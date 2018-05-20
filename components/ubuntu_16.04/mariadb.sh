@@ -1,29 +1,170 @@
 #!/usr/bin/env bash
-#
-# mariadb.sh
-#
-
-# Check if mariadb.sh is loaded by proviscript.sh
-if [ -z "${PROVISCRIPT+x}" ]; then
-
-    # Set up the variables to run this script in silent mode,
-    # Or it will prompt you to submit those information.
-    mysql_root_password="proviscript"
-    mysql_secure="n"
-    mysql_remote_access="n"
-
-    # The following variables are not needed when mysql_remote_access="n"
-    mysql_remote_user="proviscript"
-    mysql_remote_password_="proviscript"
-
-    # Default, you can modify it if you want other specific version.
-    package_version="10.2"
-fi
+#>                   +--------------+
+#>                   |  mariadb.sh  |   
+#>                   +--------------+
+#-
+#- SYNOPSIS
+#-
+#-    mariadb.sh [-h] [-p [password]] [-s [y|n]] [...]
+#-
+#- OPTIONS
+#-
+#-    -p ?, --password=?            Set mysql root password.
+#-    -s ?, --secure=?              Enable mysql secure configuration.
+#-                                  Accept vaule: y, n
+#-    -r ?, --remote=?              Enable access mysql remotely.
+#-                                  Accept vaule: y, n
+#-    -ru ?, --remote-user=?        Remote user.
+#-    -rp ?, --remote-password=?    Remote user's password.
+#-    -v ?, --version=?             Which version of MariaDB you want to install?
+#-                                  Accept vaule: version number
+#-    -h, --help                    Print this help.
+#-    -i, --info                    Print script information.
+#-
+#- EXAMPLES
+#-
+#-    $ ./mariadb.sh -v 10.2 -s y -r y -ru test_user -rp 12345678
+#-    $ ./mariadb.sh --version=10.2 --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#+
+#+ IMPLEMENTATION:
+#+
+#+    version    1.01
+#+    copyright  https://github.com/Proviscript/
+#+    license    GNU General Public License
+#+    authors    Terry Lin (terrylinooo)
+#+ 
+#+ CHANGELOGS:
+#+
+#+    2018/05/19 terrylinooo First commit.
+#+    2018/05/20 terrylinooo Add arguments, see mariradb.sh -h
+#+
+#================================================================
 
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="16.04"
 package_name="MariaDB"
+
+# Print script help
+show_script_help() {
+    echo 
+    head -50 ${0} | grep -e "^#[-|>]" | sed -e "s/^#[-|>]*/ /g"
+    echo 
+}
+
+# Print script info
+show_script_information() {
+    echo 
+    head -50 ${0} | grep -e "^#[+|>]" | sed -e "s/^#[+|>]*/ /g"
+    echo 
+}
+
+# Receive arguments in slient mode.
+if [ "$#" -gt 0 ]; then
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            # mysql root password (required in slient mode)
+            "-p") 
+                mysql_root_password="$2";
+                shift 2
+            ;;
+            "--password=*") 
+                mysql_root_password="${1#*=}"
+                shift 1
+            ;;
+            # Enable mysql secure configuration (not required)
+            # As known as mysql_secure_installation.sh by Twitter
+            # Accept vaule: y, Y, n, N
+            "-s") 
+                mysql_secure="$2"
+                shift 2
+            ;;
+            "--secure=*") 
+                mysql_secure="${1#*=}"; 
+                shift 1
+            ;;
+            # Enable access mysql remotely (not required)
+            # Accept: y, Y, n, N
+            "-r") 
+                mysql_remote_access="$2"
+                shift 2
+            ;;
+            "--remote=*") 
+                mysql_remote_access="${1#*=}"; 
+                shift 1
+            ;;
+            # Remote user (required if $mysql_remote_access = y)
+            "-ru") 
+                mysql_remote_user="$2"
+                shift 2
+            ;;
+            "--remote-user=*") 
+                mysql_remote_user="${1#*=}"; 
+                shift 1
+            ;;
+            # Remote user's password (required if $mysql_remote_access = y)
+            "-rp") 
+                mysql_remote_password="$2"
+                shift 2
+            ;;
+            "--remote-password=*") 
+                mysql_remote_password="${1#*=}"; 
+                shift 1
+            ;;
+            # Which version of MariaDB you want to install?
+            "-v") 
+                package_version="$2"
+                shift 2
+            ;;
+            "--version=*") 
+                package_version="${1#*=}"; 
+                shift 1
+            ;;
+            # Help
+            "-h"|"--help")
+                show_script_help
+                exit 1
+            ;;
+            # Info
+            "-i"|"--information")
+                show_script_information
+                exit 1
+            ;;
+            "--password"|"--secure"|"--remote"|"remote-user"|"remote-password")
+                echo "$1 requires an argument" >&2
+                exit 1
+            ;;
+            "-*")
+                echo "Unknown option: $1" >&2
+                exit 1
+            ;;
+            "*")
+                echo "Unknown option: $1" >&2
+                exit 1
+            ;;
+        esac
+    done
+fi
+
+# Check if mariadb.sh is loaded by proviscript.sh
+if [ -z "${PROVISCRIPT+x}" ]; then
+
+    # Not loaded by proviscript.sh, and mysql_root_password not set.
+    if [ -z "${mysql_root_password+x}" ]; then
+
+        # Set up the variables to run this script in silent mode,
+        mysql_root_password="proviscript"
+        mysql_secure="n"
+        mysql_remote_access="n"
+
+        # The following variables are not needed when mysql_remote_access="n"
+        mysql_remote_user="proviscript"
+        mysql_remote_password_="proviscript"
+
+        # Default, you can modify it if you want other specific version.
+        package_version="10.2"
+    fi
+fi
 
 if [ "$(type -t func_component_welcome)" == function ]; then 
     func_component_welcome "mariadb" "${package_version}"
