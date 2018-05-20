@@ -45,6 +45,9 @@ os_name="Ubuntu"
 os_version="16.04"
 package_name="MariaDB"
 
+# Default, you can overwrite this setting by assigning -v or --version option.
+package_version="10.2"
+
 # Print script help
 show_script_help() {
     echo 
@@ -146,28 +149,39 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
-# Check if mariadb.sh is loaded by proviscript.sh
-if [ -z "${PROVISCRIPT+x}" ]; then
+# Not loaded by proviscript.sh, and mysql_root_password not set.
+if [ -z "${mysql_root_password+x}" ]; then
+    mysql_root_password="proviscript"
+fi
 
-    # Not loaded by proviscript.sh, and mysql_root_password not set.
-    if [ -z "${mysql_root_password+x}" ]; then
+if [ -z "${mysql_secure+x}" ]; then
+    mysql_secure="n"
+fi
 
-        # Set up the variables to run this script in silent mode,
-        mysql_root_password="proviscript"
-        mysql_secure="n"
-        mysql_remote_access="n"
+if [ -z "${mysql_remote_access+x}" ]; then
+    mysql_remote_access="n"
+fi
 
-        # The following variables are not needed when mysql_remote_access="n"
-        mysql_remote_user="proviscript"
-        mysql_remote_password_="proviscript"
+# The following variables are not needed when mysql_remote_access="n"
+if [ -z "${mysql_remote_user+x}" ]; then
+    mysql_remote_user="proviscript"
+fi
 
-        # Default, you can modify it if you want other specific version.
-        package_version="10.2"
-    fi
+if [ -z "${mysql_remote_password+x}" ]; then
+    mysql_remote_password="proviscript"
 fi
 
 if [ "$(type -t func_component_welcome)" == function ]; then 
     func_component_welcome "mariadb" "${package_version}"
+else
+    echo "                                                          "
+    echo "  __  __                  _           ____    ____        ";
+    echo " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )       ";
+    echo " | |\/| |  / _\` | | '__| | |  / _\` | | | | | |  _ \     ";
+    echo " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |      ";
+    echo " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/       ";
+    echo "                                                          ";
+    echo "       Automatic installation by Proviscript.             ";
 fi
 
 echo
