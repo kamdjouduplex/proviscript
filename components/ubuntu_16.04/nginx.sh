@@ -100,7 +100,7 @@ else
     echo " | |\  | | (_| | | | | | | |  >  <        ";
     echo " |_| \_|  \__, | |_| |_| |_| /_/\_\       ";
     echo "          |___/                           ";
-    echo "                                          "
+    echo "                                          ";
     echo " Automatic installation by Proviscript.   ";
 fi
 
@@ -113,6 +113,8 @@ echo "--------------------------------------------------------------------------
 echo
 
 # Check if Nginx has been installed or not.
+echo "Checking if nginx is installed, if not proceed to install it."
+
 is_nginx_installed=$(dpkg-query -W --showformat='${Status}\n' nginx | grep "install ok installed")
 
 if [ "${is_nginx_installed}" == "install ok installed" ]; then

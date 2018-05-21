@@ -193,6 +193,8 @@ echo "--------------------------------------------------------------------------
 echo
 
 # Check if MariaDb has been installed or not.
+echo "Checking if mariadb-server is installed, if not proceed to install it."
+
 is_mariadb_installed=$(dpkg-query -W --showformat='${Status}\n' mariadb-server | grep "install ok installed")
 
 if [ "${is_mariadb_installed}" == "install ok installed" ]; then
