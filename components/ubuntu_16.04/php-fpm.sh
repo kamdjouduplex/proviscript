@@ -1,31 +1,118 @@
 #!/usr/bin/env bash
-#
-# php-fpm.sh
-#
-
-# PHP
-# only allow 5.6, 7.0, 7,1, 7.2
-package_version="7.2"
-
-case  ${package_version} in
-    "5.6") ;;           
-    "7.0") ;;
-    "7.1") ;;
-    "7.2") ;;
-    *)
-        echo "Invalid PHP version: ${package_version} is not supported."
-        echo "Try \"5.6, 7.0, 7.1 or 7.2\" (recommended version: 7.2)."
-        exit 1
-        ;;
-esac
+#>                   +------------+
+#>                   |  php-fpm.sh  |   
+#>                   +------------+
+#-
+#- SYNOPSIS
+#-
+#-    php-fpm.sh [-h] [-i] [-v [version]]
+#-
+#- OPTIONS
+#-
+#-    -v ?, --version=?    Which version of PHP-FPM you want to install?
+#-                         Accept vaule: 5.6, 7.0, 7,1, 7.2
+#-    -h, --help           Print this help.
+#-    -i, --info           Print script information.
+#-
+#- EXAMPLES
+#-
+#-    $ ./php-fpm.sh -v 7.2
+#-    $ ./php-fpm.sh --version=7.2
+#-    $ ./php-fpm.sh
+#+
+#+ IMPLEMENTATION:
+#+
+#+    version    1.01
+#+    copyright  https://github.com/Proviscript/
+#+    license    GNU General Public License
+#+    authors    Terry Lin (terrylinooo)
+#+ 
+#+ CHANGELOGS:
+#+
+#+    2018/05/19 terrylinooo First commit.
+#+    2018/05/22 terrylinooo Add arguments, see php-fpm.sh -h
+#+
+#================================================================
 
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="16.04"
 package_name="PHP-FPM"
 
+# only allow 5.6, 7.0, 7,1, 7.2
+package_version="7.2"
+
+# Print script help
+show_script_help() {
+    echo 
+    head -50 ${0} | grep -e "^#[-|>]" | sed -e "s/^#[-|>]*/ /g"
+    echo 
+}
+
+# Print script info
+show_script_information() {
+    echo 
+    head -50 ${0} | grep -e "^#[+|>]" | sed -e "s/^#[+|>]*/ /g"
+    echo 
+}
+
+# Receive arguments in slient mode.
+if [ "$#" -gt 0 ]; then
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            # Which version of MariaDB you want to install?
+            "-v") 
+                package_version="$2"
+                shift 2
+            ;;
+            "--version=*") 
+                package_version="${1#*=}"; 
+                shift 1
+            ;;
+            # Help
+            "-h"|"--help")
+                show_script_help
+                exit 1
+            ;;
+            # Info
+            "-i"|"--information")
+                show_script_information
+                exit 1
+            ;;
+            "-*")
+                echo "Unknown option: $1" >&2
+                exit 1
+            ;;
+            "*")
+                echo "Unknown option: $1" >&2
+                exit 1
+            ;;
+        esac
+    done
+fi
+
+case  ${package_version} in
+    "5.6") ;;           
+    "7.0") ;;
+    "7.1") ;;
+    "7.2") ;;
+    "*")
+        echo "Invalid PHP version: ${package_version} is not supported."
+        echo "Try \"5.6, 7.0, 7.1 or 7.2\" (recommended version: 7.2)."
+        exit 1
+        ;;
+esac
+
 if [ "$(type -t func_component_welcome)" == function ]; then 
     func_component_welcome "php-fpm" "${package_version}"
+else
+    echo "  ____    _   _   ____            _____   ____    __  __  ";
+    echo " |  _ \  | | | | |  _ \          |  ___| |  _ \  |  \/  | ";
+    echo " | |_) | | |_| | | |_) |  _____  | |_    | |_) | | |\/| | ";
+    echo " |  __/  |  _  | |  __/  |_____| |  _|   |  __/  | |  | | ";
+    echo " |_|     |_| |_| |_|             |_|     |_|     |_|  |_| ";
+    echo "                                                          ";
+    echo "         Automatic installation by Proviscript.           ";
 fi
 
 echo
@@ -36,7 +123,9 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
-# Check if Nginx has been installed or not.
+# Check if PHP-FPM has been installed or not.
+echo "Checking if php${package_version}-fpm is installed, if not proceed to install it."
+
 is_phpfpm_installed=$(dpkg-query -W --showformat='${Status}\n' php${package_version}-fpm | grep "install ok installed")
 
 if [ "${is_phpfpm_installed}" == "install ok installed" ]; then
