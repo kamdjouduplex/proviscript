@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
-#>                   +------------+
+#>                   +--------------+
 #>                   |  php-fpm.sh  |   
-#>                   +------------+
+#>                   +--------------+
 #-
 #- SYNOPSIS
 #-
-#-    php-fpm.sh [-h] [-i] [-v [version]]
+#-    php-fpm.sh [-h] [-i] [-l] [-v [version]] [-m [modules]]
 #-
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of PHP-FPM you want to install?
 #-                         Accept vaule: 5.6, 7.0, 7,1, 7.2
+#-    -m ?, --modules=?    Which modules of PHP-FPM you want to install?
+#-                         Accept vaule: A comma-separated list of module names.
+#-                         See "./php-fpm.sh --module-list"
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
+#-    -l, --module-list    Print module list of PHP-FPM.
 #-
 #- EXAMPLES
 #-
@@ -39,8 +43,21 @@ os_name="Ubuntu"
 os_version="16.04"
 package_name="PHP-FPM"
 
-# only allow 5.6, 7.0, 7,1, 7.2
+# Only allow 5.6, 7.0, 7,1, 7.2
 package_version="7.2"
+
+php_modules=(
+    'bcmath'  'bz2'       'cgi'        'cli'       'common' 
+    'curl'    'dba'       'dev'        'enchant'   'gd'       
+    'gmp'     'imap'      'interbase'  'intl'      'json'
+    'ldap'    'mbstring'  'mysql'      'odbc'      'opcache'  
+    'pgsql'   'phpdbg'    'pspell'     'readline'  'recode'   
+    'redis'   'snmp'      'soap'       'sqlite3'   'sybase' 
+    'tidy'    'xml'       'xmlrpc'     'xsl'       'zip' 
+)
+
+# Default
+install_modules="ALL"
 
 # Print script help
 show_script_help() {
@@ -66,7 +83,15 @@ if [ "$#" -gt 0 ]; then
                 shift 2
             ;;
             "--version=*") 
-                package_version="${1#*=}"; 
+                package_version="${1#*=}"
+                shift 1
+            ;;
+            "-m") 
+                install_modules="$2"
+                shift 2
+            ;;
+            "--modules=*") 
+                install_modules="${1#*=}"
                 shift 1
             ;;
             # Help
@@ -77,6 +102,14 @@ if [ "$#" -gt 0 ]; then
             # Info
             "-i"|"--information")
                 show_script_information
+                exit 1
+            ;;
+            # Info
+            "-l"|"--module-list")
+                for module_name in ${php_modules[@]}; do
+                    echo ${module_name}
+                done
+                echo "ALL (default)"
                 exit 1
             ;;
             "-*")
@@ -149,47 +182,27 @@ sudo add-apt-repository --yes ppa:ondrej/php
 sudo apt-get update
 
 # Comment out the package you don't want.
-# Default: install them all.
-sudo apt-get install -y php-pear
-sudo apt-get install -y php${package_version}-bcmath
-sudo apt-get install -y php${package_version}-bz2
-sudo apt-get install -y php${package_version}-cgi
-sudo apt-get install -y php${package_version}-cli
-sudo apt-get install -y php${package_version}-common
-sudo apt-get install -y php${package_version}-curl
-sudo apt-get install -y php${package_version}-dba
-sudo apt-get install -y php${package_version}-dev
-sudo apt-get install -y php${package_version}-enchant
+# Default: install them "ALL"
 sudo apt-get install -y php${package_version}-fpm
-sudo apt-get install -y php${package_version}-gd
-sudo apt-get install -y php${package_version}-gmp
-sudo apt-get install -y php${package_version}-imap
-sudo apt-get install -y php${package_version}-interbase
-sudo apt-get install -y php${package_version}-intl
-sudo apt-get install -y php${package_version}-json
-sudo apt-get install -y php${package_version}-ldap
-sudo apt-get install -y php${package_version}-mbstring
-sudo apt-get install -y php${package_version}-mysql
-sudo apt-get install -y php${package_version}-odbc
-sudo apt-get install -y php${package_version}-opcache
-sudo apt-get install -y php${package_version}-pgsql
-sudo apt-get install -y php${package_version}-phpdbg
-sudo apt-get install -y php${package_version}-pspell
-sudo apt-get install -y php${package_version}-readline
-sudo apt-get install -y php${package_version}-recode
-sudo apt-get install -y php${package_version}-snmp
-sudo apt-get install -y php${package_version}-soap
-sudo apt-get install -y php${package_version}-sqlite3
-sudo apt-get install -y php${package_version}-sybase
-sudo apt-get install -y php${package_version}-tidy
-sudo apt-get install -y php${package_version}-xml
-sudo apt-get install -y php${package_version}-xmlrpc
-sudo apt-get install -y php${package_version}-xsl
-sudo apt-get install -y php${package_version}-zip
+sudo apt-get install -y php-pear
 
-# There are virtual packages
-# php-redis
-sudo apt-get install -y php${package_version}-redis 
+# Install PHP modules
+if [ "${install_modules}" == "ALL" ]; then
+    for module in ${php_modules[@]}; do
+        sudo apt-get install -y php${package_version}-${module}
+    done
+else
+    # Only install the modules what you want
+    OLD_IFS=${IFS}
+    IFS=',' read -r -a array_install_modules <<< "$install_modules"
+    IFS=${OLD_IFS}
+
+    for module in ${array_install_modules[@]}; do
+        if [[ "${php_modules[@]}" =~ "${module}" ]]; then
+            sudo apt-get install -y php${package_version}-${module}
+        fi
+    done
+fi
 
 # To Enable php-fpm in boot.
 sudo systemctl enable php${package_version}-fpm
