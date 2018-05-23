@@ -16,7 +16,7 @@ Proviscript Components are well-tested shell scripts that can help you install p
 |  MariaDB |  10.2 | 10.2
 |  PHP-FPM |  7.2 * | 5.6, 7.0, 7.1, 7.2
 
-Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then excute the command blow.
+Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the command below.
 
 
 ### Nginx
