@@ -10,14 +10,14 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Nginx you want to install?
-#-                         Accept vaule: stable (default), development (if you want to use the latest development version)
+#-                         Accept vaule: stable, mainline
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-
 #- EXAMPLES
 #-
-#-    $ ./nginx.sh -v development
-#-    $ ./nginx.sh --version=development
+#-    $ ./nginx.sh -v stable
+#-    $ ./nginx.sh --version=mainline
 #-    $ ./nginx.sh
 #+
 #+ IMPLEMENTATION:
