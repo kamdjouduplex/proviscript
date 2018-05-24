@@ -10,11 +10,11 @@ Ubuntu 16.04 LTS (Xenial Xerus)
 
 Proviscript Components are well-tested shell scripts that can help you install packages to just fire and forget. 
 
-| Package name  | Supported versions | Vagrant box | Docker image
-|---|---|---|
-|  Nginx |  *stable: 1.14 *<br />mainline: 1.13.12 | ubuntu/xenial64 | not tested yet
-|  MariaDB |  *10.2* | ubuntu/xenial64 | not tested yet 
-|  PHP-FPM |  *7.2*, 7.1, 7.0, 5.6 | ubuntu/xenial64 | not tested yet
+| Package name  | Supported versions | Vagrant box | Docker image |
+|---|---|---|---|
+|  Nginx |  *stable: 1.14 *<br />mainline: 1.13.12 | ubuntu/xenial64 | not tested yet |
+|  MariaDB |  *10.2* | ubuntu/xenial64 | not tested yet |
+|  PHP-FPM |  *7.2*, 7.1, 7.0, 5.6 | ubuntu/xenial64 | not tested yet |
 
 
 
