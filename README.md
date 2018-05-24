@@ -22,11 +22,11 @@ Proviscript Components are well-tested shell scripts that can help you install p
 1. Dialog mode
 2. Standalone Mode
 
-### Dialog mode
+## Dialog mode
 
 Coming soon.
 
-### Standalone Mode
+## Standalone Mode
 
 Ubuntu 16.04 LTS (Xenial Xerus)
 
@@ -40,13 +40,11 @@ Debian 9
 Fedora 28
 FreeBSD 11
 
----
-
 Getting started with standalone mode. Standalone mode means you can execute the script alone without proviscript.sh (Actually proviscript.sh is desgned as an launcher to call them when neeeded). 
 
 You can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the command below. 
 
-#### Nginx
+### Nginx
 
 By default, this script will install the latest stable version of Nginx.
 Check out <a href="https://nginx.org/en/download.html">Nginx download page</a> for more details.
@@ -75,7 +73,7 @@ Check out <a href="https://nginx.org/en/download.html">Nginx download page</a> f
     $ ./nginx.sh
 ```
 
-#### MariaDB
+### MariaDB
 
 Just simply install MariaDB 10.2.
 ```
@@ -118,7 +116,7 @@ Add an user who can access Mysql remotely.
     $ ./mariadb.sh --version=10.2 --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
-#### PHP-FPM
+### PHP-FPM
 
 ```
  SYNOPSIS
