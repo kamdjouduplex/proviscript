@@ -71,7 +71,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_root_password="$2";
                 shift 2
             ;;
-            "--password=*") 
+            "--password="*) 
                 mysql_root_password="${1#*=}"
                 shift 1
             ;;
@@ -82,7 +82,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_secure="$2"
                 shift 2
             ;;
-            "--secure=*") 
+            "--secure="*) 
                 mysql_secure="${1#*=}"; 
                 shift 1
             ;;
@@ -92,7 +92,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_remote_access="$2"
                 shift 2
             ;;
-            "--remote=*") 
+            "--remote="*) 
                 mysql_remote_access="${1#*=}"; 
                 shift 1
             ;;
@@ -101,7 +101,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_remote_user="$2"
                 shift 2
             ;;
-            "--remote-user=*") 
+            "--remote-user="*) 
                 mysql_remote_user="${1#*=}"; 
                 shift 1
             ;;
@@ -110,7 +110,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_remote_password="$2"
                 shift 2
             ;;
-            "--remote-password=*") 
+            "--remote-password="*) 
                 mysql_remote_password="${1#*=}"; 
                 shift 1
             ;;
@@ -119,7 +119,7 @@ if [ "$#" -gt 0 ]; then
                 package_version="$2"
                 shift 2
             ;;
-            "--version=*") 
+            "--version="*) 
                 package_version="${1#*=}"; 
                 shift 1
             ;;
@@ -137,11 +137,11 @@ if [ "$#" -gt 0 ]; then
                 echo "$1 requires an argument" >&2
                 exit 1
             ;;
-            "-*")
+            "-"*)
                 echo "Unknown option: $1" >&2
                 exit 1
             ;;
-            "*")
+            *)
                 echo "Unknown option: $1" >&2
                 exit 1
             ;;

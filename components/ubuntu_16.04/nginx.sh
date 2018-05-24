@@ -65,7 +65,7 @@ if [ "$#" -gt 0 ]; then
                 package_version="$2"
                 shift 2
             ;;
-            "--version=*") 
+            "--version="*) 
                 package_version="${1#*=}"; 
                 shift 1
             ;;
@@ -79,11 +79,11 @@ if [ "$#" -gt 0 ]; then
                 show_script_information
                 exit 1
             ;;
-            "-*")
+            "-"*)
                 echo "Unknown option: $1" >&2
                 exit 1
             ;;
-            "*")
+            *)
                 echo "Unknown option: $1" >&2
                 exit 1
             ;;
