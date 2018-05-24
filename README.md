@@ -6,6 +6,8 @@ Document is currently under construction.
 
 Coming soon.
 
+Quick start: https://cdn.proviscript.sh/
+
 ## Components
 
 Proviscript Components are well-tested shell scripts that can help you install packages to just fire and forget. 
