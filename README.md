@@ -40,9 +40,10 @@ In schedule:
 * Fedora 28
 * FreeBSD 11
 
-Getting started with standalone mode. Standalone mode means you can execute the script alone without proviscript.sh (Actually proviscript.sh is desgned as an launcher to call them when neeeded). 
+Getting started with standalone mode. Standalone mode means you can execute the script alone without proviscript.sh 
+(Actually proviscript.sh is desgned as a launcher to call them when neeeded). 
 
-You can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the command below. 
+You can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the script by using the command below. 
 
 ### Nginx
 
