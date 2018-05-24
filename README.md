@@ -1,6 +1,6 @@
 # proviscript.sh
 
-Proviscript means **P**rovisioning **S**hell **Scripts**, to do fully automatic installations of most popular packages for Linux servers.
+Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages for Linux servers.
 
 Document is currently under construction.
 
