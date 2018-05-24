@@ -34,11 +34,11 @@ Ubuntu 16.04 LTS (Xenial Xerus)
 
 In schedule:
 
-Ubuntu 14.04
-CentOS 7
-Debian 9
-Fedora 28
-FreeBSD 11
+* Ubuntu 14.04
+* CentOS 7
+* Debian 9
+* Fedora 28
+* FreeBSD 11
 
 Getting started with standalone mode. Standalone mode means you can execute the script alone without proviscript.sh (Actually proviscript.sh is desgned as an launcher to call them when neeeded). 
 
