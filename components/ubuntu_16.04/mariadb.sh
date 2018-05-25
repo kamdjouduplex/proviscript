@@ -67,9 +67,11 @@ show_script_information() {
 
 # Print notice text
 show_notice() {
+    echo
     echo "---[proviscript]------------------------------------------------------------------";
     echo " $1"
     echo "----------------------------------------------------------------------------------";
+    echo
 }
 
 # Receive arguments in slient mode.
@@ -150,10 +152,12 @@ if [ "$#" -gt 0 ]; then
             # aptitude
             "--aptitude")
                 _APT="aptitude"
+                shift 1
             ;;
             # apt-get
             "--apt-get")
                 _APT="apt-get"
+                shift 1
             ;;
             "-"*)
                 echo "Unknown option: $1" >&2
@@ -210,6 +214,16 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
+if [ "${_APT}" == "aptitude" ]; then
+    # Check if aptitude installed or not.
+    is_aptitude=$(which aptitude |  grep "aptitude")
+
+    if [ "${is_aptitude}" == "" ]; then
+        show_notice "Package manager \"aptitude\" is not installed, installing..."
+        sudo apt-get install aptitude
+    fi
+fi
+
 # Check if MariaDb has been installed or not.
 echo "Checking if mariadb-server is installed, if not proceed to install it."
 
@@ -226,7 +240,7 @@ is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
 # Check if add-apt-repository command is available to use or not.
 if [ "${is_add_apt_repository}" == "" ]; then
-    sudo apt-get install -y software-properties-common
+    sudo ${_APT} install -y software-properties-common
 fi
 
 # Add repository for MariaDB.
@@ -234,18 +248,18 @@ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F2
 sudo add-apt-repository "deb [arch=amd64,i386,ppc64el] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${package_version}/ubuntu xenial main"
 
 # Update repository for MariaDB. 
-sudo apt-get update
+sudo ${_APT} update
 
 # Install MariaDB without password prompt.
-sudo apt-get install -y debconf-utils
+sudo ${_APT} install -y debconf-utils
 sudo export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< "maria-server-${package_version} mysql-server/root_password password DefaultPass"
 sudo debconf-set-selections <<< "maria-server-${package_version} mysql-server/root_password_again password DefaultPass"
-sudo apt-get purge -y debconf-utils
+sudo ${_APT} purge -y debconf-utils
 
 # Install MariaDB server
 show_notice "Proceeding to install mariadb-server..."
-sudo apt-get install -y mariadb-server
+sudo ${_APT} install -y mariadb-server
 
 # To Enable MariaDB server in boot.
 show_notice "Proceeding to enable service mariadb-server in boot."
@@ -271,8 +285,10 @@ fi
 # This is an option,If you need remote access the MySQL server
 # Allow remote access.
 if [ "${mysql_remote_access}" == "y" ]; then
+    show_notice "Proceeding to modify /etc/mysql/my.cnf \n bind-address = 0.0.0.0"
     sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
+    show_notice "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\""
     # Setup an user account and access a MySQL server remotely.
     sudo mysql -uroot -p${mysql_root_password} << EOF
         CREATE USER '${mysql_remote_user}'@'%' IDENTIFIED BY '${mysql_remote_password}';
@@ -281,5 +297,7 @@ if [ "${mysql_remote_access}" == "y" ]; then
 EOF
 fi
 
+# To restart mysql service.
+show_notice "Restart service mariadb-server."
 sudo service mysql restart
 

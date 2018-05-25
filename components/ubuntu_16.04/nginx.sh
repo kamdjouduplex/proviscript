@@ -61,9 +61,11 @@ show_script_information() {
 
 # Print notice text
 show_notice() {
+    echo
     echo "---[proviscript]------------------------------------------------------------------";
     echo " $1"
     echo "----------------------------------------------------------------------------------";
+    echo
 }
 
 # Receive arguments in slient mode.
@@ -92,10 +94,12 @@ if [ "$#" -gt 0 ]; then
             # aptitude
             "--aptitude")
                 _APT="aptitude"
+                shift 1
             ;;
             # apt-get
             "--apt-get")
                 _APT="apt-get"
+                shift 1
             ;;
             "-"*)
                 echo "Unknown option: $1"
@@ -135,6 +139,7 @@ if [ "${_APT}" == "aptitude" ]; then
     is_aptitude=$(which aptitude |  grep "aptitude")
 
     if [ "${is_aptitude}" == "" ]; then
+        show_notice "Package manager \"aptitude\" is not installed, installing..."
         sudo apt-get install aptitude
     fi
 fi
