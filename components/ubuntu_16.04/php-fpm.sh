@@ -43,6 +43,9 @@ os_name="Ubuntu"
 os_version="16.04"
 package_name="PHP-FPM"
 
+# Debian/Ubuntu Only. Package manager: apt-get | aptitude
+_APT="apt-get"
+
 # Only allow 5.6, 7.0, 7,1, 7.2
 package_version="7.2"
 
@@ -71,6 +74,13 @@ show_script_information() {
     echo 
     head -50 ${0} | grep -e "^#[+|>]" | sed -e "s/^#[+|>]*/ /g"
     echo 
+}
+
+# Print notice text
+show_notice() {
+    echo "---[proviscript]------------------------------------------------------------------";
+    echo " $1"
+    echo "----------------------------------------------------------------------------------";
 }
 
 # Receive arguments in slient mode.
@@ -112,12 +122,20 @@ if [ "$#" -gt 0 ]; then
                 echo "ALL (default)"
                 exit 1
             ;;
+            # aptitude
+            "--aptitude")
+                _APT="aptitude"
+            ;;
+            # apt-get
+            "--apt-get")
+                _APT="apt-get"
+            ;;
             "-"*)
-                echo "Unknown option: $1" >&2
+                echo "Unknown option: $1"
                 exit 1
             ;;
             *)
-                echo "Unknown option: $1" >&2
+                echo "Unknown option: $1"
                 exit 1
             ;;
         esac
@@ -156,6 +174,15 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
+if [ "${_APT}" == "aptitude" ]; then
+    # Check if aptitude installed or not.
+    is_aptitude=$(which aptitude |  grep "aptitude")
+
+    if [ "${is_aptitude}" == "" ]; then
+        sudo apt-get install aptitude
+    fi
+fi
+
 # Check if PHP-FPM has been installed or not.
 echo "Checking if php${package_version}-fpm is installed, if not proceed to install it."
 
@@ -163,7 +190,7 @@ is_phpfpm_installed=$(dpkg-query -W --showformat='${Status}\n' php${package_vers
 
 if [ "${is_phpfpm_installed}" == "install ok installed" ]; then
     echo "php${package_version}-fpm is already installed, please remove it before executing this script."
-    echo "Try \"sudo apt-get purge php${package_version}-fpm\""
+    echo "Try \"sudo ${_APT} purge php${package_version}-fpm\""
     exit 2
 fi
 
@@ -172,24 +199,26 @@ is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
 # Check if add-apt-repository command is available to use or not.
 if [ "${is_add_apt_repository}" == "" ]; then
-    sudo apt-get install -y software-properties-common
+    sudo ${_APT} install -y software-properties-common
 fi
 
 # Add repository for PHP.
 sudo add-apt-repository --yes ppa:ondrej/php
 
 # Update repository for PHP.
-sudo apt-get update
+sudo ${_APT} update
 
 # Comment out the package you don't want.
 # Default: install them "ALL"
-sudo apt-get install -y php${package_version}-fpm
-sudo apt-get install -y php-pear
+show_notice "Proceeding to install php${package_version}-fpm ..."
+sudo ${_APT} install -y php${package_version}-fpm
+sudo ${_APT} install -y php-pear
 
 # Install PHP modules
 if [ "${install_modules}" == "ALL" ]; then
     for module in ${php_modules[@]}; do
-        sudo apt-get install -y php${package_version}-${module}
+        show_notice "Proceeding to PHP module ${module} ..."
+        sudo ${_APT} install -y php${package_version}-${module}
     done
 else
     # Only install the modules what you want
@@ -199,13 +228,16 @@ else
 
     for module in ${array_install_modules[@]}; do
         if [[ "${php_modules[@]}" =~ "${module}" ]]; then
-            sudo apt-get install -y php${package_version}-${module}
+            show_notice "Proceeding to install PHP module ${module} ..."
+            sudo ${_APT} install -y php${package_version}-${module}
         fi
     done
 fi
 
 # To Enable php-fpm in boot.
+show_notice "Proceeding to enable service php${package_version}-fpm in boot."
 sudo systemctl enable php${package_version}-fpm
 
 # To restart php-fpm service.
+show_notice "Restart service php${package_version}-fpm."
 sudo service php${package_version}-fpm restart

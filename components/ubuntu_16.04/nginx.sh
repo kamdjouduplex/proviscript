@@ -39,6 +39,9 @@ os_name="Ubuntu"
 os_version="16.04"
 package_name="Nginx"
 
+# Debian/Ubuntu Only. Package manager: apt-get | aptitude
+_APT="apt-get"
+
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="stable"
 
@@ -54,6 +57,13 @@ show_script_information() {
     echo 
     head -50 ${0} | grep -e "^#[+|>]" | sed -e "s/^#[+|>]*/ /g"
     echo 
+}
+
+# Print notice text
+show_notice() {
+    echo "---[proviscript]------------------------------------------------------------------";
+    echo " $1"
+    echo "----------------------------------------------------------------------------------";
 }
 
 # Receive arguments in slient mode.
@@ -79,12 +89,20 @@ if [ "$#" -gt 0 ]; then
                 show_script_information
                 exit 1
             ;;
+            # aptitude
+            "--aptitude")
+                _APT="aptitude"
+            ;;
+            # apt-get
+            "--apt-get")
+                _APT="apt-get"
+            ;;
             "-"*)
-                echo "Unknown option: $1" >&2
+                echo "Unknown option: $1"
                 exit 1
             ;;
             *)
-                echo "Unknown option: $1" >&2
+                echo "Unknown option: $1"
                 exit 1
             ;;
         esac
@@ -112,6 +130,15 @@ echo " @version: ${package_version} (latest)                                    
 echo "----------------------------------------------------------------------------------";
 echo
 
+if [ "${_APT}" == "aptitude" ]; then
+    # Check if aptitude installed or not.
+    is_aptitude=$(which aptitude |  grep "aptitude")
+
+    if [ "${is_aptitude}" == "" ]; then
+        sudo apt-get install aptitude
+    fi
+fi
+
 # Check if Nginx has been installed or not.
 echo "Checking if nginx is installed, if not proceed to install it."
 
@@ -119,7 +146,7 @@ is_nginx_installed=$(dpkg-query -W --showformat='${Status}\n' nginx | grep "inst
 
 if [ "${is_nginx_installed}" == "install ok installed" ]; then
     echo "${package_name} is already installed, please remove it before executing this script."
-    echo "Try \"sudo apt-get purge nginx\""
+    echo "Try \"sudo ${_APT} purge nginx\""
     exit 2
 fi
 
@@ -128,19 +155,22 @@ is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
 # Check if add-apt-repository command is available to use or not.
 if [ "${is_add_apt_repository}" == "" ]; then
-    sudo apt-get install -y software-properties-common
+    sudo ${_APT} install -y software-properties-common
 fi
 
 # Add repository for Nginx.
 sudo add-apt-repository --yes ppa:nginx/${package_version}
 
 # Update repository for Nginx. 
-sudo apt-get update
+sudo ${_APT} update
 
 # Install Nginx
-sudo apt-get install -y nginx
+show_notice "Proceeding to install nginx."
+sudo ${_APT} install -y nginx
 
 # To Enable Nginx server in boot.
+show_notice "Proceeding to enable service nginx in boot."
 sudo systemctl enable nginx
 
+show_notice "Restart service nginx."
 sudo service nginx restart

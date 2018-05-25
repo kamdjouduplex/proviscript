@@ -48,6 +48,9 @@ package_name="MariaDB"
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="10.2"
 
+# Debian/Ubuntu Only. Package manager: apt-get | aptitude
+_APT="apt-get"
+
 # Print script help
 show_script_help() {
     echo 
@@ -60,6 +63,13 @@ show_script_information() {
     echo 
     head -50 ${0} | grep -e "^#[+|>]" | sed -e "s/^#[+|>]*/ /g"
     echo 
+}
+
+# Print notice text
+show_notice() {
+    echo "---[proviscript]------------------------------------------------------------------";
+    echo " $1"
+    echo "----------------------------------------------------------------------------------";
 }
 
 # Receive arguments in slient mode.
@@ -136,6 +146,14 @@ if [ "$#" -gt 0 ]; then
             "--password"|"--secure"|"--remote"|"remote-user"|"remote-password")
                 echo "$1 requires an argument" >&2
                 exit 1
+            ;;
+            # aptitude
+            "--aptitude")
+                _APT="aptitude"
+            ;;
+            # apt-get
+            "--apt-get")
+                _APT="apt-get"
             ;;
             "-"*)
                 echo "Unknown option: $1" >&2
@@ -226,9 +244,11 @@ sudo debconf-set-selections <<< "maria-server-${package_version} mysql-server/ro
 sudo apt-get purge -y debconf-utils
 
 # Install MariaDB server
+show_notice "Proceeding to install mariadb-server..."
 sudo apt-get install -y mariadb-server
 
 # To Enable MariaDB server in boot.
+show_notice "Proceeding to enable service mariadb-server in boot."
 sudo systemctl enable mariadb
 
 # As same as secure_mysql_installation.
@@ -238,6 +258,7 @@ sudo systemctl enable mariadb
 # 3) Remove anonymous users.
 # 4) Remove test database and access to it.
 if [ "${mysql_secure}" == "y" ]; then
+    show_notice "Proceeding to secure mysql installation..."
     sudo mysql -uroot -pDefaultPass << EOF
         UPDATE mysql.user SET Password=PASSWORD('${mysql_root_password}') WHERE User='root';
         DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
