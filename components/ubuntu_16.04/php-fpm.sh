@@ -17,6 +17,7 @@
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    -l, --module-list    Print module list of PHP-FPM.
+#-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
@@ -77,12 +78,22 @@ show_script_information() {
 }
 
 # Print notice text
+# Print notice text
+# Bash color set
+COLOR_REST="\e[0m"
+COLOR_NOTICE="\e[34m"
+COLOR_WARNING="\e[91m"
+COLOR_SUCCESS="\e[92m"
+COLOR_INFO="\e[97m"
+
 show_notice() {
-    echo
-    echo "---[proviscript]------------------------------------------------------------------";
-    echo " $1"
-    echo "----------------------------------------------------------------------------------";
-    echo
+    echo -e "[${COLOR_INFO}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
+}
+show_warning() {
+    echo -e "[${COLOR_WARNING}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
+}
+show_success() {
+    echo -e "[${COLOR_SUCCESS}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
 }
 
 # Receive arguments in slient mode.
@@ -161,13 +172,15 @@ esac
 if [ "$(type -t func_component_welcome)" == function ]; then 
     func_component_welcome "php-fpm" "${package_version}"
 else
+    echo -e ${COLOR_INFO}
     echo "  ____    _   _   ____            _____   ____    __  __  ";
     echo " |  _ \  | | | | |  _ \          |  ___| |  _ \  |  \/  | ";
     echo " | |_) | | |_| | | |_) |  _____  | |_    | |_) | | |\/| | ";
     echo " |  __/  |  _  | |  __/  |_____| |  _|   |  __/  | |  | | ";
     echo " |_|     |_| |_| |_|             |_|     |_|     |_|  |_| ";
-    echo "                                                          ";
-    echo "         Automatic installation by Proviscript.           ";
+    echo -e ${COLOR_REST}
+    echo -e "       Automatic installation by ${COLOR_NOTICE}Provi${COLOR_SUCCESS}script";
+    echo -e ${COLOR_REST}
 fi
 
 echo
@@ -194,7 +207,7 @@ echo "Checking if php${package_version}-fpm is installed, if not proceed to inst
 is_phpfpm_installed=$(dpkg-query -W --showformat='${Status}\n' php${package_version}-fpm | grep "install ok installed")
 
 if [ "${is_phpfpm_installed}" == "install ok installed" ]; then
-    echo "php${package_version}-fpm is already installed, please remove it before executing this script."
+    show_warning "php${package_version}-fpm is already installed, please remove it before executing this script."
     echo "Try \"sudo ${_APT} purge php${package_version}-fpm\""
     exit 2
 fi
@@ -222,7 +235,7 @@ sudo ${_APT} install -y php-pear
 # Install PHP modules
 if [ "${install_modules}" == "ALL" ]; then
     for module in ${php_modules[@]}; do
-        show_notice "Proceeding to install PHP module ${module} ..."
+        show_notice "Proceeding to install PHP module \"${module}\" ..."
         sudo ${_APT} install -y php${package_version}-${module}
     done
 else
@@ -233,16 +246,17 @@ else
 
     for module in ${array_install_modules[@]}; do
         if [[ "${php_modules[@]}" =~ "${module}" ]]; then
-            show_notice "Proceeding to install PHP module ${module} ..."
+            show_notice "Proceeding to install PHP module \"${module}\" ..."
             sudo ${_APT} install -y php${package_version}-${module}
         fi
     done
 fi
 
 # To Enable php-fpm in boot.
-show_notice "Proceeding to enable service php${package_version}-fpm in boot."
+show_notice "Enable service php${package_version}-fpm in boot."
 sudo systemctl enable php${package_version}-fpm
 
 # To restart php-fpm service.
 show_notice "Restart service php${package_version}-fpm."
 sudo service php${package_version}-fpm restart
+show_success "Done."

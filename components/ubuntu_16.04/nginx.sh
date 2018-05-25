@@ -13,6 +13,7 @@
 #-                         Accept vaule: stable, mainline
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
+#-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
@@ -60,12 +61,22 @@ show_script_information() {
 }
 
 # Print notice text
+# Print notice text
+# Bash color set
+COLOR_REST="\e[0m"
+COLOR_NOTICE="\e[34m"
+COLOR_WARNING="\e[91m"
+COLOR_SUCCESS="\e[92m"
+COLOR_INFO="\e[97m"
+
 show_notice() {
-    echo
-    echo "---[proviscript]------------------------------------------------------------------";
-    echo " $1"
-    echo "----------------------------------------------------------------------------------";
-    echo
+    echo -e "[${COLOR_INFO}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
+}
+show_warning() {
+    echo -e "[${COLOR_WARNING}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
+}
+show_success() {
+    echo -e "[${COLOR_SUCCESS}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
 }
 
 # Receive arguments in slient mode.
@@ -116,14 +127,16 @@ fi
 if [ "$(type -t func_component_welcome)" == function ]; then 
     func_component_welcome "nginx" "${package_version}"
 else
+    echo -e ${COLOR_INFO}
     echo "  _   _           _                       ";
     echo " | \ | |   __ _  (_)  _ __   __  __       ";
     echo " |  \| |  / _\` | | | | '_ \  \ \/ /      ";
     echo " | |\  | | (_| | | | | | | |  >  <        ";
     echo " |_| \_|  \__, | |_| |_| |_| /_/\_\       ";
     echo "          |___/                           ";
-    echo "                                          ";
-    echo " Automatic installation by Proviscript.   ";
+    echo -e ${COLOR_REST}
+    echo -e "       Automatic installation by ${COLOR_NOTICE}Provi${COLOR_SUCCESS}script";
+    echo -e ${COLOR_REST}
 fi
 
 echo
@@ -150,7 +163,7 @@ echo "Checking if nginx is installed, if not proceed to install it."
 is_nginx_installed=$(dpkg-query -W --showformat='${Status}\n' nginx | grep "install ok installed")
 
 if [ "${is_nginx_installed}" == "install ok installed" ]; then
-    echo "${package_name} is already installed, please remove it before executing this script."
+    show_warning "${package_name} is already installed, please remove it before executing this script."
     echo "Try \"sudo ${_APT} purge nginx\""
     exit 2
 fi
@@ -170,12 +183,13 @@ sudo add-apt-repository --yes ppa:nginx/${package_version}
 sudo ${_APT} update
 
 # Install Nginx
-show_notice "Proceeding to install nginx."
+show_notice "Proceeding to install nginx server."
 sudo ${_APT} install -y nginx
 
 # To Enable Nginx server in boot.
-show_notice "Proceeding to enable service nginx in boot."
+show_notice "Enable service nginx in boot."
 sudo systemctl enable nginx
 
 show_notice "Restart service nginx."
 sudo service nginx restart
+show_success "Done."

@@ -20,6 +20,7 @@
 #-                                  Accept vaule: version number
 #-    -h, --help                    Print this help.
 #-    -i, --info                    Print script information.
+#-    --aptitude                    Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
@@ -66,12 +67,21 @@ show_script_information() {
 }
 
 # Print notice text
+# Bash color set
+COLOR_REST="\e[0m"
+COLOR_NOTICE="\e[34m"
+COLOR_WARNING="\e[91m"
+COLOR_SUCCESS="\e[92m"
+COLOR_INFO="\e[97m"
+
 show_notice() {
-    echo
-    echo "---[proviscript]------------------------------------------------------------------";
-    echo " $1"
-    echo "----------------------------------------------------------------------------------";
-    echo
+    echo -e "[${COLOR_INFO}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
+}
+show_warning() {
+    echo -e "[${COLOR_WARNING}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
+}
+show_success() {
+    echo -e "[${COLOR_SUCCESS}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
 }
 
 # Receive arguments in slient mode.
@@ -160,11 +170,11 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             "-"*)
-                echo "Unknown option: $1" >&2
+                echo "Unknown option: $1"
                 exit 1
             ;;
             *)
-                echo "Unknown option: $1" >&2
+                echo "Unknown option: $1"
                 exit 1
             ;;
         esac
@@ -196,14 +206,15 @@ fi
 if [ "$(type -t func_component_welcome)" == function ]; then 
     func_component_welcome "mariadb" "${package_version}"
 else
-    echo "                                                          "
-    echo "  __  __                  _           ____    ____        ";
-    echo " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )       ";
-    echo " | |\/| |  / _\` | | '__| | |  / _\` | | | | | |  _ \     ";
-    echo " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |      ";
-    echo " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/       ";
-    echo "                                                          ";
-    echo "       Automatic installation by Proviscript.             ";
+    echo -e ${COLOR_INFO}
+    echo -e "  __  __                  _           ____    ____        ";
+    echo -e " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )       ";
+    echo -e " | |\/| |  / _\` | | '__| | |  / _\` | | | | | |  _ \     ";
+    echo -e " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |      ";
+    echo -e " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/       ";
+    echo -e ${COLOR_REST}
+    echo -e "       Automatic installation by ${COLOR_NOTICE}Provi${COLOR_SUCCESS}script";
+    echo -e ${COLOR_REST}
 fi
 
 echo
@@ -230,7 +241,7 @@ echo "Checking if mariadb-server is installed, if not proceed to install it."
 is_mariadb_installed=$(dpkg-query -W --showformat='${Status}\n' mariadb-server | grep "install ok installed")
 
 if [ "${is_mariadb_installed}" == "install ok installed" ]; then
-    echo "${package_name} is already installed, please remove it before executing this script."
+    show_warning "${package_name} is already installed, please remove it before executing this script."
     echo "Try \"sudo apt-get purge mariadb-server\""
     exit 2
 fi
@@ -300,4 +311,5 @@ fi
 # To restart mysql service.
 show_notice "Restart service mariadb-server."
 sudo service mysql restart
+show_success "Done."
 
