@@ -1,4 +1,34 @@
 
+INIT_PROVISCRIPT() {
+    # Nothing to do. 
+    # Just tell components it is load by main script "proviscript.sh"
+}
+
+# Bash color set
+COLOR_EOF="\e[0m"
+COLOR_BLUE="\e[34m"
+COLOR_RED="\e[91m"
+COLOR_GREEN="\e[92m"
+COLOR_WHITE="\e[97m"
+COLOR_DARK="\e[90m"
+COLOR_BG_BLUE="\e[44m"
+COLOR_BG_GREEN="\e[42m"
+COLOR_BG_DARK="\e[100m"
+
+func_proviscript_msg() {
+    case "$1" in
+        "info")
+            echo -e "[${COLOR_BLUE}PS${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+        ;;
+        "warning")
+            echo -e "[${COLOR_RED}PS${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+        ;;
+        "success")
+            echo -e "[${COLOR_GREEN}PS${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+        ;;
+    esac
+}
+
 func_proviscript_welcome() {
     echo "                                                                                  ";
     echo "                                                                                  ";

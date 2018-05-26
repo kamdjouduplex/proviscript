@@ -2,7 +2,7 @@
 
 Ubuntu 16.04 LTS (Xenial Xerus)
 
-<small>Last updated: 2018/05/23</small>
+<small>Last updated: 2018/05/26</small>
 
 ---
 

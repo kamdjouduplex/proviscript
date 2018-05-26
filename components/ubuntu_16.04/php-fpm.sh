@@ -39,6 +39,10 @@
 #+
 #================================================================
 
+#================================================================
+# Part 1. Config
+#================================================================
+
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="16.04"
@@ -63,6 +67,10 @@ php_modules=(
 # Default
 install_modules="ALL"
 
+#================================================================
+# Part 2. Option (DO NOT MODIFY)
+#================================================================
+
 # Print script help
 show_script_help() {
     echo 
@@ -77,32 +85,13 @@ show_script_information() {
     echo 
 }
 
-# Print notice text
-# Print notice text
-# Bash color set
-COLOR_REST="\e[0m"
-COLOR_NOTICE="\e[34m"
-COLOR_WARNING="\e[91m"
-COLOR_SUCCESS="\e[92m"
-COLOR_INFO="\e[97m"
-
-show_notice() {
-    echo -e "[${COLOR_INFO}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
-}
-show_warning() {
-    echo -e "[${COLOR_WARNING}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
-}
-show_success() {
-    echo -e "[${COLOR_SUCCESS}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
-}
-
 # Receive arguments in slient mode.
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
             # Which version of MariaDB you want to install?
             "-v") 
-                package_version="$2"
+                package_version="${2}"
                 shift 2
             ;;
             "--version="*) 
@@ -110,7 +99,7 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             "-m") 
-                install_modules="$2"
+                install_modules="${2}"
                 shift 2
             ;;
             "--modules="*) 
@@ -146,41 +135,59 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             "-"*)
-                echo "Unknown option: $1"
+                echo "Unknown option: ${1}"
                 exit 1
             ;;
             *)
-                echo "Unknown option: $1"
+                echo "Unknown option: ${1}"
                 exit 1
             ;;
         esac
     done
 fi
 
-case  ${package_version} in
-    "5.6") ;;           
-    "7.0") ;;
-    "7.1") ;;
-    "7.2") ;;
-    "*")
-        echo "Invalid PHP version: ${package_version} is not supported."
-        echo "Try \"5.6, 7.0, 7.1 or 7.2\" (recommended version: 7.2)."
-        exit 1
-        ;;
-esac
+#================================================================
+# Part 3. Message (DO NOT MODIFY)
+#================================================================
 
-if [ "$(type -t func_component_welcome)" == function ]; then 
+if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
     func_component_welcome "php-fpm" "${package_version}"
 else
-    echo -e ${COLOR_INFO}
-    echo "  ____    _   _   ____            _____   ____    __  __  ";
-    echo " |  _ \  | | | | |  _ \          |  ___| |  _ \  |  \/  | ";
-    echo " | |_) | | |_| | | |_) |  _____  | |_    | |_) | | |\/| | ";
-    echo " |  __/  |  _  | |  __/  |_____| |  _|   |  __/  | |  | | ";
-    echo " |_|     |_| |_| |_|             |_|     |_|     |_|  |_| ";
-    echo -e ${COLOR_REST}
-    echo -e "       Automatic installation by ${COLOR_NOTICE}Provi${COLOR_SUCCESS}script";
-    echo -e ${COLOR_REST}
+    # Bash color set
+    COLOR_EOF="\e[0m"
+    COLOR_BLUE="\e[34m"
+    COLOR_RED="\e[91m"
+    COLOR_GREEN="\e[92m"
+    COLOR_WHITE="\e[97m"
+    COLOR_DARK="\e[90m"
+    COLOR_BG_BLUE="\e[44m"
+    COLOR_BG_GREEN="\e[42m"
+    COLOR_BG_DARK="\e[100m"
+
+    func_proviscript_msg() {
+        case "$1" in
+            "info")
+                echo -e "[${COLOR_BLUE}O.o${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+            ;;
+            "warning")
+                echo -e "[${COLOR_RED}O.o${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+            ;;
+            "success")
+                echo -e "[${COLOR_GREEN}O.o${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+            ;;
+        esac
+    }
+
+    echo -e ${COLOR_WHITE}
+    echo -e "  ____    _   _   ____            _____   ____    __  __  ";
+    echo -e " |  _ \  | | | | |  _ \          |  ___| |  _ \  |  \/  | ";
+    echo -e " | |_) | | |_| | | |_) |  _____  | |_    | |_) | | |\/| | ";
+    echo -e " |  __/  |  _  | |  __/  |_____| |  _|   |  __/  | |  | | ";
+    echo -e " |_|     |_| |_| |_|             |_|     |_|     |_|  |_| ";
+    echo -e ${COLOR_EOF}
+    echo -e " Automatic installation by ${COLOR_GREEN}Provi${COLOR_BLUE}script";
+    echo -e " ${COLOR_BG_GREEN}  ${COLOR_BG_BLUE}  ${COLOR_BG_DARK}${COLOR_WHITE} https://github.com/Proviscript/ ${COLOR_EOF}"
+    echo -e ${COLOR_EOF}
 fi
 
 echo
@@ -191,24 +198,40 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
+#================================================================
+# Part 4. Core
+#================================================================
+
+case  ${package_version} in
+    "5.6") ;;           
+    "7.0") ;;
+    "7.1") ;;
+    "7.2") ;;
+    "*")
+        func_proviscript_msg warning "Invalid PHP version: ${package_version} is not supported."
+        func_proviscript_msg info "Try \"5.6, 7.0, 7.1 or 7.2\" (recommended version: 7.2)."
+        exit 1
+        ;;
+esac
+
 if [ "${_APT}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
 
     if [ "${is_aptitude}" == "" ]; then
-        show_notice "Package manager \"aptitude\" is not installed, installing..."
+        func_proviscript_msg info "Package manager \"aptitude\" is not installed, installing..."
         sudo apt-get install aptitude
     fi
 fi
 
 # Check if PHP-FPM has been installed or not.
-echo "Checking if php${package_version}-fpm is installed, if not proceed to install it."
+func_proviscript_msg info "Checking if php${package_version}-fpm is installed, if not, proceed to install it."
 
 is_phpfpm_installed=$(dpkg-query -W --showformat='${Status}\n' php${package_version}-fpm | grep "install ok installed")
 
 if [ "${is_phpfpm_installed}" == "install ok installed" ]; then
-    show_warning "php${package_version}-fpm is already installed, please remove it before executing this script."
-    echo "Try \"sudo ${_APT} purge php${package_version}-fpm\""
+    func_proviscript_msg warning "php${package_version}-fpm is already installed, please remove it before executing this script."
+    func_proviscript_msg info "Try \"sudo ${_APT} purge php${package_version}-fpm\""
     exit 2
 fi
 
@@ -217,6 +240,8 @@ is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
 # Check if add-apt-repository command is available to use or not.
 if [ "${is_add_apt_repository}" == "" ]; then
+    func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
+    func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
     sudo ${_APT} install -y software-properties-common
 fi
 
@@ -228,14 +253,14 @@ sudo ${_APT} update
 
 # Comment out the package you don't want.
 # Default: install them "ALL"
-show_notice "Proceeding to install php${package_version}-fpm ..."
+func_proviscript_msg info "Proceeding to install php${package_version}-fpm ..."
 sudo ${_APT} install -y php${package_version}-fpm
 sudo ${_APT} install -y php-pear
 
 # Install PHP modules
 if [ "${install_modules}" == "ALL" ]; then
     for module in ${php_modules[@]}; do
-        show_notice "Proceeding to install PHP module \"${module}\" ..."
+        func_proviscript_msg info "Proceeding to install PHP module \"${module}\" ..."
         sudo ${_APT} install -y php${package_version}-${module}
     done
 else
@@ -246,17 +271,25 @@ else
 
     for module in ${array_install_modules[@]}; do
         if [[ "${php_modules[@]}" =~ "${module}" ]]; then
-            show_notice "Proceeding to install PHP module \"${module}\" ..."
+            func_proviscript_msg info "Proceeding to install PHP module \"${module}\" ..."
             sudo ${_APT} install -y php${package_version}-${module}
         fi
     done
 fi
 
 # To Enable php-fpm in boot.
-show_notice "Enable service php${package_version}-fpm in boot."
+func_proviscript_msg info "Enable service php${package_version}-fpm in boot."
 sudo systemctl enable php${package_version}-fpm
 
 # To restart php-fpm service.
-show_notice "Restart service php${package_version}-fpm."
+func_proviscript_msg info "Restart service php${package_version}-fpm."
 sudo service php${package_version}-fpm restart
-show_success "Done."
+
+php_version="$(php -v 2>&1)"
+
+if [[ "${php_version}" = *"PHP"* ]]; then
+    func_proviscript_msg success "Installation process is completed."
+    func_proviscript_msg success "$(php -v 2>&1)"
+else
+    func_proviscript_msg warning "Installation process is failed."
+fi

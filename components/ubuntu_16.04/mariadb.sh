@@ -41,6 +41,10 @@
 #+
 #================================================================
 
+#================================================================
+# Part 1. Config
+#================================================================
+
 # Display package information, no need to change.
 os_name="Ubuntu"
 os_version="16.04"
@@ -51,6 +55,10 @@ package_version="10.2"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _APT="apt-get"
+
+#================================================================
+# Part 2. Option (DO NOT MODIFY)
+#================================================================
 
 # Print script help
 show_script_help() {
@@ -66,31 +74,13 @@ show_script_information() {
     echo 
 }
 
-# Print notice text
-# Bash color set
-COLOR_REST="\e[0m"
-COLOR_NOTICE="\e[34m"
-COLOR_WARNING="\e[91m"
-COLOR_SUCCESS="\e[92m"
-COLOR_INFO="\e[97m"
-
-show_notice() {
-    echo -e "[${COLOR_INFO}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
-}
-show_warning() {
-    echo -e "[${COLOR_WARNING}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
-}
-show_success() {
-    echo -e "[${COLOR_SUCCESS}proviscript${COLOR_REST}] ${COLOR_NOTICE}$1${COLOR_REST}"
-}
-
 # Receive arguments in slient mode.
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
             # mysql root password (required in slient mode)
             "-p") 
-                mysql_root_password="$2";
+                mysql_root_password="${2}";
                 shift 2
             ;;
             "--password="*) 
@@ -101,7 +91,7 @@ if [ "$#" -gt 0 ]; then
             # As known as mysql_secure_installation.sh by Twitter
             # Accept vaule: y, Y, n, N
             "-s") 
-                mysql_secure="$2"
+                mysql_secure="${2}"
                 shift 2
             ;;
             "--secure="*) 
@@ -111,7 +101,7 @@ if [ "$#" -gt 0 ]; then
             # Enable access mysql remotely (not required)
             # Accept: y, Y, n, N
             "-r") 
-                mysql_remote_access="$2"
+                mysql_remote_access="${2}"
                 shift 2
             ;;
             "--remote="*) 
@@ -120,7 +110,7 @@ if [ "$#" -gt 0 ]; then
             ;;
             # Remote user (required if $mysql_remote_access = y)
             "-ru") 
-                mysql_remote_user="$2"
+                mysql_remote_user="${2}"
                 shift 2
             ;;
             "--remote-user="*) 
@@ -129,7 +119,7 @@ if [ "$#" -gt 0 ]; then
             ;;
             # Remote user's password (required if $mysql_remote_access = y)
             "-rp") 
-                mysql_remote_password="$2"
+                mysql_remote_password="${2}"
                 shift 2
             ;;
             "--remote-password="*) 
@@ -138,7 +128,7 @@ if [ "$#" -gt 0 ]; then
             ;;
             # Which version of MariaDB you want to install?
             "-v") 
-                package_version="$2"
+                package_version="${2}"
                 shift 2
             ;;
             "--version="*) 
@@ -156,7 +146,7 @@ if [ "$#" -gt 0 ]; then
                 exit 1
             ;;
             "--password"|"--secure"|"--remote"|"remote-user"|"remote-password")
-                echo "$1 requires an argument" >&2
+                echo "${1} requires an argument"
                 exit 1
             ;;
             # aptitude
@@ -170,11 +160,11 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             "-"*)
-                echo "Unknown option: $1"
+                echo "Unknown option: ${1}"
                 exit 1
             ;;
             *)
-                echo "Unknown option: $1"
+                echo "Unknown option: ${1}"
                 exit 1
             ;;
         esac
@@ -203,18 +193,48 @@ if [ -z "${mysql_remote_password+x}" ]; then
     mysql_remote_password="proviscript"
 fi
 
-if [ "$(type -t func_component_welcome)" == function ]; then 
+#================================================================
+# Part 3. Message (DO NOT MODIFY)
+#================================================================
+
+if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
     func_component_welcome "mariadb" "${package_version}"
 else
-    echo -e ${COLOR_INFO}
+    # Bash color set
+    COLOR_EOF="\e[0m"
+    COLOR_BLUE="\e[34m"
+    COLOR_RED="\e[91m"
+    COLOR_GREEN="\e[92m"
+    COLOR_WHITE="\e[97m"
+    COLOR_DARK="\e[90m"
+    COLOR_BG_BLUE="\e[44m"
+    COLOR_BG_GREEN="\e[42m"
+    COLOR_BG_DARK="\e[100m"
+
+    func_proviscript_msg() {
+        case "$1" in
+            "info")
+                echo -e "[${COLOR_BLUE}O.o${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+            ;;
+            "warning")
+                echo -e "[${COLOR_RED}O.o${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+            ;;
+            "success")
+                echo -e "[${COLOR_GREEN}O.o${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+            ;;
+        esac
+    }
+
+    echo -e ${COLOR_WHITE}
     echo -e "  __  __                  _           ____    ____        ";
     echo -e " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )       ";
     echo -e " | |\/| |  / _\` | | '__| | |  / _\` | | | | | |  _ \     ";
     echo -e " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |      ";
     echo -e " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/       ";
-    echo -e ${COLOR_REST}
-    echo -e "       Automatic installation by ${COLOR_NOTICE}Provi${COLOR_SUCCESS}script";
-    echo -e ${COLOR_REST}
+    echo -e ${COLOR_EOF}
+    echo -e " Automatic installation by ${COLOR_GREEN}Provi${COLOR_BLUE}script";
+    echo -e " ${COLOR_BG_GREEN}  ${COLOR_BG_BLUE}  ${COLOR_BG_DARK}${COLOR_WHITE} https://github.com/Proviscript/ ${COLOR_EOF}"
+    echo -e ${COLOR_EOF}
 fi
 
 echo
@@ -225,24 +245,28 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
+#================================================================
+# Part 4. Core
+#================================================================
+
 if [ "${_APT}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
 
     if [ "${is_aptitude}" == "" ]; then
-        show_notice "Package manager \"aptitude\" is not installed, installing..."
+        func_proviscript_msg info "Package manager \"aptitude\" is not installed, installing..."
         sudo apt-get install aptitude
     fi
 fi
 
 # Check if MariaDb has been installed or not.
-echo "Checking if mariadb-server is installed, if not proceed to install it."
+func_proviscript_msg info "Checking if mariadb-server is installed, if not, proceed to install it."
 
 is_mariadb_installed=$(dpkg-query -W --showformat='${Status}\n' mariadb-server | grep "install ok installed")
 
 if [ "${is_mariadb_installed}" == "install ok installed" ]; then
-    show_warning "${package_name} is already installed, please remove it before executing this script."
-    echo "Try \"sudo apt-get purge mariadb-server\""
+    func_proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
+    func_proviscript_msg info "Try \"sudo apt-get purge mariadb-server\""
     exit 2
 fi
 
@@ -251,12 +275,14 @@ is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
 # Check if add-apt-repository command is available to use or not.
 if [ "${is_add_apt_repository}" == "" ]; then
+    func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
+    func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
     sudo ${_APT} install -y software-properties-common
 fi
 
 # Add repository for MariaDB.
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository "deb [arch=amd64,i386,ppc64el] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${package_version}/ubuntu xenial main"
+sudo add-apt-repository --yes "deb [arch=amd64,i386,ppc64el] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${package_version}/ubuntu xenial main"
 
 # Update repository for MariaDB. 
 sudo ${_APT} update
@@ -269,11 +295,11 @@ sudo debconf-set-selections <<< "maria-server-${package_version} mysql-server/ro
 sudo ${_APT} purge -y debconf-utils
 
 # Install MariaDB server
-show_notice "Proceeding to install mariadb-server..."
+func_proviscript_msg info "Proceeding to install mariadb-server..."
 sudo ${_APT} install -y mariadb-server
 
 # To Enable MariaDB server in boot.
-show_notice "Proceeding to enable service mariadb-server in boot."
+func_proviscript_msg info "Proceeding to enable service mariadb-server in boot."
 sudo systemctl enable mariadb
 
 # As same as secure_mysql_installation.
@@ -283,7 +309,7 @@ sudo systemctl enable mariadb
 # 3) Remove anonymous users.
 # 4) Remove test database and access to it.
 if [ "${mysql_secure}" == "y" ]; then
-    show_notice "Proceeding to secure mysql installation..."
+    func_proviscript_msg info "Proceeding to secure mysql installation..."
     sudo mysql -uroot -pDefaultPass << EOF
         UPDATE mysql.user SET Password=PASSWORD('${mysql_root_password}') WHERE User='root';
         DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
@@ -296,10 +322,10 @@ fi
 # This is an option,If you need remote access the MySQL server
 # Allow remote access.
 if [ "${mysql_remote_access}" == "y" ]; then
-    show_notice "Proceeding to modify /etc/mysql/my.cnf \n bind-address = 0.0.0.0"
+    func_proviscript_msg info "Proceeding to modify /etc/mysql/my.cnf => bind-address = 0.0.0.0"
     sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-    show_notice "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\""
+    func_proviscript_msg info "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\"."
     # Setup an user account and access a MySQL server remotely.
     sudo mysql -uroot -p${mysql_root_password} << EOF
         CREATE USER '${mysql_remote_user}'@'%' IDENTIFIED BY '${mysql_remote_password}';
@@ -309,7 +335,15 @@ EOF
 fi
 
 # To restart mysql service.
-show_notice "Restart service mariadb-server."
+func_proviscript_msg info "Restart service mariadb-server."
 sudo service mysql restart
-show_success "Done."
+
+mysql_version="$(mysql -V 2>&1)"
+
+if [[ "${mysql_version}" = *"MariaDB"* ]]; then
+    func_proviscript_msg success "Installation process is completed."
+    func_proviscript_msg success "$(mysql -V 2>&1)"
+else
+    func_proviscript_msg warning "Installation process is failed."
+fi
 
