@@ -45,9 +45,13 @@ export PROVISCRIPT_DIR=$(dirname $(readlink -f $0))
 
 # Load basic functions
 source "${PROVISCRIPT_DIR}/inc/functions.sh"
+source "${PROVISCRIPT_DIR}/inc/parse_yaml.sh"
 
 # Show welcome message
 func_proviscript_welcome
+
+# Load config settings
+parse_yaml config.yml
 
 # Load components
 
