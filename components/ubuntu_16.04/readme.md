@@ -6,13 +6,13 @@ Ubuntu 16.04 LTS (Xenial Xerus)
 
 
 
-| Package name  | Supported versions | Vagrant box 
-|---|---|---|---|
-|  Nginx | **stable: 1.14**<br />mainline: 1.13.12 | ubuntu/xenial64 
-|  MariaDB |  **10.2** | ubuntu/xenial64 
-|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 
-|  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 
-|  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 
+| Package name  | Supported versions | Vagrant box |
+|---|---|---|
+|  Nginx | **stable: 1.14**<br />mainline: 1.13.12 | ubuntu/xenial64 | 
+|  MariaDB |  **10.2** | ubuntu/xenial64 |
+|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
+|  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
+|  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
 
 Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the command below.
 
