@@ -1,7 +1,9 @@
+#!/usr/bin/env bash
 
 INIT_PROVISCRIPT() {
     # Nothing to do. 
     # Just tell components it is load by main script "proviscript.sh"
+    echo "" 2>&1
 }
 
 # Bash color set
@@ -109,6 +111,38 @@ func_component_welcome() {
             echo "            |_|                                   ${2} "
         ;;
     esac
-}                                                                                    
-                                                                                                  
+}
 
+# https://gist.github.com/l5x/8cf512c6d64641bde388
+# Based on https://gist.github.com/pkuczynski/8665367
+
+parse_yaml() {
+    local prefix=$2
+    local s
+    local w
+    local fs
+    s='[[:space:]]*'
+    w='[a-zA-Z0-9_]*'
+    fs="$(echo @|tr @ '\034')"
+    sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s[:-]$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
+    awk -F"$fs" '{
+    indent = length($1)/4;
+    vname[indent] = $2;
+    for (i in vname) {if (i > indent) {delete vname[i]}}
+        if (length($3) > 0) {
+            vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+            printf("%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, $3);
+        }
+    }' | sed 's/_=/+=/g'
+}
+
+os_name() {
+    eval $(cat /etc/lsb-release)
+    echo ${DISTRIB_ID}
+}
+
+os_release_number() {
+    eval $(cat /etc/lsb-release)
+    echo ${DISTRIB_RELEASE}
+}

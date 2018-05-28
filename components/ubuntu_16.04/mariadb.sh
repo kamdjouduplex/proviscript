@@ -101,14 +101,14 @@ if [ "$#" -gt 0 ]; then
             # Enable access mysql remotely (not required)
             # Accept: y, Y, n, N
             "-r") 
-                mysql_remote_access="${2}"
+                mysql_remote="${2}"
                 shift 2
             ;;
             "--remote="*) 
-                mysql_remote_access="${1#*=}"; 
+                mysql_remote="${1#*=}"; 
                 shift 1
             ;;
-            # Remote user (required if $mysql_remote_access = y)
+            # Remote user (required if $mysql_remote = y)
             "-ru") 
                 mysql_remote_user="${2}"
                 shift 2
@@ -117,7 +117,7 @@ if [ "$#" -gt 0 ]; then
                 mysql_remote_user="${1#*=}"; 
                 shift 1
             ;;
-            # Remote user's password (required if $mysql_remote_access = y)
+            # Remote user's password (required if $mysql_remote = y)
             "-rp") 
                 mysql_remote_password="${2}"
                 shift 2
@@ -180,11 +180,11 @@ if [ -z "${mysql_secure+x}" ]; then
     mysql_secure="n"
 fi
 
-if [ -z "${mysql_remote_access+x}" ]; then
-    mysql_remote_access="n"
+if [ -z "${mysql_remote+x}" ]; then
+    mysql_remote="n"
 fi
 
-# The following variables are not needed when mysql_remote_access="n"
+# The following variables are not needed when mysql_remote="n"
 if [ -z "${mysql_remote_user+x}" ]; then
     mysql_remote_user="proviscript"
 fi
@@ -197,7 +197,13 @@ fi
 # Part 3. Message (DO NOT MODIFY)
 #================================================================
 
-if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
+if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
+    package_version=${PACKAGE_VERSION}
+    mysql_root_password=${MYSQL_ROOT_PASSWORD}
+    mysql_secure=${MYSQL_SECURE}
+    mysql_remote=${MYSQL_REMOTE}
+    mysql_remote_user=${MYSQL_REMOTE_USER}
+    mysql_remote_password=${MYSQL_REMOTE_PASSWORD}
     func_component_welcome "mariadb" "${package_version}"
 else
     # Bash color set

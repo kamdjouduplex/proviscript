@@ -118,6 +118,7 @@ fi
 #================================================================
 
 if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
+    package_version=${PACKAGE_VERSION}
     func_component_welcome "nginx" "${package_version}"
 else
     # Bash color set

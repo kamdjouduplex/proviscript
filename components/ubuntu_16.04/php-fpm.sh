@@ -150,7 +150,9 @@ fi
 # Part 3. Message (DO NOT MODIFY)
 #================================================================
 
-if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
+if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
+    package_version=${PACKAGE_VERSION}
+    php_modules=${PHP_MODULES}
     func_component_welcome "php-fpm" "${package_version}"
 else
     # Bash color set
@@ -207,7 +209,7 @@ case  ${package_version} in
     "7.0") ;;
     "7.1") ;;
     "7.2") ;;
-    "*")
+    *)
         func_proviscript_msg warning "Invalid PHP version: ${package_version} is not supported."
         func_proviscript_msg info "Try \"5.6, 7.0, 7.1 or 7.2\" (recommended version: 7.2)."
         exit 1

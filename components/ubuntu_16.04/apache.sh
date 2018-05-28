@@ -116,7 +116,8 @@ fi
 # Part 3. Message (DO NOT MODIFY)
 #================================================================
 
-if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
+if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
+    package_version=${PACKAGE_VERSION}
     func_component_welcome "apache" "${package_version}"
 else
     # Bash color set
