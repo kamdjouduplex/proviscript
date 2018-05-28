@@ -5,12 +5,13 @@
 #-
 #- SYNOPSIS
 #-
-#-    proviscript.sh [-h] [-i]
+#-    proviscript.sh [-h] [-i] install
 #-
 #- OPTIONS
 #-
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
+#-    -p, --print-config   Print config variables, for debug
 #-
 #+
 #+ IMPLEMENTATION:
@@ -91,7 +92,6 @@ if [ ${PROVI} == true ]; then
             export MYSQL_REMOTE_USER=${config_mariadb_remote_user}
             export MYSQL_REMOTE_PASSWORD=${config_mariadb_remote_password}
         fi
-
 
         # Load component script
         source "${PROVISCRIPT_DIR}/components/${OS_DIST}/${component_name}.sh"
