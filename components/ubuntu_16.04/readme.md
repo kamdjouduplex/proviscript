@@ -42,17 +42,17 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
 
   config.vm.provision "shell" do |s|
-    s.path = "https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/mariadb.sh"
-	s.privileged: "false"
+    s.path = "https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh"
+    s.privileged: "false"
     s.args = ["--version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678"]
   end
 end
 ```
 
-### Install Packages
+### Install a package
 
 ```shell
-wget https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/mariadb.sh
+wget https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 ```
 ```shell
 chmod 755 ./mariadb.sh
@@ -68,7 +68,7 @@ chmod 755 ./mariadb.sh
 ### Nginx
 
 Download:
-https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/nginx.sh
+https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh
 
 ```
  SYNOPSIS
@@ -95,7 +95,7 @@ https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/nginx.sh
 ### MariaDB
 
 Download:
-https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/mariadb.sh
+https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 
 
 ```
@@ -128,7 +128,7 @@ https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/mariadb.sh
 ### PHP-FPM
 
 Download:
-https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/php-fpm.sh
+https://cdn.proviscript.sh/components/ubuntu_16.04/php-fpm.sh
 
 ```
  SYNOPSIS
@@ -158,7 +158,7 @@ https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/php-fpm.sh
 ### Apache
 
 Download:
-https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/apache.sh
+https://cdn.proviscript.sh/components/ubuntu_16.04/apache.sh
 
 ```
  SYNOPSIS
@@ -184,7 +184,7 @@ https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/apache.sh
 ### Redis
 
 Download:
-https://cdn.proviscript.sh/cdn/components/ubuntu_16.04/redis.sh
+https://cdn.proviscript.sh/components/ubuntu_16.04/redis.sh
 
 ```
  SYNOPSIS
