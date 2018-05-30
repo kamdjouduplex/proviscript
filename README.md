@@ -8,138 +8,90 @@ Coming soon.
 
 Quick start: https://cdn.proviscript.sh/
 
-## Components
-
-Proviscript Components are well-tested shell scripts that can help you install packages to just fire and forget. 
-
-| Package name  | Supported versions | Vagrant box | Docker image |
-|---|---|---|---|
-|  Nginx |  *stable: 1.14 *<br />mainline: 1.13.12 | ubuntu/xenial64 | not tested yet |
-|  MariaDB |  *10.2* | ubuntu/xenial64 | not tested yet |
-|  PHP-FPM |  *7.2*, 7.1, 7.0, 5.6 | ubuntu/xenial64 | not tested yet |
 
 
 ## How to use proviscript
 
-1. Dialog mode
-2. Standalone Mode
-
-## Dialog mode
-
-Coming soon.
-
-## Standalone Mode
-
-Ubuntu 16.04 LTS (Xenial Xerus)
-
-<small>Last updated: 2018/05/23</small>
-
-In schedule:
-
-* Ubuntu 14.04
-* CentOS 7
-* Debian 9
-* Fedora 28
-* FreeBSD 11
-
-Getting started with standalone mode. Standalone mode means you can execute the script alone without proviscript.sh 
-(Actually proviscript.sh is desgned as a launcher to call them when neeeded). 
-
-You can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the script by using the command below. 
-
-### Nginx
-
-By default, this script will install the latest stable version of Nginx.
-Check out <a href="https://nginx.org/en/download.html">Nginx download page</a> for more details.
-
+#### Download
 ```
-./nginx.sh
+wget https://cdn.proviscript.sh/proviscript.tar.gz
+tar -zxvf proviscript.tar.gz
+cd proviscript-latest
+```
+#### Configure
+
+Edit `config.yml` to see what packages you want to install.
+```
+vi config.yml
+```
+#### Run
+```
+./proviscript.sh
 ```
 
+That's it. Proviscript will install packages which defined in `install` section in `config.yml`
 
-```
- SYNOPSIS
+## Components
 
-    nginx.sh [-h] [-i] [-v [version]]
+[Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget. 
 
- OPTIONS
+Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
 
-    -v ?, --version=?    Which version of Nginx you want to install?
-                         Accept vaule: stable, mainline
-    -h, --help           Print this help.
-    -i, --info           Print script information.
-
- EXAMPLES
-
-    $ ./nginx.sh -v stable
-    $ ./nginx.sh --version=mainline
-    $ ./nginx.sh
+Example (Install MariaDB 10.2)
+```shell
+./mariadb.sh --version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
 
-### MariaDB
+| Package name  | Supported versions | Vagrant box |
+|---|---|---|
+|  Nginx | **stable: 1.14**<br />mainline: 1.13.12 | ubuntu/xenial64 | 
+|  MariaDB |  **10.2** | ubuntu/xenial64 |
+|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
+|  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
+|  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
 
-Just simply install MariaDB 10.2.
+### Vargrant Provisioning
+
+It's highly recommended to use Proviscript's CDN service to quick provison your Vagrant machine.
+
+```shell
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_check_update = false
+
+  config.vm.provision "shell", path: "https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh", privileged: "false"
+  config.vm.provision "shell", path: "https://cdn.proviscript.sh/components/ubuntu_16.04/php-fpm.sh", privileged: "false"
+  config.vm.provision "shell", path: "https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh", privileged: "false"
+  
+end
 ```
-./mariadb.sh --version=10.2
+
+With script arguments:
+
+```shell
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_check_update = false
+
+  config.vm.provision "shell" do |s|
+    s.path = "https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh"
+    s.privileged: "false"
+    s.args = ["--version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678"]
+  end
+end
 ```
-Default root password is `proviscript`.
 
-You can also do a secure mysql installation without password prompt.
+### Install a package
 
+```shell
+wget https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 ```
-./mariadb.sh --version=10.2 --password=yourpassword --secure=y
+```shell
+chmod 755 ./mariadb.sh
 ```
-Add an user who can access Mysql remotely.
+```shell
+./mariadb.sh --version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
-./mariadb.sh --version=10.2 --password=yourpassword --secure=y --remote==y --remote-user=test_user --remote-password=12345678
-```
 
-```
- SYNOPSIS
-
-    mariadb.sh [-h] [-p [password]] [-s [y|n]] [...]
-
- OPTIONS
-
-    -p ?, --password=?            Set mysql root password.
-    -s ?, --secure=?              Enable mysql secure configuration.
-                                  Accept vaule: y, n
-    -r ?, --remote=?              Enable access mysql remotely.
-                                  Accept vaule: y, n
-    -ru ?, --remote-user=?        Remote user.
-    -rp ?, --remote-password=?    Remote user's password.
-    -v ?, --version=?             Which version of MariaDB you want to install?
-                                  Accept vaule: version number
-    -h, --help                    Print this help.
-    -i, --info                    Print script information.
-
- EXAMPLES
-
-    $ ./mariadb.sh -v 10.2 -s y -r y -ru test_user -rp 12345678
-    $ ./mariadb.sh --version=10.2 --secure=y --remote==y --remote-user=test_user --remote-password=12345678
-
-```
-### PHP-FPM
-
-```
- SYNOPSIS
-
-    php-fpm.sh [-h] [-i] [-l] [-v [version]] [-m [modules]]
-
- OPTIONS
-
-    -v ?, --version=?    Which version of PHP-FPM you want to install?
-                         Accept vaule: 5.6, 7.0, 7,1, 7.2
-    -m ?, --modules=?    Which modules of PHP-FPM you want to install?
-                         Accept vaule: A comma-separated list of module names.
-                         See "./php-fpm.sh --module-list"
-    -h, --help           Print this help.
-    -i, --info           Print script information.
-    -l, --module-list    Print module list of PHP-FPM.
-
- EXAMPLES
-
-    $ ./php-fpm.sh -v 7.2
-    $ ./php-fpm.sh --version=7.2
-    $ ./php-fpm.sh
-```
