@@ -26,7 +26,7 @@ vi config.yml
 ```
 #### Run
 ```
-./proviscript.sh
+./proviscript.sh install
 ```
 
 That's it. Proviscript will install packages which defined in `install` section in `config.yml`
@@ -35,13 +35,6 @@ That's it. Proviscript will install packages which defined in `install` section 
 
 [Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget. 
 
-Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
-
-Example (Install MariaDB 10.2)
-```shell
-./mariadb.sh --version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
-```
-
 | Package name  | Supported versions | Vagrant box |
 |---|---|---|
 |  Nginx | **stable: 1.14**<br />mainline: 1.13.12 | ubuntu/xenial64 | 
@@ -49,6 +42,20 @@ Example (Install MariaDB 10.2)
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
 |  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
+
+Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
+
+### Examples
+
+#### MariaDB
+```shell
+./mariadb.sh --version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
+```
+
+#### Nginx
+```shell
+./nginx.sh
+```
 
 ### Vargrant Provisioning
 
