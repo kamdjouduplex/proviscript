@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Redis you want to install?
-#-                         Accept vaule: latest
+#-                         Accept vaule: latest, default
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
@@ -168,6 +168,7 @@ echo
 #================================================================
 # Part 4. Core
 #================================================================
+sudo ${_APT} update
 
 if [ "${_APT}" == "aptitude" ]; then
     # Check if aptitude installed or not.
