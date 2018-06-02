@@ -41,6 +41,7 @@ That's it. Proviscript will install packages which defined in `install` section 
 |---|---|---|
 |  Nginx | **stable: 1.14**<br />mainline: 1.13.12 | ubuntu/xenial64 | 
 |  MariaDB |  **10.2** | ubuntu/xenial64 |
+|  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
 |  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
