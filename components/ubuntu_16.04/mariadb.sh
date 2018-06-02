@@ -17,7 +17,7 @@
 #-    -ru ?, --remote-user=?        Remote user.
 #-    -rp ?, --remote-password=?    Remote user's password.
 #-    -v ?, --version=?             Which version of MariaDB you want to install?
-#-                                  Accept vaule: version number
+#-                                  Accept vaule: latest, default
 #-    -h, --help                    Print this help.
 #-    -i, --info                    Print script information.
 #-    --aptitude                    Use aptitude instead of apt-get as package manager
@@ -29,7 +29,7 @@
 #+
 #+ IMPLEMENTATION:
 #+
-#+    version    1.01
+#+    version    1.02
 #+    copyright  https://github.com/Proviscript/
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
@@ -38,6 +38,7 @@
 #+
 #+    2018/05/19 terrylinooo First commit.
 #+    2018/05/20 terrylinooo Add arguments, see mariradb.sh -h
+#+    2018/06/02 terrylinooo Redefine version value: latest, default
 #+
 #================================================================
 
@@ -51,7 +52,7 @@ os_version="16.04"
 package_name="MariaDB"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
-package_version="10.2"
+package_version="latest"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _APT="apt-get"
@@ -254,6 +255,7 @@ echo
 #================================================================
 # Part 4. Core
 #================================================================
+sudo ${_APT} update
 
 if [ "${_APT}" == "aptitude" ]; then
     # Check if aptitude installed or not.
@@ -276,33 +278,44 @@ if [ "${is_mariadb_installed}" == "install ok installed" ]; then
     exit 2
 fi
 
-# Check if software-properties-common installed or not.
-is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
-
-# Check if add-apt-repository command is available to use or not.
-if [ "${is_add_apt_repository}" == "" ]; then
-    func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
-    func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
-    sudo ${_APT} install -y software-properties-common
+# Add repository for Nginx.
+if [ "${package_version}" == "latest" ]; then
+    version_code = "10.2"
+else
+    version_code = "10.0"
 fi
 
-# Add repository for MariaDB.
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository --yes "deb [arch=amd64,i386,ppc64el] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${package_version}/ubuntu xenial main"
+if [ "${package_version}" == "latest" ]; then
+    # Check if software-properties-common installed or not.
+    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
-# Update repository for MariaDB. 
-sudo ${_APT} update
+    # Check if add-apt-repository command is available to use or not.
+    if [ "${is_add_apt_repository}" == "" ]; then
+        func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
+        func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
+        sudo ${_APT} install -y software-properties-common
+    fi
+
+    # Add repository for MariaDB.
+    sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+    sudo add-apt-repository --yes "deb [arch=amd64,i386,ppc64el] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${version_code}/ubuntu xenial main"
+
+    # Update repository for MariaDB. 
+    sudo ${_APT} update
+fi
 
 # Install MariaDB without password prompt.
 sudo ${_APT} install -y debconf-utils
-sudo export DEBIAN_FRONTEND=noninteractive
-sudo debconf-set-selections <<< "maria-server-${package_version} mysql-server/root_password password DefaultPass"
-sudo debconf-set-selections <<< "maria-server-${package_version} mysql-server/root_password_again password DefaultPass"
+export DEBIAN_FRONTEND=noninteractive
+sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_password password ${mysql_root_password}"
+sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_password_again password ${mysql_root_password}"
 sudo ${_APT} purge -y debconf-utils
 
 # Install MariaDB server
 func_proviscript_msg info "Proceeding to install mariadb-server..."
-sudo ${_APT} install -y mariadb-server
+sudo -E ${_APT} install -y mariadb-server
+
+unset DEBIAN_FRONTEND
 
 # To Enable MariaDB server in boot.
 func_proviscript_msg info "Proceeding to enable service mariadb-server in boot."
@@ -314,10 +327,11 @@ sudo systemctl enable mariadb
 # 2) Disallow root login remotely.
 # 3) Remove anonymous users.
 # 4) Remove test database and access to it.
+
+# UPDATE mysql.user SET Password=PASSWORD('${mysql_root_password}') WHERE User='root';
 if [ "${mysql_secure}" == "y" ]; then
     func_proviscript_msg info "Proceeding to secure mysql installation..."
-    sudo mysql -uroot -pDefaultPass << EOF
-        UPDATE mysql.user SET Password=PASSWORD('${mysql_root_password}') WHERE User='root';
+    sudo mysql -uroot -p${mysql_root_password} << EOF
         DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
         DELETE FROM mysql.user WHERE User='';
         DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
@@ -327,7 +341,7 @@ fi
 
 # This is an option,If you need remote access the MySQL server
 # Allow remote access.
-if [ "${mysql_remote_access}" == "y" ]; then
+if [ "${mysql_remote}" == "y" ]; then
     func_proviscript_msg info "Proceeding to modify /etc/mysql/my.cnf => bind-address = 0.0.0.0"
     sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 

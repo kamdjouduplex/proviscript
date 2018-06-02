@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Nginx you want to install?
-#-                         Accept vaule: stable, mainline
+#-                         Accept vaule: latest, mainline, default
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
@@ -23,7 +23,7 @@
 #+
 #+ IMPLEMENTATION:
 #+
-#+    version    1.01
+#+    version    1.02
 #+    copyright  https://github.com/Proviscript/
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
@@ -32,6 +32,7 @@
 #+
 #+    2018/05/19 terrylinooo First commit.
 #+    2018/05/20 terrylinooo Add arguments, see nginx.sh -h
+#+    2018/06/02 terrylinooo Redefine version value: latest, mainline, default
 #+
 #================================================================
 
@@ -48,7 +49,7 @@ package_name="Nginx"
 _APT="apt-get"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
-package_version="stable"
+package_version="latest"
 
 #================================================================
 # Part 2. Option (DO NOT MODIFY)
@@ -163,13 +164,14 @@ echo
 echo "----------------------------------------------------------------------------------";
 echo " @os: ${os_name} ${os_version}                                                    ";
 echo " @package: ${package_name}                                                        ";
-echo " @version: ${package_version} (latest)                                            ";
+echo " @version: ${package_version}                                                     ";
 echo "----------------------------------------------------------------------------------";
 echo
 
 #================================================================
 # Part 4. Core
 #================================================================
+sudo ${_APT} update
 
 if [ "${_APT}" == "aptitude" ]; then
     # Check if aptitude installed or not.
@@ -192,21 +194,30 @@ if [ "${is_nginx_installed}" == "install ok installed" ]; then
     exit 2
 fi
 
-# Check if software-properties-common installed or not.
-is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
-
-# Check if add-apt-repository command is available to use or not.
-if [ "${is_add_apt_repository}" == "" ]; then
-    func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
-    func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
-    sudo ${_APT} install -y software-properties-common
+# Add repository for Nginx.
+if [ "${package_version}" == "latest" ]; then
+    version_code = "stable"
+elif [ "${package_version}" == "mainline" ]; then
+    version_code = "mainline"
+else [ "${package_version}" == "default" ]; then
+    version_code = "default"
 fi
 
-# Add repository for Nginx.
-sudo add-apt-repository --yes ppa:nginx/${package_version}
+if [ "${version_code}" != "default" ]; then
+    # Check if software-properties-common installed or not.
+    is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 
-# Update repository for Nginx. 
-sudo ${_APT} update
+    # Check if add-apt-repository command is available to use or not.
+    if [ "${is_add_apt_repository}" == "" ]; then
+        func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
+        func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
+        sudo ${_APT} install -y software-properties-common
+    fi
+
+    sudo add-apt-repository --yes ppa:nginx/${version_code}
+    # Update repository for Nginx. 
+    sudo ${_APT} update
+fi
 
 # Install Nginx
 func_proviscript_msg info "Proceeding to install nginx server."
