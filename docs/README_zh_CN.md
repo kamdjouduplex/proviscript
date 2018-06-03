@@ -2,7 +2,7 @@
 
 Document Transations: [English](./README_en_US.md) | [繁體中文](./README_zh_TW.md) | [简体中文](./README_zh_CN.md)
 
-Proviscript字面上意思源自** Provi ** sioning Shell ** Script ** s，（预装设置命令脚本）为的是化繁为简，一只指令就能进行静默安装各种在Linux服务器上受欢迎的软体套件。连看文件依照步骤安装都懒，所以写成Proviscript，才是又宅又懒工程师的本色XD
+Proviscript字面上意思源自 **Provi**sioning Shell **Script**s，（预装设置命令脚本）为的是化繁为简，一只指令就能进行静默安装各种在Linux服务器上受欢迎的软体套件。连看文件依照步骤安装都懒，所以写成Proviscript，才是又宅又懒工程师的本色XD
 
 英文文档不会开玩笑，因为本人英文只有小学水准，不知道怎么写进去。如果有好的翻译欢迎提交^^。话不多说，直接往下看吧。
 
