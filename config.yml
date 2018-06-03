@@ -16,15 +16,18 @@ config:
     #--------------------------------#
     # Apache server                  #
     #---------+----------------------#
-    # version | latest | default     #
-     #---------+----------------------#
+    # version | latest: 2.4.33       #
+    #         | default: 2.4.18      #
+    #---------+----------------------#
     apache:
         name: apache
         version: latest
     #--------------------------------#
     # Nginx                          #
     #---------+----------------------#
-    # version | stable, mainline     #
+    # version | latest: 1.14         #
+    #         | mainline: 1.13.12    #
+    #         | default: 1.10.3      #
     #---------+----------------------#
     nginx:
         name: nginx
@@ -77,24 +80,45 @@ config:
     #--------------------------------#
     # Redis                          #
     #---------+----------------------#
-    # version | latest | default     #
+    # version | latest: 4.0.9        #
+    #         | default: 3.0.6       #
     #---------+----------------------#
     redis:
         name: redis
         version: latest
-    #--------------------------------#
-    # MariaDB                        #
-    #-----------------+--------------#
-    # version         | 10.2         #
-    # password        | *            #
-    # secure          | y, n         #
-    # remote          | y, n         #
-    # remote_user     | *            #
-    # remote_password | *            #
-    #-----------------+--------------#
+    #---------------------------------#
+    # MariaDB                         #
+    #-----------------+---------------#
+    # version         | latest: 10.2  #
+    #                 | default: 10.0 #
+    # password        | *             #
+    # secure          | y, n          #
+    # remote          | y, n          #
+    # remote_user     | *             #
+    # remote_password | *             #
+    #-----------------+---------------#
     mariadb:
         name: mariadb
-        version: 10.2
+        version: latest
+        password: 12345678
+        secure: y
+        remote: y
+        remote_user: test_user
+        remote_password: 12345678
+    #---------------------------------#
+    # MySQL                         #
+    #-----------------+---------------#
+    # version         | latest: 8.0   #
+    #                 | default: 5.7  #
+    # password        | *             #
+    # secure          | y, n          #
+    # remote          | y, n          #
+    # remote_user     | *             #
+    # remote_password | *             #
+    #-----------------+---------------#
+    mysql:
+        name: mysql
+        version: latest
         password: 12345678
         secure: y
         remote: y
