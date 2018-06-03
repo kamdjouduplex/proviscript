@@ -8,8 +8,9 @@ Ubuntu 16.04 LTS (Xenial Xerus)
 
 | Package name  | Supported versions | Vagrant box |
 |---|---|---|
-|  Nginx | **stable: 1.14**<br />mainline: 1.13.12 | ubuntu/xenial64 | 
-|  MariaDB |  **10.2** | ubuntu/xenial64 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.3 | ubuntu/xenial64 | 
+|  MariaDB |  **latest: 10.2**<br />default: 10.2 | ubuntu/xenial64 |
+|  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
 |  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
@@ -44,7 +45,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell" do |s|
     s.path = "https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh"
     s.privileged: "false"
-    s.args = ["--version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678"]
+    s.args = ["--version=latest --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678"]
   end
 end
 ```
@@ -58,7 +59,7 @@ wget https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 chmod 755 ./mariadb.sh
 ```
 ```shell
-./mariadb.sh --version=10.2 --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
+./mariadb.sh --version=latest --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
 
 ---
@@ -78,7 +79,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Nginx you want to install?
-                         Accept vaule: stable, mainline
+                         Accept vaule: stable, mainline, default
                          
     -h, --help           Print this help.
     -i, --info           Print script information.
@@ -101,7 +102,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 ```
  SYNOPSIS
 
-    mariadb.sh [-h] [-p [password]] [-s [y|n]] [...]
+    mysql.sh [-h] [-p [password]] [-s [y|n]] [...]
 
  OPTIONS
 
@@ -113,7 +114,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MariaDB you want to install?
-                                  Accept vaule: version number
+                                  Accept vaule: latest, default
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
@@ -121,10 +122,45 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 
  EXAMPLES
 
-    $ ./mariadb.sh -v 10.2 -s y -r y -ru test_user -rp 12345678
-    $ ./mariadb.sh --version=10.2 --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
+    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
+
+### MySQL
+
+Download:
+https://cdn.proviscript.sh/components/ubuntu_16.04/mysql.sh
+
+
+```
+ SYNOPSIS
+
+    mysql.sh [-h] [-p [password]] [-s [y|n]] [...]
+
+ OPTIONS
+
+    -p ?, --password=?            Set mysql root password.
+    -s ?, --secure=?              Enable mysql secure configuration.
+                                  Accept vaule: y, n
+    -r ?, --remote=?              Enable access mysql remotely.
+                                  Accept vaule: y, n
+    -ru ?, --remote-user=?        Remote user.
+    -rp ?, --remote-password=?    Remote user's password.
+    -v ?, --version=?             Which version of MySQL you want to install?
+                                  Accept vaule: latest, default
+    -h, --help                    Print this help.
+    -i, --info                    Print script information.
+
+    --aptitude           Use aptitude instead of apt-get as package manager
+
+ EXAMPLES
+
+    $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
+    $ ./mysql.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+
+```
+
 ### PHP-FPM
 
 Download:
