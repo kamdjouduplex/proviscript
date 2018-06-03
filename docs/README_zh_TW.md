@@ -1,6 +1,6 @@
 # proviscript.sh
 
-Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/README_zh_TW.md) | [简体中文](./docs/README_zh_CN.md)
+Document Transations: [English](./README_en_US.md) | [繁體中文](./README_zh_TW.md) | [简体中文](./README_zh_CN.md)
 
 Proviscript 字面上意思源自 **Provi**sioning Shell **Script**s, (預裝設置命令腳本) 為的是化繁為簡、一只指令就能進行靜默安裝各種在 Linux 伺服器上受歡迎的軟體套件。連看文件依照步驟安裝都懶，所以寫成 Proviscript，才是又宅又懶工程師的本色 XD
 
@@ -296,7 +296,7 @@ chmod 755 ./mariadb.sh
 ./mariadb.sh --version=latest --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
 
-##　作者
+## 作者
 
 拜訪作者:
 https://github.com/Proviscript/proviscript/graphs/contributors
