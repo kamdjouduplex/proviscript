@@ -24,8 +24,8 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./mariadb.sh -v 10.2 -s y -r y -ru test_user -rp 12345678
-#-    $ ./mariadb.sh --version=10.2 --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#-    $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
+#-    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+

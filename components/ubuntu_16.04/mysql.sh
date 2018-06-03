@@ -5,7 +5,7 @@
 #-
 #- SYNOPSIS
 #-
-#-    mariadb.sh [-h] [-p [password]] [-s [y|n]] [...]
+#-    mysql.sh [-h] [-p [password]] [-s [y|n]] [...]
 #-
 #- OPTIONS
 #-
@@ -24,8 +24,8 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./mysql.sh -v 10.2 -s y -r y -ru test_user -rp 12345678
-#-    $ ./mysql.sh --version=10.2 --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#-    $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
+#-    $ ./mysql.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+
