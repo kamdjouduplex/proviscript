@@ -2,60 +2,61 @@
 
 Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/README_zh_TW.md) | [简体中文](./docs/README_zh_CN.md)
 
-Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages for Linux servers.
+Proviscript 字面上意思源自 **Provi**sioning Shell **Script**s, (預裝設置命令腳本) 為的是化繁為簡、一只指令就能進行靜默安裝各種在 Linux 伺服器上受歡迎的軟體套件。連看文件依照步驟安裝都懶，所以寫成 Proviscript，才是又宅又懶工程師的本色 XD
+
+英文文檔不會開玩笑，因為本人英文只有小學水準，不知道怎寫進去。如果有好的翻譯歡迎 commit ^^。話不多說，直接往下看吧。
+
+目前只支援 Ubuntu 16.04，不久後會把各 Linux 發行版都做進來，想知道進度就 Watch，喜歡就 Star，想貢獻代碼就 Folk 一份，切換到 development 分支發 pull request 給我吧！
 
 ![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.pngg)
 
-Document is currently under construction.
+快速開始: https://cdn.proviscript.sh/
 
-Coming soon.
+## 如何使用
 
-Quick start: https://cdn.proviscript.sh/
-
-
-
-## How to use proviscript
-
-#### Download
+#### 下載
 ```
 wget https://cdn.proviscript.sh/proviscript.tar.gz
 tar -zxvf proviscript.tar.gz
 cd proviscript-latest
 ```
-#### Configure
+#### 設定
 
-Edit `config.yml` to see what packages you want to install.
+編輯 `config.yml` 查看要安裝的套件
 ```
 vi config.yml
 ```
-#### Run
+#### 執行
 ```
 ./proviscript.sh install
 ```
 
-That's it. Proviscript will install packages which defined in `install` section in `config.yml`
+就只有這樣。Proviscript 會安裝在 `config.yml` 中有被設定在 `install` 區塊內的套件。
 
-## Components
+## 組件
 
-[Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget. 
+[Proviscript 組件](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) 是經過測試的命令腳本，幫你在安裝時可以設後不理。然後就裝好了。
 
-| Package name  | Supported versions | Tested Vagrant box |
+| 套件名稱  | 支援版本 | 測試的 Vagrant 盒子 |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default | ubuntu/xenial64 | 
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.3 | ubuntu/xenial64 | 
 |  MariaDB |  **latest: 10.2**<br />default: 10.2 | ubuntu/xenial64 |
 |  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
 |  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
 
-Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
+每一支組件腳本可以獨立執行。獨立執行模式的方法很簡單，切換到 `components/ubuntu_16.04`　然後執行腳本安裝套件，看以下的使用範例。
 
 ---
 
 ### Nginx
 
-Download
+下載
+
 https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh
+
+手冊
 
 ```
  SYNOPSIS
@@ -81,11 +82,12 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh
 
 ### MariaDB
 
-Download
+下載
+
 https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
 
+手冊
 
-Manual
 ```
  SYNOPSIS
 
@@ -116,14 +118,12 @@ Manual
 
 ### MySQL
 
-Download
+下載
+
 https://cdn.proviscript.sh/components/ubuntu_16.04/mysql.sh
 
-Example
-```shell
-./mariadb.sh --version=default --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
-```
-Manual:
+手冊
+
 ```
  SYNOPSIS
 
@@ -154,10 +154,12 @@ Manual:
 
 ### PHP-FPM
 
-Download
+下載
+
 https://cdn.proviscript.sh/components/ubuntu_16.04/php-fpm.sh
 
-Manual
+手冊
+
 ```
  SYNOPSIS
 
@@ -185,8 +187,11 @@ Manual
 
 ### Apache
 
-Download:
+下載
+
 https://cdn.proviscript.sh/components/ubuntu_16.04/apache.sh
+
+手冊
 
 ```
  SYNOPSIS
@@ -211,8 +216,11 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/apache.sh
 
 ### Redis
 
-Download:
+下載
+
 https://cdn.proviscript.sh/components/ubuntu_16.04/redis.sh
+
+手冊
 
 ```
  SYNOPSIS
@@ -235,13 +243,14 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/redis.sh
 
 ```
 
-More component scripts will be added..
+更多組件會陸續加入...
 
 
 
-### Vargrant Provisioning
+### Vargrant 預裝
 
-It's highly recommended to use Proviscript's CDN service to quick provison your Vagrant machine.
+強烈建議使用 Proviscript 的 CDN 服務，快速部屬您的 Vargeant 機器。
+
 
 ```shell
 Vagrant.configure("2") do |config|
@@ -256,7 +265,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-With script arguments:
+帶參數:
 
 ```shell
 Vagrant.configure("2") do |config|
@@ -272,9 +281,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-### Install a package
+### 安裝一個套件
 
-Let's take MariaDB as an example.
+在此我們用 MariaDB 當作範例。
+
 
 ```shell
 wget https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
@@ -286,12 +296,12 @@ chmod 755 ./mariadb.sh
 ./mariadb.sh --version=latest --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
 
-## Authors
+##　作者
 
-Meet the authors:
+拜訪作者:
 https://github.com/Proviscript/proviscript/graphs/contributors
 
-## License
+## 授權
 
 MIT
 
