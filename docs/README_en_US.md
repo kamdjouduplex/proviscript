@@ -1,6 +1,6 @@
 # proviscript.sh
 
-Document Transations: [English](./README_en_US.md) | [繁體中文](.README_zh_TW.md) | [简体中文](./README_zh_CN.md)
+Document Transations: [English](./README_en_US.md) | [繁體中文](./README_zh_TW.md) | [简体中文](./README_zh_CN.md)
 
 Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages for Linux servers.
 
