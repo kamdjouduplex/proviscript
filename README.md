@@ -39,14 +39,27 @@ That's it. Proviscript will install packages which defined in `install` section 
 
 [Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget. 
 
+Ubuntu 16.04 LTS
+
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
 |  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default | ubuntu/xenial64 | 
-|  MariaDB |  **latest: 10.2**<br />default: 10.2 | ubuntu/xenial64 |
+|  MariaDB |  **latest: 10.3**<br />default: 10.0 | ubuntu/xenial64 |
 |  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
 |  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
+
+Ubuntu 18.04 LTS
+
+| Package name  | Supported versions | Tested Vagrant box |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.14 | ubuntu/bionic64 | 
+|  MariaDB |  **latest: 10.3**<br />default: 10.1.29 | ubuntu/bionic64 |
+|  MySQL |  **latest: 8.0**<br />default: 5.7.22 | ubuntu/bionic64 |
+|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/bionic64 |
+|  Apache |  **latest: 2.4.33**<br />default: 2.4.29 | ubuntu/bionic64 |
+|  Redis |  **latest: 4.0.9**<br />default: 4.0.9 | ubuntu/bionic64 |
 
 Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
 

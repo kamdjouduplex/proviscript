@@ -37,6 +37,8 @@ vi config.yml
 
 [Proviscript 組件](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) 是經過測試的命令腳本，幫你在安裝時可以設後不理。然後就裝好了。
 
+Ubuntu 16.04 LTS
+
 | 套件名稱  | 支援版本 | 測試的 Vagrant 盒子 |
 |---|---|---|
 |  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.3 | ubuntu/xenial64 | 
@@ -45,6 +47,17 @@ vi config.yml
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
 |  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
+
+Ubuntu 18.04 LTS
+
+| Package name  | Supported versions | Tested Vagrant box |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.14 | ubuntu/bionic64 | 
+|  MariaDB |  **latest: 10.2**<br />default: 10.1.29 | ubuntu/bionic64 |
+|  MySQL |  **latest: 8.0**<br />default: 5.7.22 | ubuntu/bionic64 |
+|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/bionic64 |
+|  Apache |  **latest: 2.4.33**<br />default: 2.4.29 | ubuntu/bionic64 |
+|  Redis |  **latest: 4.0.9**<br />default: 4.0.9 | ubuntu/bionic64 |
 
 每一支組件腳本可以獨立執行。獨立執行模式的方法很簡單，切換到 `components/ubuntu_16.04`　然後執行腳本安裝套件，看以下的使用範例。
 
