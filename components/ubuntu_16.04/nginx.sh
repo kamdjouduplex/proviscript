@@ -196,11 +196,11 @@ fi
 
 # Add repository for Nginx.
 if [ "${package_version}" == "latest" ]; then
-    version_code = "stable"
+    version_code="stable"
 elif [ "${package_version}" == "mainline" ]; then
-    version_code = "mainline"
-else [ "${package_version}" == "default" ]; then
-    version_code = "default"
+    version_code="mainline"
+elif [ "${package_version}" == "default" ]; then
+    version_code="default"
 fi
 
 if [ "${version_code}" != "default" ]; then

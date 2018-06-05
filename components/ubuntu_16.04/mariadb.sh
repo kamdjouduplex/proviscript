@@ -280,9 +280,9 @@ fi
 
 # Add repository for Nginx.
 if [ "${package_version}" == "latest" ]; then
-    version_code = "10.3"
+    version_code="10.3"
 else
-    version_code = "10.0"
+    version_code="10.0"
 fi
 
 if [ "${package_version}" == "latest" ]; then
