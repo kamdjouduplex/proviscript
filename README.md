@@ -307,7 +307,7 @@ chmod 755 ./mariadb.sh
 4. After code is being reviewed, the code will be merged to the master. Everything on master will be part of the next major release.
 
 ### Gitflow
-![Contributing to Proviscript](https://i.imgur.com/3JEsaaI.png)
+![Contributing to Proviscript](https://i.imgur.com/yjJGTaA.png)
 
 ## Authors
 
