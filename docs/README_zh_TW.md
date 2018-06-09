@@ -6,7 +6,7 @@ Proviscript 字面上意思源自 **Provi**sioning Shell **Script**s, (預裝設
 
 ## 支援的作業系統
 
-| 作業系統 | - |  套件 | 测试的 Vagrant box 
+| 作業系統 | - |  套件 | 測試的 Vagrant box 
 |---|---| --- | --- |
 |  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) |  | centos/6
 |  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/7
