@@ -13,7 +13,6 @@
 #-                         Accept vaule: latest, mainline, default
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
-#-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
@@ -186,25 +185,24 @@ if [ "${package_version}" == "default" ]; then
     is_epel_installed=$(yum list installed epel-release 2>&1 | grep -o "No matching")
     if [ "${is_epel_installed}" == "No matching" ]; then
         func_proviscript_msg info "CentOS 7 EPEL repository is not installed, installing..."
-        sudo yum install epel-release
+        sudo yum install -y epel-release
     fi
 fi
 if [ "${package_version}" == "latest" ]; then
-    cat <<- "EOF" > /etc/yum.repos.d/nginx.repo
-    [nginx]
-    name=nginx repo
-    baseurl=http://nginx.org/packages/centos/7/$basearch/
-    gpgcheck=0
-    enabled=1
-EOF
+    sudo rm -rf /etc/yum.repos.d/nginx.repo
+    sudo bash -c "echo '[nginx]' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'name=nginx repo' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'baseurl=http://nginx.org/packages/centos/7/\$basearch/' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'gpgcheck=0' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/nginx.repo"
 fi
 if [ "${package_version}" == "mainline" ]; then
-    cat <<- "EOF" > /etc/yum.repos.d/nginx.repo
-    [nginx]
-    name=nginx repo
-    baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
-    gpgcheck=0
-    enabled=1
+    sudo rm -rf /etc/yum.repos.d/nginx.repo
+    sudo bash -c "echo '[nginx]' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'name=nginx repo' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'baseurl=http://nginx.org/packages/mainline/centos/7/\$basearch/' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'gpgcheck=0' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/nginx.repo"
 EOF
 fi
 
@@ -219,9 +217,21 @@ sudo systemctl enable nginx
 func_proviscript_msg info "Restart service nginx."
 sudo service nginx restart
 
+# Check if FirewallD is enable or not
+is_firewalld_active=$(systemctl status firewalld 2>&1 | grep -o "Active: active")
+
+if [ "${is_firewalld_active}" == "Active: active" ]; then
+    func_proviscript_msg notice "Allow HTTP traffic to Nginx in FirewallD."
+    sudo firewall-cmd --permanent --zone=public --add-service=http 
+    func_proviscript_msg notice "Allow HTTPS traffic to Nginx in FirewallD."
+    sudo firewall-cmd --permanent --zone=public --add-service=https
+    func_proviscript_msg notice "Reload FirewallD to take effect."
+    sudo firewall-cmd --reload
+fi
+
 nginx_version="$(nginx -v 2>&1)"
 
-if [[ "${nginx_version}" = *"nginx"* ]]; then
+if [[ "${nginx_version}" = *"nginx"* && "${nginx_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(nginx -v 2>&1)"
 else
