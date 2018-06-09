@@ -6,14 +6,14 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 
 ## Supported operating systems
 
-| Operating system  | - |  Supported packages |
-|---|---| -- |
-|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | 
-|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx`
+| Operating system  | - |  Supported packages | Tested Vagrant box 
+|---|---| --- | --- |
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) |  | centos/6
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/7
 |  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) |
 |  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) |
-|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
-|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
+|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/xenial64
+|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/bionic64
 
 More packages will be added in Proviscript project, please watch us to get the latest updates.
 

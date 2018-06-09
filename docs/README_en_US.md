@@ -2,17 +2,29 @@
 
 Document Transations: [English](./README_en_US.md) | [繁體中文](./README_zh_TW.md) | [简体中文](./README_zh_CN.md)
 
-Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages for Linux servers.
+Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (*always the latest version*) for Linux servers.
 
-![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.pngg)
+## Supported operating systems
 
-Document is currently under construction.
+| Operating system  | - |  Supported packages | Tested Vagrant box 
+|---|---| --- | --- |
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) |  | centos/6
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/7
+|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) |
+|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) |
+|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/xenial64
+|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/bionic64
 
-Coming soon.
-
-Quick start: https://cdn.proviscript.sh/
+More packages will be added in Proviscript project, please watch us to get the latest updates.
 
 ## How to use proviscript
+
+- Launcher mode
+- Standalone mode
+
+![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.png)
+
+### Launcher mode 
 
 #### Download
 ```
@@ -32,6 +44,10 @@ vi config.yml
 ```
 
 That's it. Proviscript will install packages which defined in `install` section in `config.yml`
+
+### Standalone mode
+
+See `Components` section.
 
 ## Components
 
@@ -250,7 +266,7 @@ More component scripts will be added..
 
 
 
-### Vagrant Provisioning
+### Vargrant Provisioning
 
 It's highly recommended to use Proviscript's CDN service to quick provison your Vagrant machine.
 
@@ -296,6 +312,16 @@ chmod 755 ./mariadb.sh
 ```shell
 ./mariadb.sh --version=latest --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
+
+## Contributing Code
+
+1. Fork a repo from master branch.
+2. Use the coding style outlined in the [bash coding style guide](https://github.com/Proviscript/bash-coding-style-guide).
+3. Make pull requests to the development branch.
+4. After code is being reviewed, the code will be merged to the master. Everything on master will be part of the next major release.
+
+### Gitflow
+![Contributing to Proviscript](https://i.imgur.com/yjJGTaA.png)
 
 ## Authors
 

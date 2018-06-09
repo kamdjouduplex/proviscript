@@ -2,17 +2,27 @@
 
 Document Transations: [English](./README_en_US.md) | [繁體中文](./README_zh_TW.md) | [简体中文](./README_zh_CN.md)
 
-Proviscript字面上意思源自 **Provi**sioning Shell **Script**s，（预装设置命令脚本）为的是化繁为简，一只指令就能进行静默安装各种在Linux服务器上受欢迎的软体套件。连看文件依照步骤安装都懒，所以写成Proviscript，才是又宅又懒工程师的本色XD
+Proviscript字面上意思源自 **Provi**sioning Shell **Script**s，（预装设置命令脚本）为的是化繁为简，一只指令就能进行静默安装各种在Linux服务器上受欢迎的软体套件。
 
-英文文档不会开玩笑，因为本人英文只有小学水准，不知道怎么写进去。如果有好的翻译欢迎提交^^。话不多说，直接往下看吧。
+## 支持的作业系统
 
-目前只支援Ubuntu 16.04，不久后会把各Linux Linux发行版都做进来，想知道进度就Watch，喜欢就Star，想贡献代码就Folk一份，切换到开发分支发pull request给我吧！
+| 作业系统 | - |  套件 | 测试的 Vagrant box 
+|---|---| --- | --- |
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) |  | centos/6
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/7
+|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) |
+|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) |
+|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/xenial64
+|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/bionic64
 
-![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.pngg)
-
-快速开始: https://cdn.proviscript.sh/
+更多的软件包将被添加到 Proviscript 项目中，请订阅我们获取最新的更新。
 
 ## 如何使用
+
+- 启动器模式
+- 独立模式
+
+![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.png)
 
 #### 下载
 ```
