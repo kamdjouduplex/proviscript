@@ -2,7 +2,7 @@
 
 Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/README_zh_TW.md) | [简体中文](./docs/README_zh_CN.md)
 
-Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages for Linux servers.
+Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (always the latest version) for Linux servers.
 
 ![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.pngg)
 
@@ -12,7 +12,13 @@ Coming soon.
 
 Quick start: https://cdn.proviscript.sh/
 
+## Supported Operating Systems
 
+| Operating system  | Supported packages |
+|---|---|
+|  CentOS 7 | Nginx
+|  Ubuntu 16.04 | Apache,MairaDB, MySQL, Nginx, PHP-FPM, Redis
+|  Ubuntu 18.04 | Apache,MairaDB, MySQL, Nginx, PHP-FPM, Redis
 
 ## How to use proviscript
 

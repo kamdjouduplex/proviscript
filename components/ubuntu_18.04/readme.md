@@ -22,7 +22,7 @@ It's highly recommended to use Proviscript's CDN service to quick provison your 
 ```shell
 Vagrant.configure("2") do |config|
   
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
   config.vm.box_check_update = false
 
   config.vm.provision "shell", path: "https://cdn.proviscript.sh/components/ubuntu_18.04/nginx.sh", privileged: "false"
@@ -37,7 +37,7 @@ With script arguments:
 ```shell
 Vagrant.configure("2") do |config|
   
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
   config.vm.box_check_update = false
 
   config.vm.provision "shell" do |s|
