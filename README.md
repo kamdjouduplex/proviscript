@@ -2,28 +2,32 @@
 
 Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/README_zh_TW.md) | [简体中文](./docs/README_zh_CN.md)
 
-Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (always the latest version) for Linux servers.
+Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (*always the latest version*) for Linux servers.
 
 ## Supported operating systems
 
-| Operating system  | Supported packages |
-|---|---|
-|  CentOS 7 | `Nginx`
-|  Ubuntu 16.04 | `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
-|  Ubuntu 18.04 | `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
+| Operating system  | - |  Supported packages |
+|---|---| -- |
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/jCUL6ux.png) | 
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/jCUL6ux.png) | `Nginx`
+|  Debian 9 | ![Debian Logo](https://i.imgur.com/pMu77Jk.png) |
+|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/gUAsE7M.png) |
+|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/pFTEQ3t.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
+|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/pFTEQ3t.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
+| - | - | <small>(compile and install packages from source code)</small>
+
 
 More packages will be added in Proviscript project, please watch us to get the latest updates.
 
 
-
 ## How to use proviscript
-
-![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.pngg)
 
 - Launcher mode
 - Standalone mode
 
-### Launcher mode
+![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.png)
+
+### Launcher mode 
 
 #### Download
 ```
