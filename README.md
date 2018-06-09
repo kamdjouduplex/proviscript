@@ -8,13 +8,13 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 
 | Operating system  | - |  Supported packages |
 |---|---| -- |
-|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/jCUL6ux.png) | 
-|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/jCUL6ux.png) | `Nginx`
-|  Debian 9 | ![Debian Logo](https://i.imgur.com/pMu77Jk.png) |
-|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/gUAsE7M.png) |
-|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/pFTEQ3t.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
-|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/pFTEQ3t.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
-| - | - | <small>(compile and install packages from source code)</small>
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | 
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx`
+|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) |
+|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) |
+|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
+|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
+| - | - | (compile and install packages from source code)
 
 
 More packages will be added in Proviscript project, please watch us to get the latest updates.
