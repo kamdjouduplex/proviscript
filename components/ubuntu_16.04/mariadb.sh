@@ -34,12 +34,6 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/19 terrylinooo First commit.
-#+    2018/05/20 terrylinooo Add arguments, see mariradb.sh -h
-#+    2018/06/02 terrylinooo Redefine version value: latest, default
-#+
 #================================================================
 
 #================================================================
@@ -360,7 +354,7 @@ sudo service mysql restart
 
 mysql_version="$(mysql -V 2>&1)"
 
-if [[ "${mysql_version}" = *"MariaDB"* ]]; then
+if [[ "${mysql_version}" = *"MariaDB"* && "${mysql_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(mysql -V 2>&1)"
 else

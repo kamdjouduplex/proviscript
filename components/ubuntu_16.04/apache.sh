@@ -28,10 +28,6 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/27 terrylinooo First commit.
-#+
 #================================================================
 
 #================================================================
@@ -223,7 +219,7 @@ sudo service apache2 restart
 
 apache_version="$(apache2 -v 2>&1)"
 
-if [[ "${apache_version}" = *"Apache"* ]]; then
+if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(apache2 -v 2>&1)"
 else

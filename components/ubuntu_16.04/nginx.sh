@@ -232,7 +232,7 @@ sudo service nginx restart
 
 nginx_version="$(nginx -v 2>&1)"
 
-if [[ "${nginx_version}" = *"nginx"* ]]; then
+if [[ "${nginx_version}" = *"nginx"* && "${nginx_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(nginx -v 2>&1)"
 else

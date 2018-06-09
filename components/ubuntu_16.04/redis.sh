@@ -28,10 +28,6 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/26 terrylinooo First commit.
-#+
 #================================================================
 
 #================================================================
@@ -222,7 +218,7 @@ sudo service redis-server restart
 
 redis_version="$(redis-server -v 2>&1)"
 
-if [[ "${redis_version}" = *"Redis"* ]]; then
+if [[ "${redis_version}" = *"Redis"* && "${redis_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(redis-server -v 2>&1)"
 else

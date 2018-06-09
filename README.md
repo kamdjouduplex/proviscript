@@ -14,11 +14,8 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 |  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) |
 |  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
 |  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis`
-| - | - | (compile and install packages from source code)
-
 
 More packages will be added in Proviscript project, please watch us to get the latest updates.
-
 
 ## How to use proviscript
 

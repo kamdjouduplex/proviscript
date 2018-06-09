@@ -28,12 +28,6 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/19 terrylinooo First commit.
-#+    2018/05/20 terrylinooo Add arguments, see nginx.sh -h
-#+    2018/06/02 terrylinooo Redefine version value: latest, mainline, default
-#+
 #================================================================
 
 #================================================================
@@ -232,7 +226,7 @@ sudo service nginx restart
 
 nginx_version="$(nginx -v 2>&1)"
 
-if [[ "${nginx_version}" = *"nginx"* ]]; then
+if [[ "${nginx_version}" = *"nginx"* && "${nginx_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(nginx -v 2>&1)"
 else

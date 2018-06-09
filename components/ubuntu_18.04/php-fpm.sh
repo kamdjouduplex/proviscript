@@ -31,11 +31,6 @@
 #+    copyright  https://github.com/Proviscript/
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
-#+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/19 terrylinooo First commit.
-#+    2018/05/22 terrylinooo Add arguments, see php-fpm.sh -h
 #+
 #================================================================
 
@@ -290,7 +285,7 @@ sudo service php${package_version}-fpm restart
 
 php_version="$(php -v 2>&1)"
 
-if [[ "${php_version}" = *"PHP"* ]]; then
+if [[ "${php_version}" = *"PHP"* && "${php_version}" != *"command not found"* ]]; then
     func_proviscript_msg success "Installation process is completed."
     func_proviscript_msg success "$(php -v 2>&1)"
 else
