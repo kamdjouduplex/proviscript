@@ -223,10 +223,11 @@ fi
 func_proviscript_msg info "Proceeding to install nginx server."
 sudo ${_APT} install -y nginx
 
-# To Enable Nginx server in boot.
-func_proviscript_msg notice "Enable service nginx in boot."
+# To enable Nginx server in boot.
+func_proviscript_msg info "Enable service nginx in boot."
 sudo systemctl enable nginx
 
+# To restart Nginx service.
 func_proviscript_msg info "Restart service nginx."
 sudo service nginx restart
 

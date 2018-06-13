@@ -347,9 +347,13 @@ if [ "${mysql_remote}" == "y" ]; then
 EOF
 fi
 
+# Start mysql service in boot.
+func_proviscript_msg info "Proceeding to enable service mariadb-server in boot."
+sudo systemctl enable mariadb
+
 # To restart mysql service.
 func_proviscript_msg info "Restart service mariadb-server."
-sudo service mysql restart
+sudo service mariadb restart
 
 mysql_version="$(mysql -V 2>&1)"
 

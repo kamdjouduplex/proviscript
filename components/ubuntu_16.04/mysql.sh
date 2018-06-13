@@ -348,6 +348,10 @@ if [ "${mysql_remote}" == "y" ]; then
 EOF
 fi
 
+# Start mysql service in boot.
+func_proviscript_msg info "Proceeding to enable service mysql-server in boot."
+sudo systemctl enable mysql
+
 # To restart mysql service.
 func_proviscript_msg info "Restart service mysql-server."
 sudo service mysql restart

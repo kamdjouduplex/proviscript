@@ -275,11 +275,11 @@ else
     done
 fi
 
-# To Enable php-fpm in boot.
+# To enable PHP-FPM in boot.
 func_proviscript_msg info "Enable service php${package_version}-fpm in boot."
 sudo systemctl enable php${package_version}-fpm
 
-# To restart php-fpm service.
+# To restart PHP-FPM service.
 func_proviscript_msg info "Restart service php${package_version}-fpm."
 sudo service php${package_version}-fpm restart
 

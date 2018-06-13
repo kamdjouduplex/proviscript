@@ -213,6 +213,7 @@ sudo ${_APT} install -y redis-server
 func_proviscript_msg info "Enable service redis in boot."
 sudo systemctl enable redis-server
 
+# To restart Redis service.
 func_proviscript_msg info "Restart service redis."
 sudo service redis-server restart
 

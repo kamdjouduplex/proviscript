@@ -210,10 +210,11 @@ fi
 func_proviscript_msg info "Proceeding to install apache server."
 sudo ${_APT} install -y apache2
 
-# To Enable Apache server in boot.
-func_proviscript_msg notice "Enable service apache in boot."
+# To enable Apache server in boot.
+func_proviscript_msg info "Enable service apache in boot."
 sudo systemctl enable apache2
 
+# To restart Apache service.
 func_proviscript_msg info "Restart service apache."
 sudo service apache2 restart
 

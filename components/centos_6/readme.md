@@ -6,14 +6,14 @@ CentOS 6
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12 | centos/7 | 
-|  MariaDB |  **latest: 10.3**<br />default:  | centos/7 |
-|  MySQL |  **latest: 8.0**<br />default:  | centos/7 |
-|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | centos/7 |
-|  Apache |  **latest: 2.4.33**<br />default:  | centos/7 |
-|  Redis |  **latest: 4.0.9**<br />default: | centos/7 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.2 | centos/6 | 
+|  MariaDB |  **latest: 10.3**<br />default:  | centos/6 |
+|  MySQL |  **latest: 8.0**<br />default:  | centos/6 |
+|  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | centos/6 |
+|  Apache |  **latest: 2.4.33**<br />default:  | centos/6 |
+|  Redis |  **latest: 4.0.9**<br />default: | centos/6 |
 
-Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/centos_7` and then execute the command below.
+Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/centos_6` and then execute the command below.
 
 ### Vargrant Provisioning
 

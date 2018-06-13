@@ -88,16 +88,6 @@ if [ "$#" -gt 0 ]; then
                 show_script_information
                 exit 1
             ;;
-            # aptitude
-            "--aptitude")
-                _APT="aptitude"
-                shift 1
-            ;;
-            # apt-get
-            "--apt-get")
-                _APT="apt-get"
-                shift 1
-            ;;
             "-"*)
                 echo "Unknown option: ${1}"
                 exit 1
@@ -210,10 +200,11 @@ fi
 func_proviscript_msg info "Proceeding to install nginx server."
 sudo yum install -y nginx
 
-# To Enable Nginx server in boot.
-func_proviscript_msg notice "Enable service nginx in boot."
+# To enable Nginx server in boot.
+func_proviscript_msg info "Enable service nginx in boot."
 sudo systemctl enable nginx
 
+# To restart Nginx service.
 func_proviscript_msg info "Restart service nginx."
 sudo service nginx restart
 
@@ -221,11 +212,11 @@ sudo service nginx restart
 is_firewalld_active=$(systemctl status firewalld 2>&1 | grep -o "Active: active")
 
 if [ "${is_firewalld_active}" == "Active: active" ]; then
-    func_proviscript_msg notice "Allow HTTP traffic to Nginx in FirewallD."
+    func_proviscript_msg info "Allow HTTP traffic to Nginx in FirewallD."
     sudo firewall-cmd --permanent --zone=public --add-service=http 
-    func_proviscript_msg notice "Allow HTTPS traffic to Nginx in FirewallD."
+    func_proviscript_msg info "Allow HTTPS traffic to Nginx in FirewallD."
     sudo firewall-cmd --permanent --zone=public --add-service=https
-    func_proviscript_msg notice "Reload FirewallD to take effect."
+    func_proviscript_msg info "Reload FirewallD to take effect."
     sudo firewall-cmd --reload
 fi
 
