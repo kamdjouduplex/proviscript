@@ -41,6 +41,9 @@ package_name="Nginx"
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="latest"
 
+# Package manager
+_PM="dnf"
+
 #================================================================
 # Part 2. Option (DO NOT MODIFY)
 #================================================================
@@ -152,37 +155,52 @@ echo
 # Part 4. Core
 #================================================================
 
-
 # Check if Nginx has been installed or not.
 func_proviscript_msg info "Checking if nginx is installed, if not, proceed to install it."
 
-is_nginx_installed=$(dnf list installed nginx 2>&1 | grep -o "nginx")
+if [ "${package_version}" == "default" ]; then
+    _PM="dnf"
+fi
+
+if [[ "${package_version}" == "latest" && "${package_version}" == "mainline" ]]; then
+    # Package manager DNF does not have repository to install the latest Nginx.
+    # Therefore forward to YUM.
+    _PM="yum"
+fi
+
+is_nginx_installed=$(${_PM} list installed nginx 2>&1 | grep -o "nginx")
 
 if [ "${is_nginx_installed}" == "nginx" ]; then
     func_proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func_proviscript_msg info "Try \"sudo dnf remove nginx\""
+    func_proviscript_msg info "Try \"sudo ${_PM} remove nginx\""
     exit 2
 fi
 
 # Add repository for Nginx.
-if [ "${package_version}" == "default" ]; then
-    # Nothing to do.. install Nginx 1.12.1
-fi
 if [ "${package_version}" == "latest" ]; then
-
+    sudo rm -rf /etc/yum.repos.d/nginx.repo
+    sudo bash -c "echo '[nginx]' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'name=nginx repo' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'baseurl=http://nginx.org/packages/centos/7/\$basearch/' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'gpgcheck=0' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/nginx.repo"
 fi
 if [ "${package_version}" == "mainline" ]; then
-
+    sudo rm -rf /etc/yum.repos.d/nginx.repo
+    sudo bash -c "echo '[nginx]' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'name=nginx repo' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'baseurl=http://nginx.org/packages/mainline/centos/7/\$basearch/' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'gpgcheck=0' >> /etc/yum.repos.d/nginx.repo"
+    sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/nginx.repo"
 EOF
 fi
 
-# Install Nginx
 func_proviscript_msg info "Proceeding to install nginx server."
-sudo dnf install -y nginx
+sudo ${_PM} install -y nginx
 
 # To enable Nginx server in boot.
 func_proviscript_msg info "Enable service nginx in boot."
-sudo chkconfig nginx on
+sudo systemctl enable nginx.service
 
 # To restart Nginx service.
 func_proviscript_msg info "Restart service nginx."
