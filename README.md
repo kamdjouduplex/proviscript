@@ -9,9 +9,9 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 | Operating system  | - |  Supported packages | Tested Vagrant box 
 |---|---| --- | --- |
 |  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/6
-|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/7
-|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) | `Nginx` | fedora/28-cloud-base
-|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) | - | debian/stretch64
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/7
+|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) | `Nginx` | debian/stretch64
+|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) | `Nginx` - | fedora/28-cloud-base
 |  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/xenial64
 |  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` | ubuntu/bionic64
 
@@ -51,13 +51,38 @@ See `Components` section.
 
 ## Components
 
-[Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget. 
+[Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget.
+
+CentOS 6
+
+| Package name  | Supported versions | Tested Vagrant box |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.2 | centos/6 | 
+
+CentOS 7
+
+| Package name  | Supported versions | Tested Vagrant box |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12 | centos/7 | 
+|  Apache |  **latest: 2.4.33**<br />default: 2.4.6 | centos/7 |
+
+Debian 9
+
+| Package name  | Supported versions | Tested Vagrant box |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: | debian/stretch64 | 
+
+Fedora 28
+
+| Package name  | Supported versions | Tested Vagrant box |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12.1 | fedora/28-cloud-base | 
 
 Ubuntu 16.04 LTS
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default | ubuntu/xenial64 | 
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.3 | ubuntu/xenial64 | 
 |  MariaDB |  **latest: 10.3**<br />default: 10.0 | ubuntu/xenial64 |
 |  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
