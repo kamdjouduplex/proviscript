@@ -49,7 +49,7 @@ package_name="MariaDB"
 package_version="latest"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
-_APT="apt-get"
+_PM="apt-get"
 
 #================================================================
 # Part 2. Option (DO NOT MODIFY)
@@ -146,12 +146,12 @@ if [ "$#" -gt 0 ]; then
             ;;
             # aptitude
             "--aptitude")
-                _APT="aptitude"
+                _PM="aptitude"
                 shift 1
             ;;
             # apt-get
             "--apt-get")
-                _APT="apt-get"
+                _PM="apt-get"
                 shift 1
             ;;
             "-"*)
@@ -249,9 +249,9 @@ echo
 #================================================================
 # Part 4. Core
 #================================================================
-sudo ${_APT} update
+sudo ${_PM} update
 
-if [ "${_APT}" == "aptitude" ]; then
+if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
 
@@ -287,26 +287,26 @@ if [ "${package_version}" == "latest" ]; then
     if [ "${is_add_apt_repository}" == "" ]; then
         func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
         func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
-        sudo ${_APT} install -y software-properties-common
+        sudo ${_PM} install -y software-properties-common
     fi
 
     # Add repository for MariaDB.
     sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
     sudo add-apt-repository --yes "deb [arch=amd64] http://ftp.ubuntu-tw.org/mirror/mariadb/repo/${version_code}/ubuntu bionic main"
     # Update repository for MariaDB. 
-    sudo ${_APT} update
+    sudo ${_PM} update
 fi
 
 # Install MariaDB without password prompt.
-sudo ${_APT} install -y debconf-utils
+sudo ${_PM} install -y debconf-utils
 export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_password password ${mysql_root_password}"
 sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_password_again password ${mysql_root_password}"
-sudo ${_APT} purge -y debconf-utils
+sudo ${_PM} purge -y debconf-utils
 
 # Install MariaDB server
 func_proviscript_msg info "Proceeding to install mariadb-server..."
-sudo -E ${_APT} install -y mariadb-server
+sudo -E ${_PM} install -y mariadb-server
 
 unset DEBIAN_FRONTEND
 

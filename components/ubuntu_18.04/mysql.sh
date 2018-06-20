@@ -49,7 +49,7 @@ package_name="MySQL"
 package_version="latest"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
-_APT="apt-get"
+_PM="apt-get"
 
 #================================================================
 # Part 2. Option (DO NOT MODIFY)
@@ -146,12 +146,12 @@ if [ "$#" -gt 0 ]; then
             ;;
             # aptitude
             "--aptitude")
-                _APT="aptitude"
+                _PM="aptitude"
                 shift 1
             ;;
             # apt-get
             "--apt-get")
-                _APT="apt-get"
+                _PM="apt-get"
                 shift 1
             ;;
             "-"*)
@@ -251,9 +251,9 @@ echo
 # Part 4. Core
 #================================================================
 
-sudo ${_APT} update
+sudo ${_PM} update
 
-if [ "${_APT}" == "aptitude" ]; then
+if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
 
@@ -274,7 +274,7 @@ if [ "${is_mysql_installed}" == "install ok installed" ]; then
 fi
 
 # Install debconf-utils for silent installation.
-sudo ${_APT} install -y debconf-utils
+sudo ${_PM} install -y debconf-utils
 export DEBIAN_FRONTEND="noninteractive"
 
 # Add repository for MySQL
@@ -295,7 +295,7 @@ if [ "${package_version}" == "latest" ]; then
     rm mysql-apt-config_0.8.9-1_all.deb
 
     # Update repository for MySQL. 
-    sudo ${_APT} update
+    sudo ${_PM} update
 fi
 
 sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password ${mysql_root_password}"
@@ -307,10 +307,10 @@ sudo debconf-set-selections <<< "mysql-community-server mysql-server/default-aut
 
 # Install MariaDB server
 func_proviscript_msg info "Proceeding to install mysql-server..."
-sudo -E ${_APT} install -y mysql-server
+sudo -E ${_PM} install -y mysql-server
 
 # Remove debconf-utils because we don't need it anymore.
-sudo ${_APT} purge -y debconf-utils
+sudo ${_PM} purge -y debconf-utils
 unset DEBIAN_FRONTEND
 
 # To Enable MariaDB server in boot.

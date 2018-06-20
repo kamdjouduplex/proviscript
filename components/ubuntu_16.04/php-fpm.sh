@@ -44,7 +44,7 @@ os_version="16.04"
 package_name="PHP-FPM"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
-_APT="apt-get"
+_PM="apt-get"
 
 # Only allow 5.6, 7.0, 7,1, 7.2
 package_version="7.2"
@@ -121,12 +121,12 @@ if [ "$#" -gt 0 ]; then
             ;;
             # aptitude
             "--aptitude")
-                _APT="aptitude"
+                _PM="aptitude"
                 shift 1
             ;;
             # apt-get
             "--apt-get")
-                _APT="apt-get"
+                _PM="apt-get"
                 shift 1
             ;;
             "-"*)
@@ -198,7 +198,7 @@ echo
 #================================================================
 # Part 4. Core
 #================================================================
-sudo ${_APT} update
+sudo ${_PM} update
 
 case  ${package_version} in
     "5.6") ;;           
@@ -212,7 +212,7 @@ case  ${package_version} in
         ;;
 esac
 
-if [ "${_APT}" == "aptitude" ]; then
+if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
 
@@ -229,7 +229,7 @@ is_phpfpm_installed=$(dpkg-query -W --showformat='${Status}\n' php${package_vers
 
 if [ "${is_phpfpm_installed}" == "install ok installed" ]; then
     func_proviscript_msg warning "php${package_version}-fpm is already installed, please remove it before executing this script."
-    func_proviscript_msg info "Try \"sudo ${_APT} purge php${package_version}-fpm\""
+    func_proviscript_msg info "Try \"sudo ${_PM} purge php${package_version}-fpm\""
     exit 2
 fi
 
@@ -240,26 +240,26 @@ is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 if [ "${is_add_apt_repository}" == "" ]; then
     func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
     func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
-    sudo ${_APT} install -y software-properties-common
+    sudo ${_PM} install -y software-properties-common
 fi
 
 # Add repository for PHP.
 sudo add-apt-repository --yes ppa:ondrej/php
 
 # Update repository for PHP.
-sudo ${_APT} update
+sudo ${_PM} update
 
 # Comment out the package you don't want.
 # Default: install them "ALL"
 func_proviscript_msg info "Proceeding to install php${package_version}-fpm ..."
-sudo ${_APT} install -y php${package_version}-fpm
-sudo ${_APT} install -y php-pear
+sudo ${_PM} install -y php${package_version}-fpm
+sudo ${_PM} install -y php-pear
 
 # Install PHP modules
 if [ "${install_modules}" == "ALL" ]; then
     for module in ${php_modules[@]}; do
         func_proviscript_msg info "Proceeding to install PHP module \"${module}\" ..."
-        sudo ${_APT} install -y php${package_version}-${module}
+        sudo ${_PM} install -y php${package_version}-${module}
     done
 else
     # Only install the modules what you want
@@ -270,7 +270,7 @@ else
     for module in ${array_install_modules[@]}; do
         if [[ "${php_modules[@]}" =~ "${module}" ]]; then
             func_proviscript_msg info "Proceeding to install PHP module \"${module}\" ..."
-            sudo ${_APT} install -y php${package_version}-${module}
+            sudo ${_PM} install -y php${package_version}-${module}
         fi
     done
 fi

@@ -40,7 +40,7 @@ os_version="18.04"
 package_name="Apache"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
-_APT="apt-get"
+_PM="apt-get"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="latest"
@@ -88,12 +88,12 @@ if [ "$#" -gt 0 ]; then
             ;;
             # aptitude
             "--aptitude")
-                _APT="aptitude"
+                _PM="aptitude"
                 shift 1
             ;;
             # apt-get
             "--apt-get")
-                _APT="apt-get"
+                _PM="apt-get"
                 shift 1
             ;;
             "-"*)
@@ -166,7 +166,7 @@ echo
 # Part 4. Core
 #================================================================
 
-if [ "${_APT}" == "aptitude" ]; then
+if [ "${_PM}" == "aptitude" ]; then
     # Check if aptitude installed or not.
     is_aptitude=$(which aptitude |  grep "aptitude")
 
@@ -183,7 +183,7 @@ is_apache_installed=$(dpkg-query -W --showformat='${Status}\n' apache | grep "in
 
 if [ "${is_apache_installed}" == "install ok installed" ]; then
     func_proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func_proviscript_msg info "Try \"sudo ${_APT} purge apache2\""
+    func_proviscript_msg info "Try \"sudo ${_PM} purge apache2\""
     exit 2
 fi
 
@@ -196,19 +196,19 @@ if [ "${package_version}" == "latest" ]; then
     if [ "${is_add_apt_repository}" == "" ]; then
         func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
         func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
-        sudo ${_APT} install -y software-properties-common
+        sudo ${_PM} install -y software-properties-common
     fi
 
     # Add repository for Apache.
     sudo add-apt-repository --yes ppa:ondrej/apache2
 
     # Update repository for Apache. 
-    sudo ${_APT} update
+    sudo ${_PM} update
 fi
 
 # Install Apache
 func_proviscript_msg info "Proceeding to install apache server."
-sudo ${_APT} install -y apache2
+sudo ${_PM} install -y apache2
 
 # To enable Apache server in boot.
 func_proviscript_msg info "Enable service apache in boot."
