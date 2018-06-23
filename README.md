@@ -318,8 +318,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell" do |s|
     s.path = "https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh"
-    s.privileged: "false"
-    s.args = ["--version=latest --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678"]
+    s.privileged = "false"
+    s.args = ["--version=latest", "--password=12345678", "--secure=y",  "--remote=y", "--remote-user=testuser", "--remote-password=12345678"]
   end
 end
 ```
