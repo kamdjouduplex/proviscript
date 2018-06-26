@@ -207,6 +207,18 @@ sudo service httpd restart
 # Work with SELinux
 sudo setsebool -P httpd_execmem=1
 
+# Check if FirewallD is enable or not
+is_firewalld_active=$(systemctl status firewalld 2>&1 | grep -o "Active: active")
+
+if [ "${is_firewalld_active}" == "Active: active" ]; then
+    func_proviscript_msg info "Allow HTTP traffic to Apache in FirewallD."
+    sudo firewall-cmd --permanent --zone=public --add-service=http 
+    func_proviscript_msg info "Allow HTTPS traffic to Apache in FirewallD."
+    sudo firewall-cmd --permanent --zone=public --add-service=https
+    func_proviscript_msg info "Reload FirewallD to take effect."
+    sudo firewall-cmd --reload
+fi
+
 apache_version="$(httpd -v 2>&1)"
 
 if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
