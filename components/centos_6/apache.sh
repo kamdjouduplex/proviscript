@@ -66,7 +66,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of MariaDB you want to install?
+            # Which version of Apache you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -167,23 +167,8 @@ if [ "${is_apache_installed}" == "httpd" ]; then
 fi
 
 if [ "${package_version}" == "latest" ]; then
-
-    # We use CodeIT repository the get the latest Apache 2 (HTTP/2 ready).
-    # More information please visit => https://codeit.guru/en_US/
-    is_epel_installed=$(${_PM} list installed epel-release 2>&1 | grep -o "No matching")
-    if [ "${is_epel_installed}" == "No matching" ]; then
-        func_proviscript_msg info "CentOS 7 EPEL repository is not installed, installing..."
-        sudo ${_PM} install -y epel-release
-    fi
-
-    # Add CodeIT repository.
-    sudo rm -rf /etc/yum.repos.d/codeit.el7.repo
-    sudo bash -c "echo '[CodeIT]' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'name=CodeIT repo' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'baseurl=https://repo.codeit.guru/packages/centos/6/\$basearch/' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'gpgkey=https://repo.codeit.guru/RPM-GPG-KEY-codeit' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'gpgcheck=1' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/codeit.el7.repo"
+    # Install IUS repository
+    sudo ${_PM} install https://centos${os_version}.iuscommunity.org/ius-release.rpm
 fi
 
 # Install Apache
@@ -192,20 +177,18 @@ func_proviscript_msg info "Proceeding to install apache server."
 if [ "${package_version}" == "latest" ]; then
     func_proviscript_msg warning "Apache http2 module no longer supports prefork mpm from version 2.4.27."
     func_proviscript_msg warning "Please use worker mpm instead of prefork mpm if you want to use http2 module."
+    sudo ${_PM} --enablerepo=ius install -y httpd24u
+else
+    sudo ${_PM} install -y httpd
 fi
-
-sudo ${_PM} install -y httpd
 
 # To enable Apache server in boot.
 func_proviscript_msg info "Enable service apache in boot."
-sudo systemctl enable httpd
+sudo chkconfig httpd on
 
 # To restart Apache service.
 func_proviscript_msg info "Restart service apache."
 sudo service httpd restart
-
-# Work with SELinux
-sudo setsebool -P httpd_execmem=1
 
 apache_version="$(httpd -v 2>&1)"
 
