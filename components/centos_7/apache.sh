@@ -66,7 +66,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of MariaDB you want to install?
+            # Which version of Apache you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -177,6 +177,7 @@ if [ "${package_version}" == "latest" ]; then
     fi
 
     # Add CodeIT repository.
+    func_proviscript_msg info "Add CodeIT repository."
     sudo rm -rf /etc/yum.repos.d/codeit.el7.repo
     sudo bash -c "echo '[CodeIT]' >> /etc/yum.repos.d/codeit.el7.repo"
     sudo bash -c "echo 'name=CodeIT repo' >> /etc/yum.repos.d/codeit.el7.repo"

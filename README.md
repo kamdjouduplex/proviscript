@@ -8,7 +8,7 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 
 | Operating system  | - |  Supported packages | Tested Vagrant box 
 |---|---| --- | --- |
-|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Nginx` | centos/6
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/6
 |  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/7
 |  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) | `Nginx` | debian/stretch64
 |  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) | `Nginx` - | fedora/28-cloud-base
@@ -58,6 +58,7 @@ CentOS 6
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
 |  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.2 | centos/6 | 
+|  Apache |  **latest: 2.4.15**<br />default: 2.2.15 | centos/6 |
 
 CentOS 7
 

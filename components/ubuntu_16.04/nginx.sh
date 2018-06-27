@@ -73,7 +73,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of MariaDB you want to install?
+            # Which version of Nginx you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
