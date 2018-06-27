@@ -47,6 +47,32 @@ vi config.yml
 
 [Proviscript 組件](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) 是经过测试的命令脚本，帮你在安装时可以设后不理。然后就装好了。
 
+CentOS 6
+
+| 套件名称  | 支援版本 | 测试的 Vagrant 盒子 |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.2 | centos/6 | 
+|  Apache |  **latest: 2.4.33**<br />default: 2.2.15 | centos/6 |
+
+CentOS 7
+
+| 套件名称  | 支援版本 | 测试的 Vagrant 盒子 |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12 | centos/7 | 
+|  Apache |  **latest: 2.4.33**<br />default: 2.4.6 | centos/7 |
+
+Debian 9
+
+| 套件名称  | 支援版本 | 测试的 Vagrant 盒子 |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: | debian/stretch64 | 
+
+Fedora 28
+
+| 套件名称  | 支援版本 | 测试的 Vagrant 盒子 |
+|---|---|---|
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12.1 | fedora/28-cloud-base | 
+
 Ubuntu 16.04 LTS
 
 | 套件名称  | 支援版本 | 测试的 Vagrant 盒子 |
@@ -60,7 +86,7 @@ Ubuntu 16.04 LTS
 
 Ubuntu 18.04 LTS
 
-| Package name  | Supported versions | Tested Vagrant box |
+| 套件名称  | 支援版本 | 测试的 Vagrant 盒子 |
 |---|---|---|
 |  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.14 | ubuntu/bionic64 | 
 |  MariaDB |  **latest: 10.3**<br />default: 10.1.29 | ubuntu/bionic64 |

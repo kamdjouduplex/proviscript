@@ -58,7 +58,7 @@ CentOS 6
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
 |  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.2 | centos/6 | 
-|  Apache |  **latest: 2.4.15**<br />default: 2.2.15 | centos/6 |
+|  Apache |  **latest: 2.4.33**<br />default: 2.2.15 | centos/6 |
 
 CentOS 7
 
