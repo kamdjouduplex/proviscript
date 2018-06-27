@@ -9,13 +9,13 @@
 #-
 #- OPTIONS
 #-
-#-    -p ?, --password=?            Set mysql root password.
+#-    -w ?, --password=?            Set mysql root password.
 #-    -s ?, --secure=?              Enable mysql secure configuration.
 #-                                  Accept vaule: y, n
 #-    -r ?, --remote=?              Enable access mysql remotely.
 #-                                  Accept vaule: y, n
-#-    -ru ?, --remote-user=?        Remote user.
-#-    -rp ?, --remote-password=?    Remote user's password.
+#-    -u ?, --remote-user=?        Remote user.
+#-    -p ?, --remote-password=?    Remote user's password.
 #-    -v ?, --version=?             Which version of MariaDB you want to install?
 #-                                  Accept vaule: latest, default
 #-    -h, --help                    Print this help.
@@ -74,7 +74,7 @@ if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
             # mysql root password (required in slient mode)
-            "-p") 
+            "-w") 
                 mysql_root_password="${2}";
                 shift 2
             ;;
@@ -104,7 +104,7 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             # Remote user (required if $mysql_remote = y)
-            "-ru") 
+            "-u") 
                 mysql_remote_user="${2}"
                 shift 2
             ;;
@@ -113,7 +113,7 @@ if [ "$#" -gt 0 ]; then
                 shift 1
             ;;
             # Remote user's password (required if $mysql_remote = y)
-            "-rp") 
+            "-p") 
                 mysql_remote_password="${2}"
                 shift 2
             ;;

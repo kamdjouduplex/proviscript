@@ -146,13 +146,13 @@ Manual
 
  OPTIONS
 
-    -p ?, --password=?            Set mysql root password.
+    -w ?, --password=?            Set mysql root password.
     -s ?, --secure=?              Enable mysql secure configuration.
                                   Accept vaule: y, n
     -r ?, --remote=?              Enable access mysql remotely.
                                   Accept vaule: y, n
-    -ru ?, --remote-user=?        Remote user.
-    -rp ?, --remote-password=?    Remote user's password.
+    -u ?, --remote-user=?         Remote user.
+    -p ?, --remote-password=?     Remote user's password.
     -v ?, --version=?             Which version of MariaDB you want to install?
                                   Accept vaule: latest, default
     -h, --help                    Print this help.
@@ -184,13 +184,13 @@ Manual:
 
  OPTIONS
 
-    -p ?, --password=?            Set mysql root password.
+    -w ?, --password=?            Set mysql root password.
     -s ?, --secure=?              Enable mysql secure configuration.
                                   Accept vaule: y, n
     -r ?, --remote=?              Enable access mysql remotely.
                                   Accept vaule: y, n
-    -ru ?, --remote-user=?        Remote user.
-    -rp ?, --remote-password=?    Remote user's password.
+    -u ?, --remote-user=?         Remote user.
+    -p ?, --remote-password=?     Remote user's password.
     -v ?, --version=?             Which version of MySQL you want to install?
                                   Accept vaule: latest, default
     -h, --help                    Print this help.
