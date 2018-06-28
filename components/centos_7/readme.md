@@ -6,12 +6,12 @@ CentOS 7
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12 | centos/7 | 
-|  MariaDB |  **latest: 10.3**<br />default:  | centos/7 |
-|  MySQL |  **latest: 8.0**<br />default:  | centos/7 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.12 | centos/7 | 
+|  MariaDB |  **latest: 10.3**<br />system:  | centos/7 |
+|  MySQL |  **latest: 8.0**<br />system:  | centos/7 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | centos/7 |
-|  Apache |  **latest: 2.4.33**<br />default:  | centos/7 |
-|  Redis |  **latest: 4.0.9**<br />default: | centos/7 |
+|  Apache |  **latest: 2.4.33**<br />system:  | centos/7 |
+|  Redis |  **latest: 4.0.9**<br />system: | centos/7 |
 
 Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/centos_7` and then execute the command below.
 
@@ -77,7 +77,7 @@ https://cdn.proviscript.sh/components/centos_7/nginx.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Nginx you want to install?
-                         Accept vaule: stable, mainline, default
+                         Accept vaule: stable, mainline, system
                          
     -h, --help           Print this help.
     -i, --info           Print script information.
@@ -110,14 +110,14 @@ https://cdn.proviscript.sh/components/centos_7/mariadb.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MariaDB you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
  EXAMPLES
 
     $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -142,14 +142,14 @@ https://cdn.proviscript.sh/components/centos_7/mysql.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MySQL you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
  EXAMPLES
 
     $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mysql.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mysql.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -194,13 +194,13 @@ https://cdn.proviscript.sh/components/centos_7/apache.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Apache you want to install?
-                         Accept vaule: latest, default
+                         Accept vaule: latest, system
     -h, --help           Print this help.
     -i, --info           Print script information.
 
  EXAMPLES
 
-    $ ./apache.sh -v default
+    $ ./apache.sh -v system
     $ ./apache.sh --version=latest
     $ ./apache.sh
 

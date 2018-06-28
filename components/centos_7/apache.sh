@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Apache you want to install?
-#-                         Accept vaule: latest, default
+#-                         Accept vaule: latest, system
 #-    -o ?, --repo=?       Repository source.
 #-                         Accept value: ius, codeit
 #-    -h, --help           Print this help.
@@ -18,7 +18,7 @@
 #-
 #- EXAMPLES
 #-
-#-    $ ./apache.sh -v default
+#-    $ ./apache.sh -v system
 #-    $ ./apache.sh --version=latest
 #-    $ ./apache.sh
 #+
@@ -202,16 +202,16 @@ if [ "${package_version}" == "latest" ]; then
         sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/codeit.el7.repo"
     fi
 
-    # Install IUS repository
+    # Install IUS repository.
     if [ "${repo_source}" == "ius" ]; then
         sudo ${_PM} install https://centos${os_version}.iuscommunity.org/ius-release.rpm
     fi
-
 fi
 
-# Install Apache
+# Install Apache.
 func_proviscript_msg info "Proceeding to install apache server."
 
+# Install latest version.
 if [ "${package_version}" == "latest" ]; then
     func_proviscript_msg warning "Apache http2 module no longer supports prefork mpm from version 2.4.27."
     func_proviscript_msg warning "Please use worker mpm instead of prefork mpm if you want to use http2 module."
@@ -223,8 +223,8 @@ if [ "${package_version}" == "latest" ]; then
     if [ "${repo_source}" == "ius" ]; then
         sudo ${_PM} --enablerepo=ius install -y httpd24u
     fi
-
 else
+    # Install system default version.
     sudo ${_PM} install -y httpd
 fi
 

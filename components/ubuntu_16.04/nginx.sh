@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Nginx you want to install?
-#-                         Accept vaule: latest, mainline, default
+#-                         Accept vaule: latest, mainline, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
@@ -28,12 +28,6 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/19 terrylinooo First commit.
-#+    2018/05/20 terrylinooo Add arguments, see nginx.sh -h
-#+    2018/06/02 terrylinooo Redefine version value: latest, mainline, default
-#+
 #================================================================
 
 #================================================================
@@ -199,11 +193,11 @@ if [ "${package_version}" == "latest" ]; then
     version_code="stable"
 elif [ "${package_version}" == "mainline" ]; then
     version_code="mainline"
-elif [ "${package_version}" == "default" ]; then
-    version_code="default"
+elif [ "${package_version}" == "system" ]; then
+    version_code="system"
 fi
 
-if [ "${version_code}" != "default" ]; then
+if [ "${version_code}" != "system" ]; then
     # Check if software-properties-common installed or not.
     is_add_apt_repository=$(which add-apt-repository |  grep "add-apt-repository")
 

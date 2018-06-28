@@ -57,49 +57,49 @@ CentOS 6
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.2 | centos/6 | 
-|  Apache |  **latest: 2.4.33**<br />default: 2.2.15 | centos/6 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.10.2 | centos/6 | 
+|  Apache |  **latest: 2.4.33**<br />system: 2.2.15 | centos/6 |
 
 CentOS 7
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12 | centos/7 | 
-|  Apache |  **latest: 2.4.33**<br />default: 2.4.6 | centos/7 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.12 | centos/7 | 
+|  Apache |  **latest: 2.4.33**<br />system: 2.4.6 | centos/7 |
 
 Debian 9
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: | debian/stretch64 | 
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: | debian/stretch64 | 
 
 Fedora 28
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12.1 | fedora/28-cloud-base | 
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.12.1 | fedora/28-cloud-base | 
 
 Ubuntu 16.04 LTS
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.3 | ubuntu/xenial64 | 
-|  MariaDB |  **latest: 10.3**<br />default: 10.0 | ubuntu/xenial64 |
-|  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.10.3 | ubuntu/xenial64 | 
+|  MariaDB |  **latest: 10.3**<br />system: 10.0 | ubuntu/xenial64 |
+|  MySQL |  **latest: 8.0**<br />system: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
-|  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
-|  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
+|  Apache |  **latest: 2.4.33**<br />system: 2.4.18 | ubuntu/xenial64 |
+|  Redis |  **latest: 4.0.9**<br />system: 3.0.6 | ubuntu/xenial64 |
 
 Ubuntu 18.04 LTS
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.14 | ubuntu/bionic64 | 
-|  MariaDB |  **latest: 10.3**<br />default: 10.1.29 | ubuntu/bionic64 |
-|  MySQL |  **latest: 8.0**<br />default: 5.7.22 | ubuntu/bionic64 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.14 | ubuntu/bionic64 | 
+|  MariaDB |  **latest: 10.3**<br />system: 10.1.29 | ubuntu/bionic64 |
+|  MySQL |  **latest: 8.0**<br />system: 5.7.22 | ubuntu/bionic64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/bionic64 |
-|  Apache |  **latest: 2.4.33**<br />default: 2.4.29 | ubuntu/bionic64 |
-|  Redis |  **latest: 4.0.9**<br />default: 4.0.9 | ubuntu/bionic64 |
+|  Apache |  **latest: 2.4.33**<br />system: 2.4.29 | ubuntu/bionic64 |
+|  Redis |  **latest: 4.0.9**<br />system: 4.0.9 | ubuntu/bionic64 |
 
 Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
 
@@ -118,7 +118,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Nginx you want to install?
-                         Accept vaule: stable, mainline, default
+                         Accept vaule: stable, mainline, system
                          
     -h, --help           Print this help.
     -i, --info           Print script information.
@@ -154,16 +154,16 @@ Manual
     -u ?, --remote-user=?         Remote user.
     -p ?, --remote-password=?     Remote user's password.
     -v ?, --version=?             Which version of MariaDB you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
-    --aptitude           Use aptitude instead of apt-get as package manager
+    --aptitude                    Use aptitude instead of apt-get as package manager
 
  EXAMPLES
 
     $ ./mariadb.sh -v latest -s y -r y -u test_user -p 12345678
-    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -174,7 +174,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mysql.sh
 
 Example
 ```shell
-./mariadb.sh --version=default --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
+./mariadb.sh --version=system --password=12345678 --secure=y --remote=y --remote-user=testuser --remote-password=12345678
 ```
 Manual:
 ```
@@ -192,7 +192,7 @@ Manual:
     -u ?, --remote-user=?         Remote user.
     -p ?, --remote-password=?     Remote user's password.
     -v ?, --version=?             Which version of MySQL you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
@@ -201,7 +201,7 @@ Manual:
  EXAMPLES
 
     $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mysql.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mysql.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -249,14 +249,14 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/apache.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Apache you want to install?
-                         Accept vaule: latest, default
+                         Accept vaule: latest, system
     -h, --help           Print this help.
     -i, --info           Print script information.
     --aptitude           Use aptitude instead of apt-get as package manager
 
  EXAMPLES
 
-    $ ./apache.sh -v default
+    $ ./apache.sh -v system
     $ ./apache.sh --version=latest
     $ ./apache.sh
 

@@ -17,7 +17,7 @@
 #-    -u ?, --remote-user=?         Remote user.
 #-    -p ?, --remote-password=?     Remote user's password.
 #-    -v ?, --version=?             Which version of MariaDB you want to install?
-#-                                  Accept vaule: latest, default
+#-                                  Accept vaule: latest, system
 #-    -h, --help                    Print this help.
 #-    -i, --info                    Print script information.
 #-    --aptitude                    Use aptitude instead of apt-get as package manager
@@ -25,7 +25,7 @@
 #- EXAMPLES
 #-
 #-    $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
-#-    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#-    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+

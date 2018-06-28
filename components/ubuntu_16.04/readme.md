@@ -8,12 +8,12 @@ Ubuntu 16.04 LTS (Xenial Xerus)
 
 | Package name  | Supported versions | Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.10.3 | ubuntu/xenial64 | 
-|  MariaDB |  **latest: 10.2**<br />default: 10.2 | ubuntu/xenial64 |
-|  MySQL |  **latest: 8.0**<br />default: 5.7.18 | ubuntu/xenial64 |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.10.3 | ubuntu/xenial64 | 
+|  MariaDB |  **latest: 10.2**<br />system: 10.2 | ubuntu/xenial64 |
+|  MySQL |  **latest: 8.0**<br />system: 5.7.18 | ubuntu/xenial64 |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/xenial64 |
-|  Apache |  **latest: 2.4.33**<br />default: 2.4.18 | ubuntu/xenial64 |
-|  Redis |  **latest: 4.0.9**<br />default: 3.0.6 | ubuntu/xenial64 |
+|  Apache |  **latest: 2.4.33**<br />system: 2.4.18 | ubuntu/xenial64 |
+|  Redis |  **latest: 4.0.9**<br />system: 3.0.6 | ubuntu/xenial64 |
 
 Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the command below.
 
@@ -79,7 +79,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/nginx.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Nginx you want to install?
-                         Accept vaule: stable, mainline, default
+                         Accept vaule: stable, mainline, system
                          
     -h, --help           Print this help.
     -i, --info           Print script information.
@@ -114,7 +114,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MariaDB you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
@@ -123,7 +123,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mariadb.sh
  EXAMPLES
 
     $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -148,7 +148,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mysql.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MySQL you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
@@ -157,7 +157,7 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/mysql.sh
  EXAMPLES
 
     $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mysql.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mysql.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -204,14 +204,14 @@ https://cdn.proviscript.sh/components/ubuntu_16.04/apache.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Apache you want to install?
-                         Accept vaule: latest, default
+                         Accept vaule: latest, system
     -h, --help           Print this help.
     -i, --info           Print script information.
     --aptitude           Use aptitude instead of apt-get as package manager
 
  EXAMPLES
 
-    $ ./apache.sh -v default
+    $ ./apache.sh -v system
     $ ./apache.sh --version=latest
     $ ./apache.sh
 

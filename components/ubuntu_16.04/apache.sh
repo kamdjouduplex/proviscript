@@ -10,14 +10,14 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Apache you want to install?
-#-                         Accept vaule: latest, default
+#-                         Accept vaule: latest, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager
 #-
 #- EXAMPLES
 #-
-#-    $ ./apache.sh -v default
+#-    $ ./apache.sh -v system
 #-    $ ./apache.sh --version=latest
 #-    $ ./apache.sh
 #+

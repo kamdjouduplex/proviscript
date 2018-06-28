@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Nginx you want to install?
-#-                         Accept vaule: latest, mainline, default
+#-                         Accept vaule: latest, mainline, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-
@@ -165,7 +165,7 @@ if [ "${is_nginx_installed}" == "nginx" ]; then
 fi
 
 # Add repository for Nginx.
-if [ "${package_version}" == "default" ]; then
+if [ "${package_version}" == "system" ]; then
     is_epel_installed=$(yum list installed epel-release 2>&1 | grep -o "No matching")
     if [ "${is_epel_installed}" == "No matching" ]; then
         func_proviscript_msg info "CentOS 6 EPEL repository is not installed, installing..."

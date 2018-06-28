@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Nginx you want to install?
-#-                         Accept vaule: latest, mainline, default
+#-                         Accept vaule: latest, mainline, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-
@@ -158,7 +158,7 @@ echo
 # Check if Nginx has been installed or not.
 func_proviscript_msg info "Checking if nginx is installed, if not, proceed to install it."
 
-if [ "${package_version}" == "default" ]; then
+if [ "${package_version}" == "system" ]; then
     _PM="dnf"
 fi
 

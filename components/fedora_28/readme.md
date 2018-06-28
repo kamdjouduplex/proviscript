@@ -6,12 +6,12 @@ Fedora 28
 
 | Package name  | Supported versions | Tested Vagrant box |
 |---|---|---|
-|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />default: 1.12.1 | fedora/28-cloud-base | 
-|  MariaDB |  **latest: 10.3**<br />default:  | fedora/28-cloud-base |
-|  MySQL |  **latest: 8.0**<br />default:  | fedora/28-cloud-base |
+|  Nginx | **latest: 1.14**<br />mainline: 1.13.12<br />system: 1.12.1 | fedora/28-cloud-base | 
+|  MariaDB |  **latest: 10.3**<br />system:  | fedora/28-cloud-base |
+|  MySQL |  **latest: 8.0**<br />system:  | fedora/28-cloud-base |
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | fedora/28-cloud-base |
-|  Apache |  **latest: 2.4.33**<br />default:  | fedora/28-cloud-base |
-|  Redis |  **latest: 4.0.9**<br />default: | fedora/28-cloud-base |
+|  Apache |  **latest: 2.4.33**<br />system:  | fedora/28-cloud-base |
+|  Redis |  **latest: 4.0.9**<br />system: | fedora/28-cloud-base |
 
 Getting started with standalone mode. In standalone mode, you can just simply change your current dictionary to `components/fedora_28` and then execute the command below.
 
@@ -77,7 +77,7 @@ https://cdn.proviscript.sh/components/fedora_28/nginx.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Nginx you want to install?
-                         Accept vaule: stable, mainline, default
+                         Accept vaule: stable, mainline, system
                          
     -h, --help           Print this help.
     -i, --info           Print script information.
@@ -110,14 +110,14 @@ https://cdn.proviscript.sh/components/fedora_28/mariadb.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MariaDB you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
  EXAMPLES
 
     $ ./mariadb.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mariadb.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -142,14 +142,14 @@ https://cdn.proviscript.sh/components/fedora_28/mysql.sh
     -ru ?, --remote-user=?        Remote user.
     -rp ?, --remote-password=?    Remote user's password.
     -v ?, --version=?             Which version of MySQL you want to install?
-                                  Accept vaule: latest, default
+                                  Accept vaule: latest, system
     -h, --help                    Print this help.
     -i, --info                    Print script information.
 
  EXAMPLES
 
     $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mysql.sh --version=default --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mysql.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
 
 ```
 
@@ -194,13 +194,13 @@ https://cdn.proviscript.sh/components/fedora_28/apache.sh
  OPTIONS
 
     -v ?, --version=?    Which version of Apache you want to install?
-                         Accept vaule: latest, default
+                         Accept vaule: latest, system
     -h, --help           Print this help.
     -i, --info           Print script information.
 
  EXAMPLES
 
-    $ ./apache.sh -v default
+    $ ./apache.sh -v system
     $ ./apache.sh --version=latest
     $ ./apache.sh
 

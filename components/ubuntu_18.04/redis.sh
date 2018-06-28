@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Redis you want to install?
-#-                         Accept vaule: latest, default
+#-                         Accept vaule: latest, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-    --aptitude           Use aptitude instead of apt-get as package manager

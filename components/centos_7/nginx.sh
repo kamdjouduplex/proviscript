@@ -10,7 +10,7 @@
 #- OPTIONS
 #-
 #-    -v ?, --version=?    Which version of Nginx you want to install?
-#-                         Accept vaule: latest, mainline, default
+#-                         Accept vaule: latest, mainline, system
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-
@@ -27,12 +27,6 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#+ CHANGELOGS:
-#+
-#+    2018/05/19 terrylinooo First commit.
-#+    2018/05/20 terrylinooo Add arguments, see nginx.sh -h
-#+    2018/06/02 terrylinooo Redefine version value: latest, mainline, default
-#+
 #================================================================
 
 #================================================================
