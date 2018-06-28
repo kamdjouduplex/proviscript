@@ -1,5 +1,7 @@
 # proviscript.sh
 
+Notice: This project is still under beta status, please do not use it in PRODUCTION environment, use it on your own risk.
+
 Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/README_zh_TW.md) | [简体中文](./docs/README_zh_CN.md)
 
 Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (*always the latest version*) for Linux servers.
