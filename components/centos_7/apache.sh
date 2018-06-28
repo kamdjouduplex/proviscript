@@ -11,6 +11,8 @@
 #-
 #-    -v ?, --version=?    Which version of Apache you want to install?
 #-                         Accept vaule: latest, default
+#-    -o ?, --repo=?       Repository source.
+#-                         Accept value: ius, codeit
 #-    -h, --help           Print this help.
 #-    -i, --info           Print script information.
 #-
@@ -43,6 +45,9 @@ _PM="yum"
 
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="latest"
+
+# Default repository source
+repo_source="ius"
 
 #================================================================
 # Part 2. Option (DO NOT MODIFY)
@@ -84,6 +89,14 @@ if [ "$#" -gt 0 ]; then
             "-i"|"--information")
                 show_script_information
                 exit 1
+            ;;
+            # Repository source
+            "-o")
+                repo_source="${2}"
+                shift 2
+            ;;
+            "--repo="*)
+                repo_source="${1#*=}"; 
             ;;
             "-"*)
                 echo "Unknown option: ${1}"
@@ -168,23 +181,32 @@ fi
 
 if [ "${package_version}" == "latest" ]; then
 
-    # We use CodeIT repository the get the latest Apache 2 (HTTP/2 ready).
-    # More information please visit => https://codeit.guru/en_US/
-    is_epel_installed=$(${_PM} list installed epel-release 2>&1 | grep -o "No matching")
-    if [ "${is_epel_installed}" == "No matching" ]; then
-        func_proviscript_msg info "CentOS 7 EPEL repository is not installed, installing..."
-        sudo ${_PM} install -y epel-release
+    # Install CodeIT repository
+    if [ "${repo_source}" == "codeit" ]; then
+        # We use CodeIT repository the get the latest Apache 2 (HTTP/2 ready).
+        # More information please visit => https://codeit.guru/en_US/
+        is_epel_installed=$(${_PM} list installed epel-release 2>&1 | grep -o "No matching")
+        if [ "${is_epel_installed}" == "No matching" ]; then
+            func_proviscript_msg info "CentOS 7 EPEL repository is not installed, installing..."
+            sudo ${_PM} install -y epel-release
+        fi
+
+        # Add CodeIT repository.
+        func_proviscript_msg info "Add CodeIT repository."
+        sudo rm -rf /etc/yum.repos.d/codeit.el7.repo
+        sudo bash -c "echo '[CodeIT]' >> /etc/yum.repos.d/codeit.el7.repo"
+        sudo bash -c "echo 'name=CodeIT repo' >> /etc/yum.repos.d/codeit.el7.repo"
+        sudo bash -c "echo 'baseurl=https://repo.codeit.guru/packages/centos/7/\$basearch/' >> /etc/yum.repos.d/codeit.el7.repo"
+        sudo bash -c "echo 'gpgkey=https://repo.codeit.guru/RPM-GPG-KEY-codeit' >> /etc/yum.repos.d/codeit.el7.repo"
+        sudo bash -c "echo 'gpgcheck=1' >> /etc/yum.repos.d/codeit.el7.repo"
+        sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/codeit.el7.repo"
     fi
 
-    # Add CodeIT repository.
-    func_proviscript_msg info "Add CodeIT repository."
-    sudo rm -rf /etc/yum.repos.d/codeit.el7.repo
-    sudo bash -c "echo '[CodeIT]' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'name=CodeIT repo' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'baseurl=https://repo.codeit.guru/packages/centos/7/\$basearch/' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'gpgkey=https://repo.codeit.guru/RPM-GPG-KEY-codeit' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'gpgcheck=1' >> /etc/yum.repos.d/codeit.el7.repo"
-    sudo bash -c "echo 'enabled=1' >> /etc/yum.repos.d/codeit.el7.repo"
+    # Install IUS repository
+    if [ "${repo_source}" == "ius" ]; then
+        sudo ${_PM} install https://centos${os_version}.iuscommunity.org/ius-release.rpm
+    fi
+
 fi
 
 # Install Apache
@@ -193,9 +215,18 @@ func_proviscript_msg info "Proceeding to install apache server."
 if [ "${package_version}" == "latest" ]; then
     func_proviscript_msg warning "Apache http2 module no longer supports prefork mpm from version 2.4.27."
     func_proviscript_msg warning "Please use worker mpm instead of prefork mpm if you want to use http2 module."
-fi
 
-sudo ${_PM} install -y httpd
+    if [ "${repo_source}" == "codeit" ]; then
+        sudo ${_PM} install -y httpd
+    fi
+
+    if [ "${repo_source}" == "ius" ]; then
+        sudo ${_PM} --enablerepo=ius install -y httpd24u
+    fi
+
+else
+    sudo ${_PM} install -y httpd
+fi
 
 # To enable Apache server in boot.
 func_proviscript_msg info "Enable service apache in boot."

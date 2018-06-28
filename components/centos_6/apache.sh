@@ -85,6 +85,14 @@ if [ "$#" -gt 0 ]; then
                 show_script_information
                 exit 1
             ;;
+            # Repository source
+            "-o")
+                repo_source="${2}"
+                shift 2
+            ;;
+            "--repo="*)
+                repo_source="${1#*=}"; 
+            ;;
             "-"*)
                 echo "Unknown option: ${1}"
                 exit 1
