@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#>                   +------------+
-#>                   |  apache.sh  |   
-#>                   +------------+
+#>                           +-------------+
+#>                           |  apache.sh  |
+#>                           +-------------+
 #-
 #- SYNOPSIS
 #-
@@ -29,11 +29,11 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+
-#================================================================
+#==============================================================================
 
-#================================================================
+#==============================================================================
 # Part 1. Config
-#================================================================
+#==============================================================================
 
 # Display package information, no need to change.
 os_name="CentOS"
@@ -49,9 +49,9 @@ package_version="latest"
 # Default repository source
 repo_source="ius"
 
-#================================================================
+#==============================================================================
 # Part 2. Option (DO NOT MODIFY)
-#================================================================
+#==============================================================================
 
 # Print script help
 show_script_help() {
@@ -110,26 +110,26 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
-#================================================================
+#==============================================================================
 # Part 3. Message (DO NOT MODIFY)
-#================================================================
+#==============================================================================
 
 if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    func_component_welcome "apache" "${package_version}"
+    func::component_welcome "apache" "${package_version}"
 else
     # Bash color set
-    COLOR_EOF="\e[0m"
-    COLOR_BLUE="\e[34m"
-    COLOR_RED="\e[91m"
-    COLOR_GREEN="\e[92m"
-    COLOR_WHITE="\e[97m"
-    COLOR_DARK="\e[90m"
-    COLOR_BG_BLUE="\e[44m"
-    COLOR_BG_GREEN="\e[42m"
-    COLOR_BG_DARK="\e[100m"
+    readonly COLOR_EOF="\e[0m"
+    readonly COLOR_BLUE="\e[34m"
+    readonly COLOR_RED="\e[91m"
+    readonly COLOR_GREEN="\e[92m"
+    readonly COLOR_WHITE="\e[97m"
+    readonly COLOR_DARK="\e[90m"
+    readonly COLOR_BG_BLUE="\e[44m"
+    readonly COLOR_BG_GREEN="\e[42m"
+    readonly COLOR_BG_DARK="\e[100m"
 
-    func_proviscript_msg() {
+    func::proviscript_msg() {
         case "$1" in
             "info")
                 echo -e "[${COLOR_BLUE}O.o${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
@@ -164,18 +164,18 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
-#================================================================
+#==============================================================================
 # Part 4. Core
-#================================================================
+#==============================================================================
 
 # Check if Apache has been installed or not.
-func_proviscript_msg info "Checking if apache is installed, if not, proceed to install it."
+func::proviscript_msg info "Checking if apache is installed, if not, proceed to install it."
 
 is_apache_installed=$(${_PM} list installed httpd 2>&1 | grep -o "httpd")
 
 if [ "${is_apache_installed}" == "httpd" ]; then
-    func_proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func_proviscript_msg info "Try \"sudo ${_PM} remove httpd\""
+    func::proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
+    func::proviscript_msg info "Try \"sudo ${_PM} remove httpd\""
     exit 2
 fi
 
@@ -187,12 +187,12 @@ if [ "${package_version}" == "latest" ]; then
         # More information please visit => https://codeit.guru/en_US/
         is_epel_installed=$(${_PM} list installed epel-release 2>&1 | grep -o "No matching")
         if [ "${is_epel_installed}" == "No matching" ]; then
-            func_proviscript_msg info "CentOS 7 EPEL repository is not installed, installing..."
+            func::proviscript_msg info "CentOS 7 EPEL repository is not installed, installing..."
             sudo ${_PM} install -y epel-release
         fi
 
         # Add CodeIT repository.
-        func_proviscript_msg info "Add CodeIT repository."
+        func::proviscript_msg info "Add CodeIT repository."
         sudo rm -rf /etc/yum.repos.d/codeit.el7.repo
         sudo bash -c "echo '[CodeIT]' >> /etc/yum.repos.d/codeit.el7.repo"
         sudo bash -c "echo 'name=CodeIT repo' >> /etc/yum.repos.d/codeit.el7.repo"
@@ -209,12 +209,12 @@ if [ "${package_version}" == "latest" ]; then
 fi
 
 # Install Apache.
-func_proviscript_msg info "Proceeding to install apache server."
+func::proviscript_msg info "Proceeding to install apache server."
 
 # Install latest version.
 if [ "${package_version}" == "latest" ]; then
-    func_proviscript_msg warning "Apache http2 module no longer supports prefork mpm from version 2.4.27."
-    func_proviscript_msg warning "Please use worker mpm instead of prefork mpm if you want to use http2 module."
+    func::proviscript_msg warning "Apache http2 module no longer supports prefork mpm from version 2.4.27."
+    func::proviscript_msg warning "Please use worker mpm instead of prefork mpm if you want to use http2 module."
 
     if [ "${repo_source}" == "codeit" ]; then
         sudo ${_PM} install -y httpd
@@ -229,11 +229,11 @@ else
 fi
 
 # To enable Apache server in boot.
-func_proviscript_msg info "Enable service apache in boot."
+func::proviscript_msg info "Enable service apache in boot."
 sudo systemctl enable httpd
 
 # To restart Apache service.
-func_proviscript_msg info "Restart service apache."
+func::proviscript_msg info "Restart service apache."
 sudo service httpd restart
 
 # Work with SELinux
@@ -243,19 +243,19 @@ sudo setsebool -P httpd_execmem=1
 is_firewalld_active=$(systemctl status firewalld 2>&1 | grep -o "Active: active")
 
 if [ "${is_firewalld_active}" == "Active: active" ]; then
-    func_proviscript_msg info "Allow HTTP traffic to Apache in FirewallD."
+    func::proviscript_msg info "Allow HTTP traffic to Apache in FirewallD."
     sudo firewall-cmd --permanent --zone=public --add-service=http 
-    func_proviscript_msg info "Allow HTTPS traffic to Apache in FirewallD."
+    func::proviscript_msg info "Allow HTTPS traffic to Apache in FirewallD."
     sudo firewall-cmd --permanent --zone=public --add-service=https
-    func_proviscript_msg info "Reload FirewallD to take effect."
+    func::proviscript_msg info "Reload FirewallD to take effect."
     sudo firewall-cmd --reload
 fi
 
 apache_version="$(httpd -v 2>&1)"
 
 if [[ "${apache_version}" = *"Apache"* && "${apache_version}" != *"command not found"* ]]; then
-    func_proviscript_msg success "Installation process is completed."
-    func_proviscript_msg success "$(httpd -v 2>&1)"
+    func::proviscript_msg success "Installation process is completed."
+    func::proviscript_msg success "$(httpd -v 2>&1)"
 else
-    func_proviscript_msg warning "Installation process is failed."
+    func::proviscript_msg warning "Installation process is failed."
 fi

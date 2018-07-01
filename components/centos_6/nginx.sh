@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#>                   +------------+
-#>                   |  nginx.sh  |   
-#>                   +------------+
+#>                           +------------+
+#>                           |  nginx.sh  |   
+#>                           +------------+
 #-
 #- SYNOPSIS
 #-
@@ -27,11 +27,11 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#================================================================
+#==============================================================================
 
-#================================================================
+#==============================================================================
 # Part 1. Config
-#================================================================
+#==============================================================================
 
 # Display package information, no need to change.
 os_name="CentOS"
@@ -41,9 +41,9 @@ package_name="Nginx"
 # Default, you can overwrite this setting by assigning -v or --version option.
 package_version="latest"
 
-#================================================================
+#==============================================================================
 # Part 2. Option (DO NOT MODIFY)
-#================================================================
+#==============================================================================
 
 # Print script help
 show_script_help() {
@@ -94,26 +94,26 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
-#================================================================
+#==============================================================================
 # Part 3. Message (DO NOT MODIFY)
-#================================================================
+#==============================================================================
 
 if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then 
     package_version=${PACKAGE_VERSION}
-    func_component_welcome "nginx" "${package_version}"
+    func::component_welcome "nginx" "${package_version}"
 else
     # Bash color set
-    COLOR_EOF="\e[0m"
-    COLOR_BLUE="\e[34m"
-    COLOR_RED="\e[91m"
-    COLOR_GREEN="\e[92m"
-    COLOR_WHITE="\e[97m"
-    COLOR_DARK="\e[90m"
-    COLOR_BG_BLUE="\e[44m"
-    COLOR_BG_GREEN="\e[42m"
-    COLOR_BG_DARK="\e[100m"
+    readonly COLOR_EOF="\e[0m"
+    readonly COLOR_BLUE="\e[34m"
+    readonly COLOR_RED="\e[91m"
+    readonly COLOR_GREEN="\e[92m"
+    readonly COLOR_WHITE="\e[97m"
+    readonly COLOR_DARK="\e[90m"
+    readonly COLOR_BG_BLUE="\e[44m"
+    readonly COLOR_BG_GREEN="\e[42m"
+    readonly COLOR_BG_DARK="\e[100m"
 
-    func_proviscript_msg() {
+    func::proviscript_msg() {
         case "$1" in
             "info")
                 echo -e "[${COLOR_BLUE}O.o${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
@@ -148,19 +148,18 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
-#================================================================
+#==============================================================================
 # Part 4. Core
-#================================================================
-
+#==============================================================================
 
 # Check if Nginx has been installed or not.
-func_proviscript_msg info "Checking if nginx is installed, if not, proceed to install it."
+func::proviscript_msg info "Checking if nginx is installed, if not, proceed to install it."
 
 is_nginx_installed=$(yum list installed nginx 2>&1 | grep -o "nginx")
 
 if [ "${is_nginx_installed}" == "nginx" ]; then
-    func_proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func_proviscript_msg info "Try \"sudo yum remove nginx\""
+    func::proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
+    func::proviscript_msg info "Try \"sudo yum remove nginx\""
     exit 2
 fi
 
@@ -168,7 +167,7 @@ fi
 if [ "${package_version}" == "system" ]; then
     is_epel_installed=$(yum list installed epel-release 2>&1 | grep -o "No matching")
     if [ "${is_epel_installed}" == "No matching" ]; then
-        func_proviscript_msg info "CentOS 6 EPEL repository is not installed, installing..."
+        func::proviscript_msg info "CentOS 6 EPEL repository is not installed, installing..."
         sudo yum install -y epel-release
     fi
 fi
@@ -191,22 +190,22 @@ EOF
 fi
 
 # Install Nginx
-func_proviscript_msg info "Proceeding to install nginx server."
+func::proviscript_msg info "Proceeding to install nginx server."
 sudo yum install -y nginx
 
 # To enable Nginx server in boot.
-func_proviscript_msg info "Enable service nginx in boot."
+func::proviscript_msg info "Enable service nginx in boot."
 sudo chkconfig nginx on
 
 # To restart Nginx service.
-func_proviscript_msg info "Restart service nginx."
+func::proviscript_msg info "Restart service nginx."
 sudo service nginx restart
 
 nginx_version="$(nginx -v 2>&1)"
 
 if [[ "${nginx_version}" = *"nginx"* && "${nginx_version}" != *"command not found"* ]]; then
-    func_proviscript_msg success "Installation process is completed."
-    func_proviscript_msg success "$(nginx -v 2>&1)"
+    func::proviscript_msg success "Installation process is completed."
+    func::proviscript_msg success "$(nginx -v 2>&1)"
 else
-    func_proviscript_msg warning "Installation process is failed."
+    func::proviscript_msg warning "Installation process is failed."
 fi

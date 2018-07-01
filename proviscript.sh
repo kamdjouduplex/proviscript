@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#>                   +------------------+
-#>                   |  proviscript.sh  |   
-#>                   +------------------+
+#>                           +------------------+
+#>                           |  proviscript.sh  |   
+#>                           +------------------+
 #-
 #- SYNOPSIS
 #-
@@ -22,17 +22,19 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+
-#================================================================
+#==============================================================================
 
 export PROVISCRIPT=main
 export PROVISCRIPT_DIR=$(dirname $(readlink -f $0))
 
 # Load base functions
 source "${PROVISCRIPT_DIR}/inc/functions.sh"
-PROVI=false
-OS_NAME="$(os_name)"
-OS_RELEASE_NUMBER="$(os_release_number)"
-OS_DIST="${OS_NAME,,}_${OS_RELEASE_NUMBER}"
+
+_PROVI=false
+
+readonly OS_NAME="$(func::os_name)"
+readonly OS_RELEASE_NUMBER="$(func::os_release_number)"
+readonly OS_DIST="${OS_NAME}_${OS_RELEASE_NUMBER}"
 
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
@@ -49,31 +51,31 @@ if [ "$#" -gt 0 ]; then
             ;;
             # Print config variables, debug
             "-p"|"--print-config")
-                parse_yaml config.yml
+                func::parse_yaml config.yml
                 exit 1
             ;;
             "install")
-                PROVI=true
+                _PROVI=true
                 shift 1
             ;;
         esac
     done
 fi
 
-if [ ${PROVI} == true ]; then
+if [ ${_PROVI} == true ]; then
     # Load config settings
-    eval $(parse_yaml config.yml)
+    eval $(func::parse_yaml config.yml)
 
     case "${OS_NAME}" in
         "Ubuntu") ;;
         *)
-            func_proviscript_msg warning "Sorry! Proviscript currently does't support your OS, please watch us on GitHub for further update."
+            func::func::proviscript_msg warning "Sorry! Proviscript currently does't support your OS, please watch us on GitHub for further update."
             exit 1
         ;;
     esac
 
     # Show welcome message
-    func_proviscript_welcome
+    functions::func_proviscript_welcome
 
     # Load components
     for component in ${install[@]}; do
@@ -99,9 +101,8 @@ if [ ${PROVI} == true ]; then
     done
 
     # Show thanks message
-    func_proviscript_thanks
+    func::func_proviscript_thanks
 
     unset PROVISCRIPT
     unset PROVISCRIPT_DIR
-
 fi

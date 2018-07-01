@@ -1,4 +1,16 @@
-#!/usr/bin/env bash
+#
+#                    +----------------+
+#                    |  functions.sh  |   
+#                    +----------------+
+#
+# Global Functions in Proviscript project
+#
+# Package  Proviscript
+# Author   Terry Lin
+# Link     https://github.com/Proviscript/proviscript
+# License  MIT
+#
+#==============================================================================
 
 INIT_PROVISCRIPT() {
     # Nothing to do. 
@@ -7,17 +19,17 @@ INIT_PROVISCRIPT() {
 }
 
 # Bash color set
-COLOR_EOF="\e[0m"
-COLOR_BLUE="\e[34m"
-COLOR_RED="\e[91m"
-COLOR_GREEN="\e[92m"
-COLOR_WHITE="\e[97m"
-COLOR_DARK="\e[90m"
-COLOR_BG_BLUE="\e[44m"
-COLOR_BG_GREEN="\e[42m"
-COLOR_BG_DARK="\e[100m"
+readonly COLOR_EOF="\e[0m"
+readonly COLOR_BLUE="\e[34m"
+readonly COLOR_RED="\e[91m"
+readonly COLOR_GREEN="\e[92m"
+readonly COLOR_WHITE="\e[97m"
+readonly COLOR_DARK="\e[90m"
+readonly COLOR_BG_BLUE="\e[44m"
+readonly COLOR_BG_GREEN="\e[42m"
+readonly COLOR_BG_DARK="\e[100m"
 
-func_proviscript_msg() {
+func::proviscript_msg() {
     case "$1" in
         "info")
             echo -e "[${COLOR_BLUE}PS${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
@@ -31,7 +43,7 @@ func_proviscript_msg() {
     esac
 }
 
-func_proviscript_welcome() {
+func::proviscript_welcome() {
     echo "                                                                                  ";
     echo "                                                                                  ";
     echo " ██████╗ ██████╗  ██████╗ ██╗   ██╗██╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗";
@@ -46,7 +58,7 @@ func_proviscript_welcome() {
     echo "                  Provisioning Shell Scripts for Linux servers                    ";
 }
 
-func_proviscript_thanks() {
+func::proviscript_thanks() {
     echo "                                                                                  ";
     echo "  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.                                        ";
     echo " ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'                                        ";
@@ -63,7 +75,7 @@ func_proviscript_thanks() {
     echo "                                                                                  ";
 }
 
-func_component_welcome() {
+func::component_welcome() {
     echo
     echo
     echo " Prepare to install.."                                                                                        
@@ -124,7 +136,7 @@ func_component_welcome() {
 # https://gist.github.com/l5x/8cf512c6d64641bde388
 # Based on https://gist.github.com/pkuczynski/8665367
 
-parse_yaml() {
+func::parse_yaml() {
     local prefix=$2
     local s
     local w
@@ -145,12 +157,12 @@ parse_yaml() {
     }' | sed 's/_=/+=/g'
 }
 
-os_name() {
+func::os_name() {
     eval $(cat /etc/lsb-release)
     echo ${DISTRIB_ID}
 }
 
-os_release_number() {
+func::os_release_number() {
     eval $(cat /etc/lsb-release)
     echo ${DISTRIB_RELEASE}
 }

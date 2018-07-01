@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#>                   +--------------+
-#>                   |  mariadb.sh  |   
-#>                   +--------------+
+#>                           +--------------+
+#>                           |  mariadb.sh  |   
+#>                           +--------------+
 #-
 #- SYNOPSIS
 #-
@@ -34,11 +34,11 @@
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
 #+ 
-#================================================================
+#==============================================================================
 
-#================================================================
+#==============================================================================
 # Part 1. Config
-#================================================================
+#==============================================================================
 
 # Display package information, no need to change.
 os_name="Ubuntu"
@@ -51,9 +51,9 @@ package_version="latest"
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
 _PM="apt-get"
 
-#================================================================
+#==============================================================================
 # Part 2. Option (DO NOT MODIFY)
-#================================================================
+#==============================================================================
 
 # Print script help
 show_script_help() {
@@ -188,9 +188,9 @@ if [ -z "${mysql_remote_password+x}" ]; then
     mysql_remote_password="proviscript"
 fi
 
-#================================================================
+#==============================================================================
 # Part 3. Message (DO NOT MODIFY)
-#================================================================
+#==============================================================================
 
 if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
     package_version=${PACKAGE_VERSION}
@@ -199,20 +199,20 @@ if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
     mysql_remote=${MYSQL_REMOTE}
     mysql_remote_user=${MYSQL_REMOTE_USER}
     mysql_remote_password=${MYSQL_REMOTE_PASSWORD}
-    func_component_welcome "mariadb" "${package_version}"
+    func::component_welcome "mariadb" "${package_version}"
 else
     # Bash color set
-    COLOR_EOF="\e[0m"
-    COLOR_BLUE="\e[34m"
-    COLOR_RED="\e[91m"
-    COLOR_GREEN="\e[92m"
-    COLOR_WHITE="\e[97m"
-    COLOR_DARK="\e[90m"
-    COLOR_BG_BLUE="\e[44m"
-    COLOR_BG_GREEN="\e[42m"
-    COLOR_BG_DARK="\e[100m"
+    readonly COLOR_EOF="\e[0m"
+    readonly COLOR_BLUE="\e[34m"
+    readonly COLOR_RED="\e[91m"
+    readonly COLOR_GREEN="\e[92m"
+    readonly COLOR_WHITE="\e[97m"
+    readonly COLOR_DARK="\e[90m"
+    readonly COLOR_BG_BLUE="\e[44m"
+    readonly COLOR_BG_GREEN="\e[42m"
+    readonly COLOR_BG_DARK="\e[100m"
 
-    func_proviscript_msg() {
+    func::proviscript_msg() {
         case "$1" in
             "info")
                 echo -e "[${COLOR_BLUE}O.o${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
@@ -246,9 +246,9 @@ echo " @version: ${package_version}                                             
 echo "----------------------------------------------------------------------------------";
 echo
 
-#================================================================
+#==============================================================================
 # Part 4. Core
-#================================================================
+#==============================================================================
 sudo ${_PM} update
 
 if [ "${_PM}" == "aptitude" ]; then
@@ -256,19 +256,19 @@ if [ "${_PM}" == "aptitude" ]; then
     is_aptitude=$(which aptitude |  grep "aptitude")
 
     if [ "${is_aptitude}" == "" ]; then
-        func_proviscript_msg info "Package manager \"aptitude\" is not installed, installing..."
+        func::proviscript_msg info "Package manager \"aptitude\" is not installed, installing..."
         sudo apt-get install aptitude
     fi
 fi
 
 # Check if MariaDb has been installed or not.
-func_proviscript_msg info "Checking if mariadb-server is installed, if not, proceed to install it."
+func::proviscript_msg info "Checking if mariadb-server is installed, if not, proceed to install it."
 
 is_mariadb_installed=$(dpkg-query -W --showformat='${Status}\n' mariadb-server | grep "install ok installed")
 
 if [ "${is_mariadb_installed}" == "install ok installed" ]; then
-    func_proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
-    func_proviscript_msg info "Try \"sudo apt-get purge mariadb-server\""
+    func::proviscript_msg warning "${package_name} is already installed, please remove it before executing this script."
+    func::proviscript_msg info "Try \"sudo apt-get purge mariadb-server\""
     exit 2
 fi
 
@@ -285,8 +285,8 @@ if [ "${package_version}" == "latest" ]; then
 
     # Check if add-apt-repository command is available to use or not.
     if [ "${is_add_apt_repository}" == "" ]; then
-        func_proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
-        func_proviscript_msg info "Proceeding to install \"software-properties-common\"."
+        func::proviscript_msg warning "Command \"add_apt_repository\" is not supprted, install \"software-properties-common\" to use it."
+        func::proviscript_msg info "Proceeding to install \"software-properties-common\"."
         sudo ${_PM} install -y software-properties-common
     fi
 
@@ -305,13 +305,13 @@ sudo debconf-set-selections <<< "maria-server-${version_code} mysql-server/root_
 sudo ${_PM} purge -y debconf-utils
 
 # Install MariaDB server
-func_proviscript_msg info "Proceeding to install mariadb-server..."
+func::proviscript_msg info "Proceeding to install mariadb-server..."
 sudo -E ${_PM} install -y mariadb-server
 
 unset DEBIAN_FRONTEND
 
 # To Enable MariaDB server in boot.
-func_proviscript_msg info "Proceeding to enable service mariadb-server in boot."
+func::proviscript_msg info "Proceeding to enable service mariadb-server in boot."
 sudo systemctl enable mariadb
 
 # As same as secure_mysql_installation.
@@ -323,7 +323,7 @@ sudo systemctl enable mariadb
 
 # UPDATE mysql.user SET Password=PASSWORD('${mysql_root_password}') WHERE User='root';
 if [ "${mysql_secure}" == "y" ]; then
-    func_proviscript_msg info "Proceeding to secure mysql installation..."
+    func::proviscript_msg info "Proceeding to secure mysql installation..."
     sudo mysql -uroot -p${mysql_root_password} << EOF
         DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
         DELETE FROM mysql.user WHERE User='';
@@ -335,10 +335,10 @@ fi
 # This is an option,If you need remote access the MySQL server
 # Allow remote access.
 if [ "${mysql_remote}" == "y" ]; then
-    func_proviscript_msg info "Proceeding to modify /etc/mysql/my.cnf => bind-address = 0.0.0.0"
+    func::proviscript_msg info "Proceeding to modify /etc/mysql/my.cnf => bind-address = 0.0.0.0"
     sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-    func_proviscript_msg info "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\"."
+    func::proviscript_msg info "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\"."
     # Setup an user account and access a MySQL server remotely.
     sudo mysql -uroot -p${mysql_root_password} << EOF
         CREATE USER '${mysql_remote_user}'@'%' IDENTIFIED BY '${mysql_remote_password}';
@@ -348,19 +348,19 @@ EOF
 fi
 
 # Start mysql service in boot.
-func_proviscript_msg info "Proceeding to enable service mariadb-server in boot."
+func::proviscript_msg info "Proceeding to enable service mariadb-server in boot."
 sudo systemctl enable mariadb
 
 # To restart mysql service.
-func_proviscript_msg info "Restart service mariadb-server."
+func::proviscript_msg info "Restart service mariadb-server."
 sudo service mariadb restart
 
 mysql_version="$(mysql -V 2>&1)"
 
 if [[ "${mysql_version}" = *"MariaDB"* && "${mysql_version}" != *"command not found"* ]]; then
-    func_proviscript_msg success "Installation process is completed."
-    func_proviscript_msg success "$(mysql -V 2>&1)"
+    func::proviscript_msg success "Installation process is completed."
+    func::proviscript_msg success "$(mysql -V 2>&1)"
 else
-    func_proviscript_msg warning "Installation process is failed."
+    func::proviscript_msg warning "Installation process is failed."
 fi
 

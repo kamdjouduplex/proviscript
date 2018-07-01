@@ -17,7 +17,7 @@ config:
     # Apache server                  #
     #---------+----------------------#
     # version | latest: 2.4.33       #
-    #         | default: 2.4.18      #
+    #         | system: 2.4.18       #
     #---------+----------------------#
     apache:
         name: apache
@@ -27,11 +27,11 @@ config:
     #---------+----------------------#
     # version | latest: 1.14         #
     #         | mainline: 1.13.12    #
-    #         | default: 1.10.3      #
+    #         | system: 1.10.3       #
     #---------+----------------------#
     nginx:
         name: nginx
-        version: stable
+        version: latest
     #--------------------------------#
     # PHP-FPM                        #
     #---------+----------------------#
@@ -81,7 +81,7 @@ config:
     # Redis                          #
     #---------+----------------------#
     # version | latest: 4.0.9        #
-    #         | default: 3.0.6       #
+    #         | system: 3.0.6        #
     #---------+----------------------#
     redis:
         name: redis
@@ -90,7 +90,7 @@ config:
     # MariaDB                         #
     #-----------------+---------------#
     # version         | latest: 10.2  #
-    #                 | default: 10.0 #
+    #                 | system: 10.0  #
     # password        | *             #
     # secure          | y, n          #
     # remote          | y, n          #
@@ -106,10 +106,10 @@ config:
         remote_user: test_user
         remote_password: 12345678
     #---------------------------------#
-    # MySQL                         #
+    # MySQL                           #
     #-----------------+---------------#
     # version         | latest: 8.0   #
-    #                 | default: 5.7  #
+    #                 | system: 5.7   #
     # password        | *             #
     # secure          | y, n          #
     # remote          | y, n          #
