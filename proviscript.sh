@@ -23,6 +23,8 @@
 #+    authors    Terry Lin (terrylinooo)
 #+
 #==============================================================================
+set -eux
+set -o pipefail
 
 export PROVISCRIPT=main
 export PROVISCRIPT_DIR=$(dirname $(readlink -f $0))
