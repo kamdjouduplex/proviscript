@@ -67,7 +67,7 @@ show_script_information() {
 if [ "$#" -gt 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            # Which version of Apache you want to install?
+            # Which version of Go you want to install?
             "-v") 
                 package_version="${2}"
                 shift 2
@@ -177,7 +177,7 @@ if [ "${_PM}" == "aptitude" ]; then
 fi
 
 # Check if Go has been installed or not.
-func::proviscript_msg info "Checking if Golang is installed, if not, proceed to install it."
+func::proviscript_msg info "Checking if Go is installed, if not, proceed to install it."
 
 is_golang_installed=$(dpkg-query -W --showformat='${Status}\n' golang-go | grep "install ok installed")
 
@@ -199,22 +199,22 @@ if [ "${package_version}" == "latest" ]; then
         sudo ${_PM} install -y software-properties-common
     fi
 
-    # Add repository for Golang.
+    # Add repository for Go.
     sudo add-apt-repository --yes ppa:longsleep/golang-backports
 
-    # Update repository for Golang. 
+    # Update repository for Go. 
     sudo ${_PM} update
 fi
 
-# Install Golang
-func::proviscript_msg info "Proceeding to install Golang."
+# Install Go
+func::proviscript_msg info "Proceeding to install Go."
 sudo ${_PM} install -y golang-go
 
 golang_version="$(go version 2>&1)"
 
 if [[ "${golang_version}" = *"go"* && "${golang_version}" != *"command not found"* ]]; then
     func::proviscript_msg success "Installation process is completed."
-    func::proviscript_msg success "$(go version -v 2>&1)"
+    func::proviscript_msg success "$(go version 2>&1)"
 else
     func::proviscript_msg warning "Installation process is failed."
 fi
