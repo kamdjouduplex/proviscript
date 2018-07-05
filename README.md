@@ -104,6 +104,7 @@ Ubuntu 18.04 LTS
 |  Apache |  **latest: 2.4.33**<br />system: 2.4.29 | ubuntu/bionic64 |
 |  Redis |  **latest: 4.0.9**<br />system: 4.0.9 | ubuntu/bionic64 |
 |  Golang |  **latest: 1.10.1**<br />system: 1.10.1 | ubuntu/xenial64 |
+|  Nodejs |  **latest: 10.6.0**<br />stable:  <br />system: 8.10.0 | ubuntu/xenial64 |
 
 Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
 
