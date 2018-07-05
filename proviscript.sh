@@ -23,8 +23,6 @@
 #+    authors    Terry Lin (terrylinooo)
 #+
 #==============================================================================
-set -eux
-set -o pipefail
 
 export PROVISCRIPT=main
 export PROVISCRIPT_DIR=$(dirname $(readlink -f $0))
@@ -56,6 +54,16 @@ if [ "$#" -gt 0 ]; then
                 func::parse_yaml config.yml
                 exit 1
             ;;
+            # Show welcome message (test)
+            "--welcome")
+                func::proviscript_welcome
+                exit 1
+            ;;
+            # Show thanks message (test)
+            "--thanks")
+                func::proviscript_thanks
+                exit 1
+            ;;
             "install")
                 _PROVI=true
                 shift 1
@@ -77,9 +85,9 @@ if [ ${_PROVI} == true ]; then
     esac
 
     # Show welcome message
-    functions::func_proviscript_welcome
+   func::proviscript_welcome
 
-    # Load components
+    # Install component packages
     for component in ${install[@]}; do
         eval "component_name=(\$config_${component}_name)"
         eval "component_version=(\$config_${component}_version)"
@@ -99,11 +107,10 @@ if [ ${_PROVI} == true ]; then
 
         # Load component script
         source "${PROVISCRIPT_DIR}/components/${OS_DIST}/${component_name}.sh"
-
     done
 
     # Show thanks message
-    func::func_proviscript_thanks
+    func::proviscript_thanks
 
     unset PROVISCRIPT
     unset PROVISCRIPT_DIR

@@ -32,79 +32,90 @@ readonly COLOR_BG_DARK="\e[100m"
 func::proviscript_msg() {
     case "$1" in
         "info")
-            echo -e "[${COLOR_BLUE}PS${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+            echo -e "${COLOR_BLUE}###${COLOR_EOF} ${COLOR_BLUE}${2}${COLOR_EOF}"
         ;;
         "warning")
-            echo -e "[${COLOR_RED}PS${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+            echo -e "${COLOR_RED}###${COLOR_EOF} ${COLOR_RED}${2}${COLOR_EOF}"
         ;;
         "success")
-            echo -e "[${COLOR_GREEN}PS${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+            echo -e "${COLOR_GREEN}###${COLOR_EOF} ${COLOR_GREEN}${2}${COLOR_EOF}"
         ;;
     esac
 }
 
 func::proviscript_welcome() {
-    echo "                                                                                  ";
-    echo "                                                                                  ";
-    echo " ██████╗ ██████╗  ██████╗ ██╗   ██╗██╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗";
-    echo " ██╔══██╗██╔══██╗██╔═══██╗██║   ██║██║██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝";
-    echo " ██████╔╝██████╔╝██║   ██║██║   ██║██║███████╗██║     ██████╔╝██║██████╔╝   ██║   ";
-    echo " ██╔═══╝ ██╔══██╗██║   ██║╚██╗ ██╔╝██║╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   ";
-    echo " ██║     ██║  ██║╚██████╔╝ ╚████╔╝ ██║███████║╚██████╗██║  ██║██║██║        ██║   ";
-    echo " ╚═╝     ╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ";
-    echo "                                                                                  ";
-    echo "                         https://proviscript.github.io                            ";
-    echo "                                                                                  ";
-    echo "                  Provisioning Shell Scripts for Linux servers                    ";
+    echo
+    echo
+    echo -e " ${COLOR_GREEN} ██████╗ ██████╗  ██████╗ ██╗   ██╗██╗${COLOR_BLUE}███████╗ ██████╗██████╗ ██╗██████╗ ████████╗${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ██╔══██╗██╔══██╗██╔═══██╗██║   ██║██║${COLOR_BLUE}██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ██████╔╝██████╔╝██║   ██║██║   ██║██║${COLOR_BLUE}███████╗██║     ██████╔╝██║██████╔╝   ██║   ${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ██╔═══╝ ██╔══██╗██║   ██║╚██╗ ██╔╝██║${COLOR_BLUE}╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   ${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ██║     ██║  ██║╚██████╔╝ ╚████╔╝ ██║${COLOR_BLUE}███████║╚██████╗██║  ██║██║██║        ██║   ${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN} ╚═╝     ╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚═╝${COLOR_BLUE}╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ${COLOR_EOF}"
+    echo "                                                       "
+    echo "                             https://proviscript.sh    "
+    echo "                                                       "
+    echo "                           Provisioning Shell Scripts  "
+    echo
+    echo
 }
 
 func::proviscript_thanks() {
-    echo "                                                                                  ";
-    echo "  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.                                        ";
-    echo " ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'                                        ";
-    echo '  `.(    `.(    `.(    `.(    `.(    `.(                                          ';
-    echo "                                                                                  ";
-    echo " Thanks for using Proviscript!                                                    ";
-    echo " Star us to let us know you like this script!                                     ";
-    echo " https://github.com/Proviscript/proviscript                                       ";
-    echo "                                                                                  ";
-    echo " If you have any questions please don't hesitate to leave your messages on:       ";
-    echo " https://github.com/Proviscript/proviscript/issues                                ";
-    echo "                                                                                  ";
-    echo " Bye.                                                                             ";
-    echo "                                                                                  ";
+    spaces=$(printf "%-80s" "*")
+    echo
+    echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
+    echo
+    echo -e " ${COLOR_RED}  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  ${COLOR_EOF} "
+    echo -e " ${COLOR_RED} ( T .' ( h .' ( a .' ( n .' ( k .' ( s .'  ${COLOR_EOF} "
+    echo -e ${COLOR_RED} '  `.(    `.(    `.(    `.(    `.(    `.(    ' ${COLOR_EOF}
+    echo -e " ${COLOR_RED}                                            ${COLOR_EOF} "
+    echo -e " ${COLOR_WHITE}Thanks for using Proviscript!                          ${COLOR_EOF} "
+    echo -e "                                                                                   "
+    echo -e " ${COLOR_GREEN}Star us to let us know you like this script!           ${COLOR_EOF} "
+    echo -e " https://github.com/Proviscript/proviscript                                        "
+    echo -e "                                                                                   "
+    echo -e " ${COLOR_BLUE}If you have any questions please don't hesitate to leave your messages on: ${COLOR_EOF} "
+    echo -e " https://github.com/Proviscript/proviscript/issues                                 "
+    echo -e "                                                                                   "
+    echo -e " ${COLOR_WHITE}Bye.                                                   ${COLOR_EOF} "
+    echo
+    echo -e "${COLOR_BG_BLUE}${spaces}${COLOR_EOF}"
+    echo
 }
 
 func::component_welcome() {
     echo
     echo
-    echo " Prepare to install.."                                                                                        
+    echo " Prepare to install.."
+    spaces=$(printf "%-80s" "*")
+    echo -e
+    echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
+    echo -e ${COLOR_WHITE}
+                                                                   
     case  "${1}" in
         "nginx")
-            echo "  _   _           _                       ";
-            echo " | \ | |   __ _  (_)  _ __   __  __       ";
-            echo " |  \| |  / _  \ | | | |_ \  \ \/ /       ";
-            echo " | |\  | | (_| | | | | | | |  >  <        ";
-            echo " |_| \_|  \__, | |_| |_| |_| /_/\_\       ";
-            echo "          |___/                      ${2} ";
-
-            
+            echo "  _   _           _                  ";
+            echo " | \ | |   __ _  (_)  _ __   __  __  ";
+            echo " |  \| |  / _  \ | | | |_ \  \ \/ /  ";
+            echo " | |\  | | (_| | | | | | | |  >  <   ";
+            echo " |_| \_|  \__, | |_| |_| |_| /_/\_\  ";
+            echo "          |___/                    ${2} ";
         ;;           
         "mariadb")
-            echo "  __  __                  _           ____    ____        ";
-            echo " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )       ";
-            echo " | |\/| |  / _  | | '__| | |  / _  | | | | | |  _ \       ";
-            echo " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |      ";
-            echo " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/       ";
-            echo "                                                     ${2} ";
+            echo "  __  __                  _           ____    ____    ";
+            echo " |  \/  |   __ _   _ __  (_)   __ _  |  _ \  | __ )   ";
+            echo " | |\/| |  / _  | | '__| | |  / _  | | | | | |  _ \   ";
+            echo " | |  | | | (_| | | |    | | | (_| | | |_| | | |_) |  ";
+            echo " |_|  |_|  \__,_| |_|    |_|  \__,_| |____/  |____/   ";
+            echo "                                                    ${2} ";
         ;;
         "php-fpm")
-            echo "  ____    _   _   ____            _____   ____    __  __        ";
-            echo " |  _ \  | | | | |  _ \          |  ___| |  _ \  |  \/  |       ";
-            echo " | |_) | | |_| | | |_) |  _____  | |_    | |_) | | |\/| |       ";
-            echo " |  __/  |  _  | |  __/  |_____| |  _|   |  __/  | |  | |       ";
-            echo " |_|     |_| |_| |_|             |_|     |_|     |_|  |_|       ";
-            echo "                                                           ${2} ";
+            echo "  ____    _   _   ____            _____   ____    __  __   ";
+            echo " |  _ \  | | | | |  _ \          |  ___| |  _ \  |  \/  |  ";
+            echo " | |_) | | |_| | | |_) |  _____  | |_    | |_) | | |\/| |  ";
+            echo " |  __/  |  _  | |  __/  |_____| |  _|   |  __/  | |  | |  ";
+            echo " |_|     |_| |_| |_|             |_|     |_|     |_|  |_|  ";
+            echo "                                                         ${2}";
         ;;
         "redis")
             echo "  ____               _   _         "      
@@ -120,17 +131,43 @@ func::component_welcome() {
             echo "    / _ \   | '_ \   / _  |  / __| | '_ \   / _ \  "
             echo "   / ___ \  | |_) | | (_| | | (__  | | | | |  __/  "
             echo "  /_/   \_\ | .__/   \__,_|  \___| |_| |_|  \___|  "
-            echo "            |_|                                   ${2} "
+            echo "            |_|                                   ${2}"
         ;;
         "mysql")
-            echo "  __  __           ____     ___    _      ";
-            echo " |  \/  |  _   _  / ___|   / _ \  | |     ";
-            echo " | |\/| | | | | | \___ \  | | | | | |     ";
-            echo " | |  | | | |_| |  ___) | | |_| | | |___  ";
-            echo " |_|  |_|  \__, | |____/   \__\_\ |_____| ";
-            echo "           |___/                         ${2}  ";
+            echo "  __  __           ____     ___    _       ";
+            echo " |  \/  |  _   _  / ___|   / _ \  | |      ";
+            echo " | |\/| | | | | | \___ \  | | | | | |      ";
+            echo " | |  | | | |_| |  ___) | | |_| | | |___   ";
+            echo " |_|  |_|  \__, | |____/   \__\_\ |_____|  ";
+            echo "           |___/                         ${2}";
+        ;;
+        "golang")
+            echo "    ____    ___    "
+            echo "   / ___|  / _ \   "
+            echo "  | |  _  | | | |  "
+            echo "  | |_| | | |_| |  "
+            echo "   \____|  \___/   "
+            echo "                 ${2}"
+        ;;
+        "nodejs")
+            echo "  _   _               _                _          "
+            echo " | \ | |   ___     __| |   ___        (_)  ___    "
+            echo " |  \| |  / _ \   / _\` |  / _ \       | | / __|  "
+            echo " | |\  | | (_) | | (_| | |  __/  _    | | \__ \   "
+            echo " |_| \_|  \___/   \__,_|  \___| (_)  _/ | |___/   "
+            echo "                                    |__/          "
+            echo "                                                ${2}"
         ;;
     esac
+
+    echo -e ${COLOR_EOF}
+    echo -e " ${COLOR_GREEN}Provi${COLOR_BLUE}script${COLOR_EOF} Project"
+    echo -e
+    echo -e " Web:    https://proviscript.sh/"
+    echo -e " GitHub: https://github.com/Proviscript/"
+    echo -e
+    echo -e "${COLOR_BG_BLUE}${spaces}${COLOR_EOF}"
+    echo -e ${COLOR_EOF}
 }
 
 # https://gist.github.com/l5x/8cf512c6d64641bde388
