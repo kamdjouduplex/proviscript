@@ -114,7 +114,7 @@ fi
 
 if [ "$(type -t INIT_PROVISCRIPT)" == function ]; then
     package_version=${PACKAGE_VERSION}
-    func::component_welcome "apache" "${package_version}"
+    func::component_welcome "golang" "${package_version}"
 else
     # Bash color set
     readonly COLOR_EOF="\e[0m"
