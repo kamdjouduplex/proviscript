@@ -141,25 +141,30 @@ else
         esac
     }
 
+    spaces_50=$(printf "%-50s" "*")
+    echo -e
+    echo -e "${COLOR_BG_GREEN}${spaces_50}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
-    echo -e "    ____    ___    ";
-    echo -e "   / ___|  / _ \   ";
-    echo -e "  | |  _  | | | |  ";
-    echo -e "  | |_| | | |_| |  ";
-    echo -e "   \____|  \___/   ";
-    echo -e "                   ";
+    echo -e "    ____    ___    "
+    echo -e "   / ___|  / _ \   "
+    echo -e "  | |  _  | | | |  "
+    echo -e "  | |_| | | |_| |  "
+    echo -e "   \____|  \___/   "
+    echo -e "                   "
     echo -e ${COLOR_EOF}
-    echo -e " Automatic installation by ${COLOR_GREEN}Provi${COLOR_BLUE}script";
-    echo -e " ${COLOR_BG_GREEN}  ${COLOR_BG_BLUE}  ${COLOR_BG_DARK}${COLOR_WHITE} https://github.com/Proviscript/ ${COLOR_EOF}"
+    echo -e " ${COLOR_GREEN}Provi${COLOR_BLUE}script${COLOR_EOF} Project"
+    echo -e
+    echo -e " Web:    https://proviscript.sh/"
+    echo -e " GitHub: https://github.com/Proviscript/"
+    echo -e
+    echo -e "${COLOR_BG_BLUE}${spaces_50}${COLOR_EOF}"
     echo -e ${COLOR_EOF}
 fi
 
 echo
-echo "----------------------------------------------------------------------------------";
-echo " @os: ${os_name} ${os_version}                                                    ";
-echo " @package: ${package_name}                                                        ";
-echo " @version: ${package_version}                                                     ";
-echo "----------------------------------------------------------------------------------";
+echo " @os:      ${os_name} ${os_version} "
+echo " @package: ${package_name}          "
+echo " @version: ${package_version}       "
 echo
 
 #==============================================================================
