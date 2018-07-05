@@ -130,20 +130,20 @@ else
     func::proviscript_msg() {
         case "$1" in
             "info")
-                echo -e "[${COLOR_BLUE}O.o${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_BLUE}###${COLOR_EOF}] ${COLOR_BLUE}${2}${COLOR_EOF}"
             ;;
             "warning")
-                echo -e "[${COLOR_RED}O.o${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_RED}###${COLOR_EOF}] ${COLOR_RED}${2}${COLOR_EOF}"
             ;;
             "success")
-                echo -e "[${COLOR_GREEN}O.o${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
+                echo -e "[${COLOR_GREEN}###${COLOR_EOF}] ${COLOR_GREEN}${2}${COLOR_EOF}"
             ;;
         esac
     }
 
-    spaces_50=$(printf "%-50s" "*")
+    spaces=$(printf "%-80s" "*")
     echo -e
-    echo -e "${COLOR_BG_GREEN}${spaces_50}${COLOR_EOF}"
+    echo -e "${COLOR_BG_GREEN}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_WHITE}
     echo -e "      _                             _              "
     echo -e "     / \     _ __     __ _    ___  | |__     ___   "
@@ -157,7 +157,7 @@ else
     echo -e " Web:    https://proviscript.sh/"
     echo -e " GitHub: https://github.com/Proviscript/"
     echo -e
-    echo -e "${COLOR_BG_BLUE}${spaces_50}${COLOR_EOF}"
+    echo -e "${COLOR_BG_BLUE}${spaces}${COLOR_EOF}"
     echo -e ${COLOR_EOF}
 fi
 
