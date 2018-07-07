@@ -22,7 +22,7 @@
 #+
 #+ IMPLEMENTATION:
 #+
-#+    version    1.0
+#+    package    Proviscript
 #+    copyright  https://github.com/Proviscript/
 #+    license    GNU General Public License
 #+    authors    Terry Lin (terrylinooo)
