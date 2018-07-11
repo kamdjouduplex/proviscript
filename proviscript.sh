@@ -106,7 +106,7 @@ if [ ${_PROVI} == true ]; then
         fi
 
         # Load component script
-        source "${PROVISCRIPT_DIR}/components/${OS_DIST}/${component_name}.sh"
+        source "${PROVISCRIPT_DIR}/components/${OS_DIST,,}/${component_name}.sh"
     done
 
     # Show thanks message
