@@ -25,7 +25,7 @@
 #- EXAMPLES
 #-
 #-    $ ./mysql.sh -v latest -s y -r y -u test_user -p 12345678
-#-    $ ./mysql.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+#-    $ ./mysql.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 #+
 #+ IMPLEMENTATION:
 #+
@@ -341,8 +341,16 @@ fi
 # This is an option,If you need remote access the MySQL server
 # Allow remote access.
 if [ "${mysql_remote}" == "y" ]; then
-    func::proviscript_msg info "Proceeding to modify /etc/mysql/my.cnf => bind-address = 0.0.0.0"
-    sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+    # Find mysqld.cnf at first.
+    cnf_path="$(sudo find /etc/ -name mysqld.cnf 2>&1)"
+
+    # If mysqld.cnf not found, find my.cnf
+    if [ -z "${cnf_path}" ]; then
+        cnf_path="$(sudo find /etc/ -name my.cnf 2>&1)"
+    fi
+
+    func::proviscript_msg info "Proceeding to modify ${cnf_path} => bind-address = 0.0.0.0"
+    sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" ${cnf_path}
 
     func::proviscript_msg info "Proceeding to create a remote user \"${mysql_remote_user}\" with password \"${mysql_remote_password}\"."
     # Setup an user account and access a MySQL server remotely.

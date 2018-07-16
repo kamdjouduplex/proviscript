@@ -168,7 +168,7 @@ Manual
  EXAMPLES
 
     $ ./mariadb.sh -v latest -s y -r y -u test_user -p 12345678
-    $ ./mariadb.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mariadb.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 
 ```
 
