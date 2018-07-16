@@ -206,7 +206,7 @@ Manual:
  EXAMPLES
 
     $ ./mysql.sh -v latest -s y -r y -ru test_user -rp 12345678
-    $ ./mysql.sh --version=system --secure=y --remote==y --remote-user=test_user --remote-password=12345678
+    $ ./mysql.sh --version=system --secure=y --remote=y --remote-user=test_user --remote-password=12345678
 
 ```
 
