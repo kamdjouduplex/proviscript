@@ -36,7 +36,7 @@
 
 # Display package information, no need to change.
 os_name="Ubuntu"
-os_version="16.04"
+os_version="18.04"
 package_name="Dart"
 
 # Debian/Ubuntu Only. Package manager: apt-get | aptitude
