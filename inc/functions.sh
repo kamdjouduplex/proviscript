@@ -158,6 +158,13 @@ func::component_welcome() {
             echo "                                    |__/          "
             echo "                                                ${2}"
         ;;
+        "dart")
+            echo "   ____                   _     ";
+            echo "  |  _ \    __ _   _ __  | |_   ";
+            echo "  | | | |  / _\` | | '__| | __| ";
+            echo "  | |_| | | (_| | | |    | |_   ";
+            echo "  |____/   \__,_| |_|     \__|  ";
+            echo "                              ${2}"
     esac
 
     echo -e ${COLOR_EOF}
