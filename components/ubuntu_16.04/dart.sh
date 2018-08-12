@@ -183,7 +183,7 @@ if [ "${_PM}" == "aptitude" ]; then
     fi
 fi
 
-# Check if Redis has been installed or not.
+# Check if Dart has been installed or not.
 func::proviscript_msg info "Checking if Dart is installed, if not, proceed to install it."
 
 is_dart_installed=$(dpkg-query -W --showformat='${Status}\n' dart | grep "install ok installed")
@@ -198,11 +198,11 @@ if [ "${package_version}" == "latest" ]; then
     # Check if apt-transport-https installed or not.
     is_apt_transport_https=$(which apt-transport-https |  grep "apt-transport-https")
 
-    # Check if is_apt_transport_https command is available to use or not.
+    # Check if apt-transport-https command is available to use or not.
     if [ "${is_apt_transport_https}" == "" ]; then
-        func::proviscript_msg warning "Command \"is_apt_transport_https\" is not supprted, install \"is_apt_transport_https\" to use it."
-        func::proviscript_msg info "Proceeding to install \"is_apt_transport_https\"."
-        sudo ${_PM} install -y is_apt_transport_https
+        func::proviscript_msg warning "Command \"apt-transport-https\" is not supprted, install \"apt-transport-https\" to use it."
+        func::proviscript_msg info "Proceeding to install \"apt-transport-https\"."
+        sudo ${_PM} install -y apt-transport-https
     fi
 
     # Add repository for Dart.
@@ -211,17 +211,29 @@ if [ "${package_version}" == "latest" ]; then
 
     # Update repository for Dart. 
     sudo ${_PM} update
+
+elif [ "${package_version}" == "dev" ]; then
+    # Add repository for Dart.
+    sudo sh -c "curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list"
+
+    # Update repository for Dart. 
+    sudo ${_PM} update
+
+else
+    func::proviscript_msg warning "The default system repository does not have Dart supported. please try:"
+    func::proviscript_msg warning "./dart.sh -v latest"
+    exit 1
 fi
 
 # Install Dart.
 func::proviscript_msg info "Proceeding to install Dart SDK."
 sudo ${_PM} install -y dart
 
-dart_version="$(dart) -v 2>&1)"
+dart_version="$(dart) --version 2>&1)"
 
-if [[ "${dart_version}" = *"dart"* && "${dart_version}" != *"command not found"* ]]; then
+if [[ "${dart_version}" = "Dart VM"* && "${dart_version}" != *"command not found"* ]]; then
     func::proviscript_msg success "Installation process is completed."
-    func::proviscript_msg success "$(dart -v 2>&1)"
+    func::proviscript_msg success "$(dart --version 2>&1)"
 else
     func::proviscript_msg warning "Installation process is failed."
 fi
