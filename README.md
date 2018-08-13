@@ -16,8 +16,8 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 |  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/7
 |  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) | `Nginx` | debian/stretch64
 |  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) | `Nginx` - | fedora/28-cloud-base
-|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` | ubuntu/xenial64
-|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Node.js` | ubuntu/bionic64
+|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Dart` | ubuntu/xenial64
+|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Node.js` `Dart` | ubuntu/bionic64
 
 More packages will be added in Proviscript project, please watch us to get the latest updates.
 
@@ -94,6 +94,8 @@ Ubuntu 16.04 LTS
 |  Apache |  **latest: 2.4.33**<br />system: 2.4.18 | ubuntu/xenial64 |
 |  Redis |  **latest: 4.0.9**<br />system: 3.0.6 | ubuntu/xenial64 |
 |  Golang |  **latest: 1.10.1**<br />system: 1.6.2 | ubuntu/xenial64 |
+|  Nodejs |  **latest: 10.8.0**<br />stable:  <br />system: 4.2.6 | ubuntu/xenial64 |
+|  Dart |  **latest: 2.0.0**<br />dev:  <br />system: - | ubuntu/xenial64 |
 
 Ubuntu 18.04 LTS
 
@@ -105,8 +107,9 @@ Ubuntu 18.04 LTS
 |  PHP-FPM |  **7.2**, 7.1, 7.0, 5.6 | ubuntu/bionic64 |
 |  Apache |  **latest: 2.4.33**<br />system: 2.4.29 | ubuntu/bionic64 |
 |  Redis |  **latest: 4.0.9**<br />system: 4.0.9 | ubuntu/bionic64 |
-|  Golang |  **latest: 1.10.1**<br />system: 1.10.1 | ubuntu/xenial64 |
-|  Nodejs |  **latest: 10.6.0**<br />stable:  <br />system: 8.10.0 | ubuntu/xenial64 |
+|  Golang |  **latest: 1.10.1**<br />system: 1.10.1 | ubuntu/bionic64 |
+|  Nodejs |  **latest: 10.8.0**<br />stable:  <br />system: 8.10.0 | ubuntu/bionic64 |
+|  Dart |  **latest: 2.0.0**<br />dev:  <br />system: - | ubuntu/bionic64 |
 
 Each component script can be executed as standalone mode, in standalone mode, you can just simply change your current dictionary to `components/ubuntu_16.04` and then execute the scripts to install packages, see example below.
 
