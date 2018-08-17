@@ -2,14 +2,19 @@
 
 Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/README_zh_TW.md) | [简体中文](./docs/README_zh_CN.md)
 
-Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (*always the latest version*) for Ubuntu servers.
+Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (*always the latest version*) for Linux servers.
 
 ## :link: [Website](https://proviscript.sh/) :link:
 
 ## Supported packages
 
+
 | Operating system  | - |  Supported packages | Tested Vagrant box 
 |---|---| --- | --- |
+|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/6
+|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/7
+|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) | `Nginx` | debian/stretch64
+|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) | `Nginx` - | fedora/28-cloud-base
 |  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Node.js` `Dart` | ubuntu/xenial64
 |  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Node.js` `Dart` | ubuntu/bionic64
 
@@ -17,7 +22,7 @@ More packages will be added in Proviscript project, please watch us to get the l
 
 ## How to use proviscript
 
-- Launcher mode
+- Launcher mode (Currently support Ubuntu only)
 - Standalone mode
 
 ![Provisctipt Introdction](https://i.imgur.com/6s3YiiE.png)
@@ -32,7 +37,10 @@ cd proviscript-latest
 ```
 #### Configure
 
-Edit `config.yml` to see what packages you want to install.
+```
+./proviscript.sh init
+```
+Edit `config.yml` to choose packages to install.
 ```
 vi config.yml
 ```
@@ -52,14 +60,6 @@ See `Components` section.
 [Proviscript Components](https://github.com/Proviscript/proviscript/tree/master/components/ubuntu_16.04) are well-tested shell scripts that can help you install packages to just fire and forget.
 
 
-| Operating system  | - |  Supported packages | Tested Vagrant box 
-|---|---| --- | --- |
-|  CentOS 6 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/6
-|  CentOS 7 | ![CentOS Logo](https://i.imgur.com/JQW7wvE.png) | `Apache` `Nginx` | centos/7
-|  Debian 9 | ![Debian Logo](https://i.imgur.com/Eokf4Pz.png) | `Nginx` | debian/stretch64
-|  Fedora 28 | ![Fedora Logo](https://i.imgur.com/upBNWL5.png) | `Nginx` - | fedora/28-cloud-base
-|  Ubuntu 16.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Node.js` `Dart` | ubuntu/xenial64
-|  Ubuntu 18.04 | ![Ubuntu Logo](https://i.imgur.com/kf8Oeno.png)|  `Apache` `MairaDB` `MySQL` `Nginx` `PHP-FPM` `Redis` `Golang` `Node.js` `Dart` | ubuntu/bionic64
 
 CentOS 6
 
