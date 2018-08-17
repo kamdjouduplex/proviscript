@@ -64,6 +64,10 @@ if [ "$#" -gt 0 ]; then
                 func::proviscript_thanks
                 exit 1
             ;;
+            "init")
+                _INIT=true
+                shift 1
+            ;;
             "install")
                 _PROVI=true
                 shift 1
@@ -72,7 +76,24 @@ if [ "$#" -gt 0 ]; then
     done
 fi
 
-if [ ${_PROVI} == true ]; then
+if [ "${_INIT}" == "true" ]; then
+    func::proviscript_welcome
+    func::proviscript_msg info "Copy components/${OS_NAME}_${OS_RELEASE_NUMBER}/config.yml to current folder..."
+    sudo cp components/${OS_NAME}_${OS_RELEASE_NUMBER}/config.yml config.yml
+
+    if [ $? -eq 0 ]; then
+        func::proviscript_msg success "Configuration file config.yml is ready."
+        func::proviscript_msg success "Please edit config.yml to choose which packages to install."
+        echo
+    else
+        func::proviscript_msg warning "Configuration file config.yml is not ready."
+        func::func::proviscript_msg warning "Proviscript currently does't support your OS, please watch us on GitHub for further update."
+        echo
+    fi
+    exit 2
+fi
+
+if [ "${_PROVI}" == "true" ]; then
     # Load config settings
     eval $(func::parse_yaml config.yml)
 
@@ -85,7 +106,7 @@ if [ ${_PROVI} == true ]; then
     esac
 
     # Show welcome message
-   func::proviscript_welcome
+    func::proviscript_welcome
 
     # Install component packages
     for component in ${install[@]}; do
