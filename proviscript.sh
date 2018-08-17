@@ -78,8 +78,8 @@ fi
 
 if [ "${_INIT}" == "true" ]; then
     func::proviscript_welcome
-    func::proviscript_msg info "Copy components/${OS_NAME}_${OS_RELEASE_NUMBER}/config.yml to current folder..."
-    sudo cp components/${OS_NAME}_${OS_RELEASE_NUMBER}/config.yml config.yml
+    func::proviscript_msg info "Copy components/${OS_DIST,,}/config.yml to current folder..."
+    sudo cp components/${OS_DIST,,}/config.yml config.yml
 
     if [ $? -eq 0 ]; then
         func::proviscript_msg success "Configuration file config.yml is ready."
@@ -87,7 +87,7 @@ if [ "${_INIT}" == "true" ]; then
         echo
     else
         func::proviscript_msg warning "Configuration file config.yml is not ready."
-        func::func::proviscript_msg warning "Proviscript currently does't support your OS, please watch us on GitHub for further update."
+        func::proviscript_msg warning "Proviscript currently does't support your OS, please watch us on GitHub for further update."
         echo
     fi
     exit 2
