@@ -44,6 +44,7 @@ func::proviscript_msg() {
 }
 
 func::proviscript_welcome() {
+    clear
     echo
     echo
     echo -e " ${COLOR_GREEN} ██████╗ ██████╗  ██████╗ ██╗   ██╗██╗${COLOR_BLUE}███████╗ ██████╗██████╗ ██╗██████╗ ████████╗${COLOR_EOF}"
