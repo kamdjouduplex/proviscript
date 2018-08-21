@@ -8,7 +8,7 @@ Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic inst
 
 This is a demo video that shows you how to install the lastest verison of LEMP (Linux - Nginx, MariaDB, PHP) + Redis in less than minutes by using proviscript.sh
 
-https://www.youtube.com/watch?v=ks6Q23Lz_QY
+https://youtu.be/2qFKw-8TLU8
 
 ## :link: [Website](https://proviscript.sh/) :link:
 
