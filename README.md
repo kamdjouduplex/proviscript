@@ -4,11 +4,9 @@ Document Transations: [English](./docs/README_en_US.md) | [繁體中文](./docs/
 
 Proviscript means **Provi**sioning Shell **Script**s, to do fully automatic installations of most popular packages (*always the latest version*) for Linux servers.
 
-## Demo Video ##
+## [Demo Video](https://youtu.be/2qFKw-8TLU8) ##
 
 This is a demo video that shows you how to install the lastest verison of LEMP (Linux - Nginx, MariaDB, PHP) + Redis in less than minutes by using proviscript.sh
-
-https://youtu.be/2qFKw-8TLU8
 
 ## :link: [Website](https://proviscript.sh/) :link:
 
